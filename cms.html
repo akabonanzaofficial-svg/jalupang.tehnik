@@ -3,551 +3,344 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CMS Artikel | Jalupang Teknik</title>
+    <title>CMS Artikel - Jalupang Teknik</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
     <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-    
-    <!-- ===== QUILL.JS RICH TEXT EDITOR ===== -->
-    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet" />
+
+    <!-- ===== QUILL JS (Rich Text Editor) ===== -->
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
     <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
     
     <style>
-        body { background: #f0fdf4; }
-        .glass { background: rgba(255,255,255,0.8); backdrop-filter: blur(10px); }
-        .card { background: white; border-radius: 16px; padding: 24px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); border: 1px solid #e5e7eb; }
-        .btn-primary { background: #16a34a; color: white; padding: 10px 24px; border-radius: 8px; transition: all 0.2s; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
-        .btn-primary:hover { background: #15803d; transform: translateY(-1px); }
-        .btn-danger { background: #dc2626; color: white; padding: 6px 14px; border-radius: 6px; transition: all 0.2s; border: none; cursor: pointer; font-size: 13px; }
-        .btn-danger:hover { background: #b91c1c; }
-        .btn-edit { background: #3b82f6; color: white; padding: 6px 14px; border-radius: 6px; transition: all 0.2s; border: none; cursor: pointer; font-size: 13px; }
-        .btn-edit:hover { background: #2563eb; }
-        .btn-view { background: #8b5cf6; color: white; padding: 6px 14px; border-radius: 6px; transition: all 0.2s; border: none; cursor: pointer; font-size: 13px; }
-        .btn-view:hover { background: #7c3aed; }
-        .status-published { background: #dcfce7; color: #166534; padding: 2px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; }
-        .status-draft { background: #fef3c7; color: #92400e; padding: 2px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; }
-        .form-group { margin-bottom: 16px; }
-        .form-group label { display: block; font-size: 14px; font-weight: 600; color: #374151; margin-bottom: 4px; }
-        .form-group input, .form-group select { width: 100%; padding: 10px 14px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; transition: border 0.2s; }
-        .form-group input:focus, .form-group select:focus { outline: none; border-color: #16a34a; box-shadow: 0 0 0 3px rgba(22,163,74,0.1); }
-        .hidden { display: none !important; }
-        .message { padding: 12px 16px; border-radius: 8px; margin-top: 12px; }
-        .message-success { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
-        .message-error { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
+        body { background: #f5f7fa; }
+        .card { transition: all 0.3s; }
+        .card:hover { transform: translateY(-2px); box-shadow: 0 10px 40px rgba(0,0,0,0.1); }
         
-        /* ===== QUILL EDITOR STYLING ===== */
-        #editor-container {
-            height: 350px;
-            border-radius: 8px;
-            border: 1px solid #d1d5db;
+        /* ===== STYLING QUILL EDITOR ===== */
+        #quill-editor {
+            min-height: 250px;
+            max-height: 400px;
+            overflow-y: auto;
             background: white;
+            border-radius: 0 0 0.5rem 0.5rem;
         }
-        #editor-container .ql-editor {
-            min-height: 300px;
-            font-size: 15px;
-            line-height: 1.7;
+        #quill-editor p {
+            margin-bottom: 0.5rem;
         }
-        #editor-container .ql-toolbar {
-            border-radius: 8px 8px 0 0;
-            border-color: #d1d5db;
+        #quill-editor ul, #quill-editor ol {
+            padding-left: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        #quill-editor blockquote {
+            border-left: 4px solid #22c55e;
+            padding-left: 1rem;
+            margin: 0.5rem 0;
+            color: #4b5563;
+            background: #f0fdf4;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+        }
+        .ql-toolbar {
+            border-radius: 0.5rem 0.5rem 0 0;
             background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-bottom: none;
         }
-        #editor-container .ql-container {
-            border-radius: 0 0 8px 8px;
-            border-color: #d1d5db;
+        .ql-container {
+            border: 1px solid #e5e7eb;
+            border-radius: 0 0 0.5rem 0.5rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
         }
-        .ql-editor h2 { font-size: 24px; font-weight: 700; margin: 16px 0 8px; }
-        .ql-editor h3 { font-size: 20px; font-weight: 600; margin: 14px 0 6px; }
-        .ql-editor p { margin-bottom: 12px; }
-        .ql-editor ul, .ql-editor ol { padding-left: 24px; margin-bottom: 12px; }
-        .ql-editor li { margin-bottom: 4px; }
-        .ql-editor blockquote { border-left: 4px solid #16a34a; padding-left: 16px; margin: 12px 0; color: #4b5563; }
-        .ql-editor a { color: #16a34a; text-decoration: underline; }
-        .ql-editor img { max-width: 100%; border-radius: 8px; margin: 12px 0; }
-        
-        /* ===== TOOLBAR CUSTOM ===== */
-        .ql-toolbar .ql-formats { margin-right: 4px; }
-        .ql-toolbar button { width: 32px; height: 32px; display: inline-flex; align-items: center; justify-content: center; }
-        .ql-toolbar button svg { width: 18px; height: 18px; }
-        
-        /* ===== RESPONSIVE ===== */
-        @media (max-width: 768px) {
-            #editor-container { height: 250px; }
-            #editor-container .ql-editor { min-height: 200px; }
-            .ql-toolbar .ql-formats { margin-right: 2px; }
-            .ql-toolbar button { width: 28px; height: 28px; }
-            .ql-toolbar button svg { width: 14px; height: 14px; }
+        .ql-editor {
+            min-height: 200px;
         }
+        .ql-editor strong { font-weight: 700; }
+        .ql-editor em { font-style: italic; }
+        .ql-editor u { text-decoration: underline; }
+        .ql-editor strike { text-decoration: line-through; }
+        .ql-editor .ql-align-center { text-align: center; }
+        .ql-editor .ql-align-right { text-align: right; }
+        .ql-editor .ql-align-justify { text-align: justify; }
     </style>
 </head>
 <body>
 
-<!-- ========== NAVIGASI ========== -->
-<nav class="fixed w-full z-50 glass border-b border-gray-200">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between items-center h-16">
-            <div class="flex items-center gap-3">
-                <div class="w-8 h-8 rounded-lg bg-green-600 flex items-center justify-center text-white">
-                    <i class="fas fa-leaf"></i>
-                </div>
-                <span class="font-bold text-xl text-gray-800">CMS <span class="text-green-600">Jalupang</span></span>
+<div class="max-w-6xl mx-auto px-4 py-10">
+    
+    <!-- HEADER -->
+    <div class="flex justify-between items-center mb-8">
+        <div>
+            <h1 class="text-3xl font-bold text-gray-800">📝 CMS Artikel</h1>
+            <p class="text-gray-500 text-sm">Kelola artikel untuk website Jalupang Teknik</p>
+        </div>
+        <div class="flex gap-3">
+            <a href="index.html" class="text-green-600 hover:text-green-800 text-sm font-medium">
+                <i class="fas fa-arrow-left"></i> Kembali ke Website
+            </a>
+        </div>
+    </div>
+
+    <!-- FORM TAMBAH ARTIKEL -->
+    <div class="bg-white rounded-2xl shadow-md p-6 mb-8 card">
+        <h2 class="text-xl font-bold text-gray-700 mb-4">➕ Tambah / Edit Artikel</h2>
+        
+        <form id="cms-form" class="space-y-4">
+            <!-- Judul -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Judul Artikel *</label>
+                <input type="text" id="cms-title" required 
+                       class="w-full px-4 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none"
+                       placeholder="Masukkan judul artikel..." />
             </div>
-            <div class="flex items-center gap-4">
-                <a href="blog.html" target="_blank" class="text-sm text-gray-500 hover:text-green-600 transition-colors">
-                    <i class="fas fa-external-link-alt mr-1"></i> Lihat Website
-                </a>
-                <button onclick="loadArticles()" class="text-sm bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors">
-                    <i class="fas fa-sync mr-1"></i> Refresh
+            
+            <!-- Rich Text Editor (Quill) -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Konten Artikel *</label>
+                <div id="quill-editor"></div>
+                <input type="hidden" id="cms-content" required />
+            </div>
+            
+            <!-- Gambar -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">URL Gambar (opsional)</label>
+                <input type="url" id="cms-image" 
+                       class="w-full px-4 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none"
+                       placeholder="https://example.com/gambar.jpg" />
+            </div>
+            
+            <!-- Status & Tombol -->
+            <div class="flex flex-wrap gap-4 items-center">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                    <select id="cms-status" class="px-4 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none">
+                        <option value="publish">Publish</option>
+                        <option value="draft">Draft</option>
+                    </select>
+                </div>
+                
+                <button type="submit" id="cms-submit-btn"
+                        class="mt-6 px-6 py-2 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition-all shadow-md hover:shadow-lg">
+                    <i class="fas fa-save"></i> Simpan Artikel
+                </button>
+                
+                <button type="button" id="cms-clear-btn"
+                        class="mt-6 px-6 py-2 bg-gray-200 text-gray-700 rounded-lg font-semibold hover:bg-gray-300 transition-all">
+                    <i class="fas fa-undo"></i> Reset
                 </button>
             </div>
+        </form>
+        
+        <div id="cms-success" class="hidden mt-4 p-3 bg-green-100 text-green-700 rounded-lg border border-green-200 text-sm">
+            ✅ Artikel berhasil disimpan!
+        </div>
+        <div id="cms-error" class="hidden mt-4 p-3 bg-red-100 text-red-700 rounded-lg border border-red-200 text-sm">
+            ❌ Gagal menyimpan artikel. Periksa koneksi atau coba lagi.
+        </div>
+        <div id="cms-loading" class="hidden mt-4 p-3 bg-blue-100 text-blue-700 rounded-lg border border-blue-200 text-sm">
+            ⏳ Menyimpan artikel...
         </div>
     </div>
-</nav>
 
-<!-- ========== MAIN CONTENT ========== -->
-<div class="pt-24 pb-12 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-
-    <!-- Header -->
-    <div class="flex justify-between items-center mb-6">
-        <h1 class="text-2xl font-bold text-gray-800">📝 Kelola Artikel</h1>
-        <button onclick="showForm()" class="btn-primary">
-            <i class="fas fa-plus"></i> Artikel Baru
-        </button>
-    </div>
-
-    <!-- ========== FORM TAMBAH/EDIT ========== -->
-    <div id="articleForm" class="card hidden mb-6">
+    <!-- DAFTAR ARTIKEL -->
+    <div class="bg-white rounded-2xl shadow-md p-6 card">
         <div class="flex justify-between items-center mb-4">
-            <h2 id="formTitle" class="text-xl font-bold text-gray-800">Tambah Artikel Baru</h2>
-            <button onclick="hideForm()" class="text-gray-400 hover:text-gray-600 text-xl">&times;</button>
-        </div>
-        
-        <div id="formMessage" class="hidden"></div>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div class="form-group md:col-span-2">
-                <label for="inputTitle">Judul Artikel *</label>
-                <input id="inputTitle" type="text" placeholder="Masukkan judul artikel" />
-            </div>
-            
-            <div class="form-group">
-                <label for="inputCategory">Kategori</label>
-                <select id="inputCategory">
-                    <option value="teknologi">Teknologi</option>
-                    <option value="lingkungan">Lingkungan</option>
-                    <option value="energi">Energi</option>
-                    <option value="limbah">Limbah</option>
-                    <option value="berita">Berita</option>
-                </select>
-            </div>
-            
-            <div class="form-group">
-                <label for="inputAuthor">Author</label>
-                <input id="inputAuthor" type="text" placeholder="Nama penulis" />
-            </div>
-            
-            <div class="form-group">
-                <label for="inputReadTime">Read Time (menit)</label>
-                <input id="inputReadTime" type="number" placeholder="5" value="5" />
-            </div>
-            
-            <div class="form-group">
-                <label for="inputStatus">Status</label>
-                <select id="inputStatus">
-                    <option value="published">Published</option>
-                    <option value="draft">Draft</option>
-                </select>
-            </div>
-            
-            <div class="form-group">
-                <label for="inputFeatured">Featured</label>
-                <select id="inputFeatured">
-                    <option value="FALSE">Tidak</option>
-                    <option value="TRUE">Ya</option>
-                </select>
-            </div>
-            
-            <div class="form-group md:col-span-2">
-                <label for="inputExcerpt">Excerpt (Ringkasan)</label>
-                <input id="inputExcerpt" type="text" placeholder="Ringkasan singkat artikel (max 160 karakter)" />
-            </div>
-            
-            <div class="form-group md:col-span-2">
-                <label for="inputImage">Gambar (URL)</label>
-                <input id="inputImage" type="text" placeholder="https://images.unsplash.com/..." />
-            </div>
-            
-            <div class="form-group md:col-span-2">
-                <label>Konten Artikel <span class="text-sm font-normal text-gray-400">(Gunakan toolbar untuk format teks)</span></label>
-                <div id="editor-container">
-                    <div id="editor"></div>
-                </div>
-                <p class="text-xs text-gray-400 mt-1">
-                    <i class="fas fa-info-circle"></i> 
-                    Gunakan toolbar di atas untuk: <strong>Bold</strong>, <em>Italic</em>, <u>Underline</u>, 
-                    <span class="text-center">Center</span>, List, Quote, Link, dan lainnya.
-                </p>
-            </div>
-        </div>
-        
-        <div class="flex gap-3 mt-6">
-            <button onclick="saveArticle()" class="btn-primary">
-                <i class="fas fa-save"></i> Simpan Artikel
-            </button>
-            <button onclick="hideForm()" class="px-6 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors">
-                Batal
+            <h2 class="text-xl font-bold text-gray-700">📄 Daftar Artikel</h2>
+            <button onclick="loadArticles()" class="text-sm text-green-600 hover:text-green-800 font-medium">
+                <i class="fas fa-sync-alt"></i> Refresh
             </button>
         </div>
-    </div>
-
-    <!-- ========== DAFTAR ARTIKEL ========== -->
-    <div class="card">
-        <div class="flex justify-between items-center mb-4">
-            <h2 class="text-lg font-semibold text-gray-800">Daftar Artikel</h2>
-            <span id="articleCount" class="text-sm text-gray-500">Memuat...</span>
+        <div id="cms-article-list" class="space-y-3">
+            <p class="text-gray-400 text-sm">Memuat data...</p>
         </div>
-        
-        <div id="articleList" class="space-y-3">
-            <div class="text-center py-8 text-gray-400">
-                <i class="fas fa-spinner fa-spin text-2xl"></i>
-                <p class="mt-2">Memuat artikel...</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Tombol Buka Google Sheets -->
-    <div class="mt-6 text-center">
-        <a href="https://docs.google.com/spreadsheets/d/1QyV9VDWWNigTte8w37zhHOFX_t41jfISRiUeyrn1WTw/edit" target="_blank" class="text-sm text-gray-500 hover:text-green-600 transition-colors">
-            <i class="fas fa-edit mr-1"></i> Buka Google Sheets
-        </a>
-        <span class="text-gray-300 mx-3">|</span>
-        <span class="text-sm text-gray-400">⚠️ Setelah simpan, publish ulang Google Sheets agar muncul di website</span>
     </div>
 </div>
 
-<!-- ========== SCRIPTS ========== -->
 <script>
-// ============================================================
-// KONFIGURASI - GANTI DENGAN URL WEB APP ANDA
-// ============================================================
-const API_URL = 'https://script.google.com/macros/s/AKfycbzohWKoI1nl5mf2p8u83vvYrqxuxbck4QhlZ7toI3XKYYZfipJTDb41OHj4ES9k6wSq/exec';
-// ⚠️ Ganti YOUR_DEPLOYMENT_ID dengan ID dari hasil deploy
+    // ============================================================
+    // KONFIGURASI
+    // ============================================================
+    const API_URL = 'https://script.google.com/macros/s/AKfycbyQAKZs4rZouzb4TRyi6cWkFy2Mj5vIF4qlDdrzAu0HfqONxSp3Qo8YnpAQCaJ4WIBy/exec';
 
-let quill = null;
-let editingId = null;
-let articles = [];
-
-// ============================================================
-// INIT QUILL EDITOR
-// ============================================================
-function initQuill() {
-    if (quill) return;
-    
-    quill = new Quill('#editor', {
+    // ============================================================
+    // INISIALISASI QUILL RICH TEXT EDITOR
+    // ============================================================
+    var quill = new Quill('#quill-editor', {
         theme: 'snow',
-        placeholder: 'Tulis konten artikel di sini... Gunakan toolbar untuk format teks (Bold, Italic, Center, dll)',
+        placeholder: 'Tulis konten artikel di sini...',
         modules: {
             toolbar: [
-                [{ 'header': [1, 2, 3, false] }],
+                [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
                 ['bold', 'italic', 'underline', 'strike'],
-                ['blockquote', 'code-block'],
+                [{ 'color': [] }, { 'background': [] }],
                 [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-                [{ 'script': 'sub'}, { 'script': 'super' }],
-                [{ 'indent': '-1'}, { 'indent': '+1' }],
                 [{ 'align': [] }],
+                ['blockquote', 'code-block'],
                 ['link', 'image', 'video'],
                 ['clean']
             ]
         }
     });
-}
 
-// ============================================================
-// SET QUILL CONTENT
-// ============================================================
-function setQuillContent(html) {
-    if (!quill) initQuill();
-    if (html) {
-        quill.root.innerHTML = html;
-    } else {
-        quill.root.innerHTML = '';
-    }
-}
-
-// ============================================================
-// GET QUILL CONTENT (HTML)
-// ============================================================
-function getQuillContent() {
-    if (!quill) return '';
-    return quill.root.innerHTML;
-}
-
-// ============================================================
-// LOAD ARTICLES
-// ============================================================
-async function loadArticles() {
-    const list = document.getElementById('articleList');
-    const count = document.getElementById('articleCount');
-    
-    list.innerHTML = `
-        <div class="text-center py-8 text-gray-400">
-            <i class="fas fa-spinner fa-spin text-2xl"></i>
-            <p class="mt-2">Memuat artikel...</p>
-        </div>
-    `;
-
-    try {
-        const response = await fetch(API_URL);
-        const data = await response.json();
+    // ============================================================
+    // AMBIL DAFTAR ARTIKEL
+    // ============================================================
+    async function loadArticles() {
+        const listContainer = document.getElementById('cms-article-list');
+        listContainer.innerHTML = '<p class="text-gray-400 text-sm">Memuat data...</p>';
         
-        if (data.error) {
-            throw new Error(data.error);
+        try {
+            const response = await fetch(API_URL);
+            if (!response.ok) throw new Error('Gagal memuat data');
+            const articles = await response.json();
+            
+            if (articles.length === 0) {
+                listContainer.innerHTML = '<p class="text-gray-400 text-sm">Belum ada artikel.</p>';
+                return;
+            }
+            
+            let html = '';
+            articles.forEach((article, index) => {
+                const statusColor = article.status === 'publish' ? 'green' : 'yellow';
+                const statusText = article.status === 'publish' ? 'Published' : 'Draft';
+                const contentPreview = article.content ? article.content.replace(/<[^>]*>/g, '').substring(0, 80) + '...' : '(kosong)';
+                
+                html += `
+                    <div class="flex justify-between items-center p-4 bg-gray-50 rounded-xl border border-gray-100 hover:border-green-200 transition-colors">
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-2">
+                                <span class="text-sm font-bold text-gray-400">#${article.id || index + 1}</span>
+                                <span class="text-sm font-semibold text-gray-800 truncate">${article.title || 'Tanpa Judul'}</span>
+                            </div>
+                            <div class="text-xs text-gray-400 truncate mt-0.5">${contentPreview}</div>
+                        </div>
+                        <div class="flex items-center gap-3 flex-shrink-0 ml-4">
+                            <span class="px-2 py-0.5 text-xs rounded-full bg-${statusColor}-100 text-${statusColor}-700 font-medium">${statusText}</span>
+                            <button onclick="editArticle('${article.id || index + 1}')" class="text-blue-400 hover:text-blue-600 transition-colors text-sm" title="Edit">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button onclick="deleteArticle('${article.id || index + 1}')" class="text-red-400 hover:text-red-600 transition-colors text-sm" title="Hapus">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            listContainer.innerHTML = html;
+            
+        } catch (error) {
+            console.error('Error loading articles:', error);
+            listContainer.innerHTML = '<p class="text-red-500 text-sm">❌ Gagal memuat data artikel.</p>';
+        }
+    }
+
+    // ============================================================
+    // SIMPAN ARTIKEL BARU
+    // ============================================================
+    document.getElementById('cms-form').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const title = document.getElementById('cms-title').value.trim();
+        const content = quill.root.innerHTML; // Ambil HTML dari Quill
+        const image = document.getElementById('cms-image').value.trim();
+        const status = document.getElementById('cms-status').value;
+        
+        if (!title || !content || content === '<p><br></p>') {
+            alert('Judul dan konten harus diisi!');
+            return;
         }
         
-        articles = data;
-        count.textContent = articles.length + ' artikel';
-        renderArticles();
+        const submitBtn = document.getElementById('cms-submit-btn');
+        const loadingDiv = document.getElementById('cms-loading');
+        const successDiv = document.getElementById('cms-success');
+        const errorDiv = document.getElementById('cms-error');
         
-    } catch (error) {
-        list.innerHTML = `
-            <div class="text-center py-8 text-red-500">
-                <i class="fas fa-exclamation-circle text-2xl"></i>
-                <p class="mt-2">Gagal memuat artikel: ${error.message}</p>
-                <button onclick="loadArticles()" class="mt-4 btn-primary text-sm">Coba Lagi</button>
-            </div>
-        `;
-    }
-}
-
-// ============================================================
-// RENDER ARTICLES
-// ============================================================
-function renderArticles() {
-    const list = document.getElementById('articleList');
-    
-    if (articles.length === 0) {
-        list.innerHTML = `
-            <div class="text-center py-8 text-gray-400">
-                <i class="fas fa-inbox text-4xl"></i>
-                <p class="mt-2">Belum ada artikel.</p>
-            </div>
-        `;
-        return;
-    }
-
-    list.innerHTML = articles.map(article => `
-        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors border border-gray-100">
-            <div class="flex-1 min-w-0">
-                <div class="flex items-center gap-3 flex-wrap">
-                    <span class="text-sm font-medium text-gray-400">#${article.id || '?'}</span>
-                    <h3 class="font-semibold text-gray-800 truncate">${article.title || 'Tanpa Judul'}</h3>
-                    <span class="${article.status === 'published' ? 'status-published' : 'status-draft'}">${article.status || 'draft'}</span>
-                    ${article.is_featured === true || article.is_featured === 'TRUE' ? '<span class="text-yellow-500 text-sm"><i class="fas fa-star"></i></span>' : ''}
-                </div>
-                <div class="flex items-center gap-4 text-xs text-gray-400 mt-1 flex-wrap">
-                    <span><i class="fas fa-folder mr-1"></i>${article.category || 'umum'}</span>
-                    ${article.author ? `<span><i class="fas fa-user mr-1"></i>${article.author}</span>` : ''}
-                    ${article.created_at ? `<span><i class="far fa-calendar mr-1"></i>${formatDate(article.created_at)}</span>` : ''}
-                </div>
-                <div class="text-sm text-gray-500 truncate mt-1">${article.excerpt || 'Tidak ada ringkasan'}</div>
-            </div>
-            <div class="flex gap-2 ml-4 flex-shrink-0">
-                <button onclick="editArticle(${article.id})" class="btn-edit" title="Edit">
-                    <i class="fas fa-edit"></i>
-                </button>
-                <button onclick="deleteArticle(${article.id})" class="btn-danger" title="Hapus">
-                    <i class="fas fa-trash"></i>
-                </button>
-                <a href="article-detail.html?id=${article.id}" target="_blank" class="btn-view" title="Lihat">
-                    <i class="fas fa-eye"></i>
-                </a>
-            </div>
-        </div>
-    `).join('');
-}
-
-// ============================================================
-// FORMAT DATE
-// ============================================================
-function formatDate(dateString) {
-    if (!dateString) return '-';
-    try {
-        const date = new Date(dateString);
-        if (isNaN(date.getTime())) return '-';
-        return date.toLocaleDateString('id-ID', {
-            day: 'numeric',
-            month: 'short',
-            year: 'numeric'
-        });
-    } catch {
-        return '-';
-    }
-}
-
-// ============================================================
-// SHOW FORM
-// ============================================================
-function showForm(data) {
-    const form = document.getElementById('articleForm');
-    form.classList.remove('hidden');
-    form.scrollIntoView({ behavior: 'smooth' });
-    
-    // Inisialisasi Quill jika belum
-    if (!quill) initQuill();
-    
-    if (data) {
-        editingId = data.id;
-        document.getElementById('formTitle').textContent = '✏️ Edit Artikel';
-        document.getElementById('inputTitle').value = data.title || '';
-        document.getElementById('inputCategory').value = data.category || 'teknologi';
-        document.getElementById('inputAuthor').value = data.author || '';
-        document.getElementById('inputReadTime').value = data.read_time || 5;
-        document.getElementById('inputStatus').value = data.status || 'draft';
-        document.getElementById('inputFeatured').value = data.is_featured === true || data.is_featured === 'TRUE' ? 'TRUE' : 'FALSE';
-        document.getElementById('inputExcerpt').value = data.excerpt || '';
-        document.getElementById('inputImage').value = data.featured_image || '';
-        setQuillContent(data.content || '');
-    } else {
-        editingId = null;
-        document.getElementById('formTitle').textContent = '📝 Tambah Artikel Baru';
-        document.getElementById('inputTitle').value = '';
-        document.getElementById('inputCategory').value = 'teknologi';
-        document.getElementById('inputAuthor').value = '';
-        document.getElementById('inputReadTime').value = 5;
-        document.getElementById('inputStatus').value = 'published';
-        document.getElementById('inputFeatured').value = 'FALSE';
-        document.getElementById('inputExcerpt').value = '';
-        document.getElementById('inputImage').value = '';
-        setQuillContent('');
-    }
-    
-    document.getElementById('formMessage').classList.add('hidden');
-}
-
-// ============================================================
-// HIDE FORM
-// ============================================================
-function hideForm() {
-    document.getElementById('articleForm').classList.add('hidden');
-    document.getElementById('formMessage').classList.add('hidden');
-}
-
-// ============================================================
-// SHOW MESSAGE
-// ============================================================
-function showMessage(text, type) {
-    const msg = document.getElementById('formMessage');
-    msg.textContent = text;
-    msg.className = 'message ' + (type === 'error' ? 'message-error' : 'message-success');
-    msg.classList.remove('hidden');
-}
-
-// ============================================================
-// SAVE ARTICLE
-// ============================================================
-async function saveArticle() {
-    const title = document.getElementById('inputTitle').value.trim();
-    const content = getQuillContent();
-    const excerpt = document.getElementById('inputExcerpt').value.trim();
-    
-    if (!title) {
-        showMessage('❌ Judul wajib diisi!', 'error');
-        document.getElementById('inputTitle').focus();
-        return;
-    }
-    
-    if (!content || content === '<p><br></p>' || content === '<p><br></p>') {
-        showMessage('❌ Konten wajib diisi!', 'error');
-        return;
-    }
-
-    // Auto-generate excerpt jika kosong
-    let finalExcerpt = excerpt;
-    if (!finalExcerpt) {
-        // Ambil teks dari konten (hilangkan HTML)
-        const tempDiv = document.createElement('div');
-        tempDiv.innerHTML = content;
-        const text = tempDiv.textContent || '';
-        finalExcerpt = text.substring(0, 150) + (text.length > 150 ? '...' : '');
-    }
-
-    const data = {
-        title: title,
-        category: document.getElementById('inputCategory').value,
-        author: document.getElementById('inputAuthor').value.trim() || 'Tim Jalupang Teknik',
-        read_time: parseInt(document.getElementById('inputReadTime').value) || 5,
-        status: document.getElementById('inputStatus').value,
-        is_featured: document.getElementById('inputFeatured').value === 'TRUE' ? true : false,
-        excerpt: finalExcerpt,
-        featured_image: document.getElementById('inputImage').value.trim(),
-        content: content
-    };
-
-    if (editingId) {
-        data.id = editingId;
-    }
-
-    try {
-        const response = await fetch(API_URL, {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data)
-        });
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Menyimpan...';
+        loadingDiv.classList.remove('hidden');
+        successDiv.classList.add('hidden');
+        errorDiv.classList.add('hidden');
         
-        showMessage('✅ Artikel berhasil disimpan!', 'success');
-        setTimeout(() => {
-            hideForm();
-            loadArticles();
-        }, 1500);
+        try {
+            const payload = { title, content, image, status };
+            
+            const response = await fetch(API_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            
+            loadingDiv.classList.add('hidden');
+            successDiv.classList.remove('hidden');
+            
+            // Reset form
+            document.getElementById('cms-title').value = '';
+            quill.root.innerHTML = '';
+            document.getElementById('cms-image').value = '';
+            document.getElementById('cms-status').value = 'publish';
+            
+            // Refresh daftar artikel
+            setTimeout(() => {
+                loadArticles();
+                successDiv.classList.add('hidden');
+            }, 2000);
+            
+        } catch (error) {
+            console.error('Error saving article:', error);
+            loadingDiv.classList.add('hidden');
+            errorDiv.classList.remove('hidden');
+            setTimeout(() => errorDiv.classList.add('hidden'), 4000);
+        }
         
-    } catch (error) {
-        showMessage('❌ Gagal menyimpan: ' + error.message, 'error');
-    }
-}
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<i class="fas fa-save"></i> Simpan Artikel';
+    });
 
-// ============================================================
-// EDIT ARTICLE
-// ============================================================
-function editArticle(id) {
-    const article = articles.find(a => Number(a.id) === id);
-    if (article) {
-        showForm(article);
-    }
-}
+    // ============================================================
+    // RESET FORM
+    // ============================================================
+    document.getElementById('cms-clear-btn').addEventListener('click', function() {
+        if (confirm('Reset form? Semua data yang belum disimpan akan hilang.')) {
+            document.getElementById('cms-title').value = '';
+            quill.root.innerHTML = '';
+            document.getElementById('cms-image').value = '';
+            document.getElementById('cms-status').value = 'publish';
+            document.getElementById('cms-success').classList.add('hidden');
+            document.getElementById('cms-error').classList.add('hidden');
+        }
+    });
 
-// ============================================================
-// DELETE ARTICLE
-// ============================================================
-async function deleteArticle(id) {
-    if (!confirm('Apakah Anda yakin ingin menghapus artikel ini?')) return;
-    
-    try {
-        await fetch(`${API_URL}?id=${id}`, {
-            method: 'DELETE',
-            mode: 'no-cors'
-        });
-        
-        showMessage('✅ Artikel berhasil dihapus!', 'success');
-        setTimeout(() => loadArticles(), 1000);
-        
-    } catch (error) {
-        showMessage('❌ Gagal menghapus: ' + error.message, 'error');
+    // ============================================================
+    // EDIT ARTIKEL (Placeholder)
+    // ============================================================
+    function editArticle(id) {
+        alert(`Fungsi edit untuk artikel #${id} akan segera tersedia.\n\nUntuk sekarang, edit langsung di Google Sheets.`);
+        window.open('https://docs.google.com/spreadsheets/d/1RfUDGqz6Rtvnka0FaflJ99C5U5n72e0WfzJT5WTW9qc/edit', '_blank');
     }
-}
 
-// ============================================================
-// INIT
-// ============================================================
-document.addEventListener('DOMContentLoaded', function() {
-    initQuill();
-    loadArticles();
-});
+    // ============================================================
+    // HAPUS ARTIKEL (Placeholder)
+    // ============================================================
+    function deleteArticle(id) {
+        if (confirm(`Yakin ingin menghapus artikel #${id}?`)) {
+            alert(`Fungsi hapus untuk artikel #${id} akan segera tersedia.\n\nUntuk sekarang, hapus manual di Google Sheets.`);
+            window.open('https://docs.google.com/spreadsheets/d/1RfUDGqz6Rtvnka0FaflJ99C5U5n72e0WfzJT5WTW9qc/edit', '_blank');
+        }
+    }
+
+    // ============================================================
+    // LOAD SAAT HALAMAN DIBUKA
+    // ============================================================
+    document.addEventListener('DOMContentLoaded', function() {
+        loadArticles();
+    });
 </script>
+
 </body>
 </html>
