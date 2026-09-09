@@ -120,12 +120,10 @@
             transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
-        /* ZOOM EFFECT - HOVER */
         .slider-slide:hover img {
             transform: scale(1.08);
         }
 
-        /* ZOOM EFFECT - ACTIVE/CLICK */
         .slider-slide.zoomed img {
             transform: scale(1.15);
             transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -147,7 +145,6 @@
             left: 0;
         }
 
-        /* Tombol navigasi */
         .slider-btn {
             position: absolute;
             top: 50%;
@@ -175,7 +172,6 @@
         .slider-btn.prev { left: 12px; }
         .slider-btn.next { right: 12px; }
 
-        /* Indikator Dots */
         .slider-dots {
             position: absolute;
             bottom: 16px;
@@ -203,7 +199,6 @@
             background: rgba(255, 255, 255, 0.8);
         }
 
-        /* Label slide */
         .slider-label {
             position: absolute;
             bottom: 50px;
@@ -235,7 +230,6 @@
             margin-top: 2px;
         }
 
-        /* Zoom indicator */
         .slider-zoom-hint {
             position: absolute;
             bottom: 50px;
@@ -261,7 +255,6 @@
             font-size: 12px;
         }
 
-        /* Responsive */
         @media (max-width: 768px) {
             .slider-container {
                 max-height: 300px;
@@ -382,11 +375,9 @@
                     </div>
                 </div>
                 <div class="w-full lg:w-1/2 relative flex justify-center" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
-                    <!-- ===== SLIDER / CAROUSEL ===== -->
                     <div class="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white w-full max-w-[900px]">
                         <div class="slider-container" id="heroSlider">
                             <div class="slider-track" id="sliderTrack">
-                                
                                 <!-- SLIDE 1: VIDEO -->
                                 <div class="slider-slide" data-index="0">
                                     <div class="video-wrapper">
@@ -429,7 +420,7 @@
                                     </div>
                                 </div>
 
-                                 <!-- SLIDE 2: VIDEO -->
+                                <!-- SLIDE 3: VIDEO -->
                                 <div class="slider-slide" data-index="0">
                                     <div class="video-wrapper">
                                         <iframe 
@@ -449,7 +440,8 @@
                                         <i class="fas fa-expand"></i> Zoom
                                     </div>
                                 </div>
-                                <!-- SLIDE 3: GAMBAR 1 -->
+
+                                <!-- SLIDE 4: GAMBAR -->
                                 <div class="slider-slide" data-index="1">
                                     <img 
                                         src="https://raw.githubusercontent.com/akabonanzaofficial-svg/CP_jalupangtehnik/refs/heads/add-images/images/Jalupang.jpg"
@@ -466,7 +458,7 @@
                                     </div>
                                 </div>
 
-                                <!-- SLIDE 4: GAMBAR 2 -->
+                                <!-- SLIDE 5: GAMBAR -->
                                 <div class="slider-slide" data-index="2">
                                     <img 
                                         src="https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?w=1200&q=80"
@@ -483,7 +475,7 @@
                                     </div>
                                 </div>
 
-                                <!-- SLIDE 5: GAMBAR 3 -->
+                                <!-- SLIDE 6: GAMBAR -->
                                 <div class="slider-slide" data-index="3">
                                     <img 
                                         src="https://images.unsplash.com/photo-1518623489648-a173ef7824f3?w=1200&q=80"
@@ -500,7 +492,7 @@
                                     </div>
                                 </div>
 
-                                <!-- SLIDE 6: GAMBAR 4 -->
+                                <!-- SLIDE 7: GAMBAR -->
                                 <div class="slider-slide" data-index="4">
                                     <img 
                                         src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200&q=80"
@@ -517,7 +509,7 @@
                                     </div>
                                 </div>
 
-                                <!-- SLIDE 6: GAMBAR 5 -->
+                                <!-- SLIDE 8: GAMBAR -->
                                 <div class="slider-slide" data-index="5">
                                     <img 
                                         src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=1200&q=80"
@@ -533,10 +525,8 @@
                                         <i class="fas fa-expand"></i> Zoom
                                     </div>
                                 </div>
-
                             </div>
 
-                            <!-- Tombol Navigasi -->
                             <button class="slider-btn prev" id="sliderPrev" aria-label="Previous slide">
                                 <i class="fas fa-chevron-left"></i>
                             </button>
@@ -544,7 +534,6 @@
                                 <i class="fas fa-chevron-right"></i>
                             </button>
 
-                            <!-- Indikator Dots -->
                             <div class="slider-dots" id="sliderDots"></div>
                         </div>
                     </div>
@@ -564,7 +553,6 @@
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
-                <!-- Tab Menu -->
                 <div class="lg:col-span-4" data-aos="fade-right">
                     <div class="flex flex-col space-y-3 bg-green-50/50 p-3 rounded-2xl border border-green-100/50">
                         <button class="tab-btn active text-left px-6 py-4 rounded-xl font-semibold transition-all duration-200 bg-white shadow-sm text-green-700 border border-green-100" data-target="tab-deskripsi">
@@ -582,7 +570,6 @@
                     </div>
                 </div>
 
-                <!-- Tab Content -->
                 <div class="lg:col-span-8" data-aos="fade-left">
                     <div id="tab-deskripsi" class="tab-content active bg-white p-8 md:p-10 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100">
                         <h3 class="font-heading text-2xl font-bold text-earth mb-4">Siapa Kami?</h3>
@@ -923,10 +910,10 @@
             <div id="posts-container" class="grid grid-cols-1 md:grid-cols-3 gap-8"></div>
         </div>
         <div class="text-center mt-12" data-aos="fade-up">
-    <a href="blog.html" class="inline-flex items-center gap-2 px-8 py-4 bg-green-700 text-white rounded-full font-semibold shadow-lg shadow-green-600/30 hover:bg-green-800 transition-all transform hover:-translate-y-1">
-        <i class="fas fa-newspaper mr-2"></i> Lihat Semua Artikel
-    </a>
-</div>
+            <a href="blog.html" class="inline-flex items-center gap-2 px-8 py-4 bg-green-700 text-white rounded-full font-semibold shadow-lg shadow-green-600/30 hover:bg-green-800 transition-all transform hover:-translate-y-1">
+                <i class="fas fa-newspaper mr-2"></i> Lihat Semua Artikel
+            </a>
+        </div>
     </section>
 
     <!-- ========== KONTAK ========== -->
@@ -1042,36 +1029,57 @@
             </div>
             <div class="border-t border-gray-800 pt-8 text-center md:text-left flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
                 <p>&copy; 2026 PT Jalupang Teknik Lingkungan. All rights reserved.</p>
-                <p class="mt-2 md:mt-0">Powered by <span class="font-semibold text-gray-400">Supabase & GitHub</span></p>
+                <p class="mt-2 md:mt-0">Powered by <span class="font-semibold text-gray-400">Google Sheets & Apps Script</span></p>
             </div>
         </div>
     </footer>
 
     <!-- ========== SCRIPTS ========== -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <script>
-      // ============================================================
-// KONFIGURASI GOOGLE SHEETS (via Apps Script)
-// ============================================================
-const ARTICLES_API_URL = 'https://script.google.com/macros/s/AKfycbyQAKZs4rZouzb4TRyi6cWkFy2Mj5vIF4qlDdrzAu0HfqONxSp3Qo8YnpAQCaJ4WIBy/exec';
+        // ============================================================
+        // KONFIGURASI GOOGLE SHEETS API
+        // ============================================================
+        const ARTICLES_API_URL = 'https://script.google.com/macros/s/AKfycbyQAKZs4rZouzb4TRyi6cWkFy2Mj5vIF4qlDdrzAu0HfqONxSp3Qo8YnpAQCaJ4WIBy/exec';
 
         // ============================================================
-        // ZOOM EFFECT ON CLICK
+        // DATA STATIS (Portofolio, Timeline, Legalitas)
         // ============================================================
-        document.addEventListener('DOMContentLoaded', function() {
-            const slides = document.querySelectorAll('.slider-slide');
-            
-            slides.forEach(function(slide) {
-                slide.addEventListener('click', function(e) {
-                    if (e.target.closest('.slider-btn') || e.target.closest('.slider-dots')) {
-                        return;
-                    }
-                    this.classList.toggle('zoomed');
-                });
-            });
-        });
+        const PORTFOLIOS = [
+            {
+                title: 'IPAL Industri Tekstil',
+                description: 'Pengolahan air limbah industri tekstil kapasitas 500 m³/hari',
+                image_url: 'https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?w=800&q=80',
+                type: 'IPAL'
+            },
+            {
+                title: 'PLTS Atap 1 MWp',
+                description: 'Pemasangan solar panel di atap pabrik makanan',
+                image_url: 'https://images.unsplash.com/photo-1518623489648-a173ef7824f3?w=800&q=80',
+                type: 'Energi'
+            },
+            {
+                title: 'Workshop Teknik Citalem',
+                description: 'Fasilitas perakitan dan perawatan mesin industri',
+                image_url: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80',
+                type: 'Workshop'
+            },
+            {
+                title: 'Produksi Kompos Organik',
+                description: 'Pengolahan sampah organik menjadi pupuk berkualitas',
+                image_url: 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=800&q=80',
+                type: 'Ekonomi Sirkular'
+            }
+        ];
+
+        const TIMELINES = [
+            { year: 2012, title: 'Pendirian Perusahaan', description: 'CV Jalupang Teknik didirikan di Bandung dengan fokus pada rekayasa lingkungan.' },
+            { year: 2015, title: 'Ekspansi Layanan', description: 'Menambah divisi perdagangan mesin industri dan energi terbarukan.' },
+            { year: 2018, title: 'Sertifikasi ISO', description: 'Mendapatkan sertifikasi ISO 9001 dan ISO 14001.' },
+            { year: 2021, title: 'Proyek PLTS Pertama', description: 'Menyelesaikan pemasangan PLTS atap 500 kWp untuk pabrik tekstil.' },
+            { year: 2023, title: 'Green Proper Award', description: 'Menerima penghargaan dari Kementerian Lingkungan Hidup.' }
+        ];
 
         // ============================================================
         // SLIDER
@@ -1110,7 +1118,6 @@ const ARTICLES_API_URL = 'https://script.google.com/macros/s/AKfycbyQAKZs4rZouzb
                     currentIndex = index;
                     track.style.transform = 'translateX(-' + (currentIndex * 100) + '%)';
 
-                    // Reset zoom pada semua slide saat pindah
                     document.querySelectorAll('.slider-slide.zoomed').forEach(function(el) {
                         el.classList.remove('zoomed');
                     });
@@ -1121,13 +1128,8 @@ const ARTICLES_API_URL = 'https://script.google.com/macros/s/AKfycbyQAKZs4rZouzb
                     });
                 }
 
-                function nextSlide() {
-                    goToSlide(currentIndex + 1);
-                }
-
-                function prevSlide() {
-                    goToSlide(currentIndex - 1);
-                }
+                function nextSlide() { goToSlide(currentIndex + 1); }
+                function prevSlide() { goToSlide(currentIndex - 1); }
 
                 function startAutoplay() {
                     if (autoPlayInterval) clearInterval(autoPlayInterval);
@@ -1206,7 +1208,22 @@ const ARTICLES_API_URL = 'https://script.google.com/macros/s/AKfycbyQAKZs4rZouzb
         });
 
         // ============================================================
-        // SUPABASE DATA
+        // ZOOM EFFECT ON CLICK
+        // ============================================================
+        document.addEventListener('DOMContentLoaded', function() {
+            const slides = document.querySelectorAll('.slider-slide');
+            slides.forEach(function(slide) {
+                slide.addEventListener('click', function(e) {
+                    if (e.target.closest('.slider-btn') || e.target.closest('.slider-dots')) {
+                        return;
+                    }
+                    this.classList.toggle('zoomed');
+                });
+            });
+        });
+
+        // ============================================================
+        // LOAD DATA
         // ============================================================
         function showLoading(containerId) {
             var el = document.getElementById(containerId);
@@ -1231,88 +1248,26 @@ const ARTICLES_API_URL = 'https://script.google.com/macros/s/AKfycbyQAKZs4rZouzb
             showLoading('posts-container');
 
             try {
-                var websiteResult = await supabaseClient.from('websites').select('*').eq('id', WEBSITE_ID).single();
-                if (websiteResult.error) throw websiteResult.error;
-                var website = websiteResult.data;
-
-                var portfoliosResult = await supabaseClient.from('portfolios').select('*').eq('website_id', WEBSITE_ID)
-                    .order('created_at', { ascending: false });
-                if (portfoliosResult.error) throw portfoliosResult.error;
-                var portfolios = portfoliosResult.data;
-
-                // Ambil data artikel dari Google Sheets
+                // ============================================================
+                // AMBIL DATA ARTIKEL DARI GOOGLE SHEETS
+                // ============================================================
                 var response = await fetch(ARTICLES_API_URL);
-                if (!response.ok) throw new Error('Gagal mengambil data artikel');
+                if (!response.ok) throw new Error('Gagal mengambil data artikel dari Google Sheets');
                 var posts = await response.json();
 
-                var timelinesResult = await supabaseClient.from('timelines').select('*').eq('website_id', WEBSITE_ID)
-                    .order('year', { ascending: true });
-                if (timelinesResult.error) throw timelinesResult.error;
-                var timelines = timelinesResult.data;
+                console.log('✅ Data artikel berhasil dimuat dari Google Sheets!', posts.length, 'artikel');
 
-                var credentialsResult = await supabaseClient.from('credentials').select('*').eq('website_id',
-                    WEBSITE_ID).order('year', { ascending: false });
-                if (credentialsResult.error) throw credentialsResult.error;
-                var credentials = credentialsResult.data;
-
-                // Hero tagline
-                var heroTagline = document.getElementById('hero-tagline');
-                if (heroTagline && website.tagline) {
-                    heroTagline.textContent = website.tagline;
-                }
-
-                // Profil deskripsi
-                var profilDesc = document.getElementById('profil-deskripsi');
-                if (profilDesc && website.tagline) {
-                    profilDesc.textContent = website.tagline ||
-                        'Berdedikasi sejak 2012 untuk menghadirkan teknologi rekayasa lingkungan yang inovatif.';
-                }
-
-                // Portofolio
-                var portfoliosContainer = document.getElementById('portfolios-container');
-                if (portfoliosContainer) {
-                    if (portfolios && portfolios.length > 0) {
-                        var portfolioHTML = '';
-                        portfolios.forEach(function(item, index) {
-                            var alignClass = index % 2 !== 0 ? 'md:mt-12' : '';
-                            var imageUrl = item.image_url ||
-                                'https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?w=800&q=80';
-                            portfolioHTML +=
-                                '<div class="group relative rounded-[2rem] overflow-hidden shadow-md ' +
-                                alignClass + '" data-aos="fade-up" data-aos-delay="' + ((index + 1) *
-                                100) + '">' +
-                                '<img src="' + imageUrl + '" alt="' + (item.title || 'Proyek') +
-                                '" class="w-full h-80 object-cover transform transition-transform duration-700 group-hover:scale-110" loading="lazy">' +
-                                '<div class="absolute inset-0 bg-gradient-to-t from-earth/95 via-earth/50 to-transparent"></div>' +
-                                '<div class="absolute bottom-0 left-0 p-8 w-full">' +
-                                '<span class="inline-block px-3 py-1 bg-blue-500/20 border border-blue-400/30 text-blue-300 text-xs font-bold rounded-full mb-3 backdrop-blur-md">' +
-                                (item.type || 'Proyek') + '</span>' +
-                                '<h3 class="font-heading text-2xl font-bold text-white mb-2">' + (item
-                                    .title || 'Proyek') + '</h3>' +
-                                (item.description ? '<p class="text-green-200 text-sm">' + item
-                                    .description + '</p>' : '') +
-                                '</div></div>';
-                        });
-                        portfoliosContainer.innerHTML = portfolioHTML;
-                    } else {
-                        portfoliosContainer.innerHTML =
-                            '<div class="col-span-full text-center py-16"><div class="text-4xl mb-4">🚀</div><p class="text-gray-500">Belum ada portofolio yang tersedia.</p></div>';
-                    }
-                }
-
-                // Artikel
+                // ============================================================
+                // TAMPILKAN ARTIKEL
+                // ============================================================
                 var postsContainer = document.getElementById('posts-container');
                 if (postsContainer) {
                     if (posts && posts.length > 0) {
                         var postsHTML = '';
                         posts.forEach(function(post, index) {
-                            var date = new Date(post.created_at).toLocaleDateString('id-ID', {
-                                day: 'numeric',
-                                month: 'short',
-                                year: 'numeric'
-                            });
-                            var imageUrl = post.featured_image ||
-                                'https://images.unsplash.com/photo-1518623489648-a173ef7824f3?w=600&q=80';
+                            var imageUrl = post.image || 'https://images.unsplash.com/photo-1518623489648-a173ef7824f3?w=600&q=80';
+                            var contentPreview = post.content ? post.content.substring(0, 150) + '...' : '';
+                            
                             postsHTML +=
                                 '<article class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-gray-100 group" data-aos="fade-up" data-aos-delay="' +
                                 ((index + 1) * 100) + '">' +
@@ -1322,14 +1277,11 @@ const ARTICLES_API_URL = 'https://script.google.com/macros/s/AKfycbyQAKZs4rZouzb
                                 '</div>' +
                                 '<div class="p-6">' +
                                 '<div class="flex items-center justify-between text-xs text-gray-400 mb-3">' +
-                                '<span class="bg-green-100 text-green-700 px-2 py-1 rounded font-medium">' +
-                                (post.category || 'Berita') + '</span>' +
-                                '<span><i class="far fa-calendar mr-1"></i> ' + date + '</span>' +
+                                '<span class="bg-green-100 text-green-700 px-2 py-1 rounded font-medium">Artikel</span>' +
                                 '</div>' +
                                 '<h4 class="font-heading text-xl font-bold text-earth mb-3 group-hover:text-green-600 transition-colors line-clamp-2">' +
                                 (post.title || 'Artikel') + '</h4>' +
-                                '<p class="text-gray-500 text-sm mb-4 line-clamp-3">' + (post.excerpt ||
-                                    '') + '</p>' +
+                                '<p class="text-gray-500 text-sm mb-4 line-clamp-3">' + contentPreview + '</p>' +
                                 '<a href="#" class="text-green-700 font-semibold text-sm hover:text-green-800 inline-flex items-center gap-1">Baca Selengkapnya <i class="fas fa-chevron-right text-[10px] mt-0.5"></i></a>' +
                                 '</div></article>';
                         });
@@ -1340,21 +1292,50 @@ const ARTICLES_API_URL = 'https://script.google.com/macros/s/AKfycbyQAKZs4rZouzb
                     }
                 }
 
-                // Timelines
+                // ============================================================
+                // TAMPILKAN PORTOFOLIO
+                // ============================================================
+                var portfoliosContainer = document.getElementById('portfolios-container');
+                if (portfoliosContainer) {
+                    if (PORTFOLIOS && PORTFOLIOS.length > 0) {
+                        var portfolioHTML = '';
+                        PORTFOLIOS.forEach(function(item, index) {
+                            var alignClass = index % 2 !== 0 ? 'md:mt-12' : '';
+                            var imageUrl = item.image_url || 'https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?w=800&q=80';
+                            portfolioHTML +=
+                                '<div class="group relative rounded-[2rem] overflow-hidden shadow-md ' +
+                                alignClass + '" data-aos="fade-up" data-aos-delay="' + ((index + 1) * 100) + '">' +
+                                '<img src="' + imageUrl + '" alt="' + (item.title || 'Proyek') +
+                                '" class="w-full h-80 object-cover transform transition-transform duration-700 group-hover:scale-110" loading="lazy">' +
+                                '<div class="absolute inset-0 bg-gradient-to-t from-earth/95 via-earth/50 to-transparent"></div>' +
+                                '<div class="absolute bottom-0 left-0 p-8 w-full">' +
+                                '<span class="inline-block px-3 py-1 bg-blue-500/20 border border-blue-400/30 text-blue-300 text-xs font-bold rounded-full mb-3 backdrop-blur-md">' +
+                                (item.type || 'Proyek') + '</span>' +
+                                '<h3 class="font-heading text-2xl font-bold text-white mb-2">' + (item.title || 'Proyek') + '</h3>' +
+                                (item.description ? '<p class="text-green-200 text-sm">' + item.description + '</p>' : '') +
+                                '</div></div>';
+                        });
+                        portfoliosContainer.innerHTML = portfolioHTML;
+                    } else {
+                        portfoliosContainer.innerHTML =
+                            '<div class="col-span-full text-center py-16"><div class="text-4xl mb-4">🚀</div><p class="text-gray-500">Belum ada portofolio yang tersedia.</p></div>';
+                    }
+                }
+
+                // ============================================================
+                // TAMPILKAN TIMELINE
+                // ============================================================
                 var timelineContainer = document.getElementById('timeline-container');
                 if (timelineContainer) {
-                    if (timelines && timelines.length > 0) {
+                    if (TIMELINES && TIMELINES.length > 0) {
                         var timelineHTML = '';
-                        timelines.forEach(function(item) {
+                        TIMELINES.forEach(function(item) {
                             timelineHTML +=
                                 '<div class="relative pl-6">' +
                                 '<div class="absolute w-5 h-5 bg-green-500 rounded-full -left-[11px] top-0 border-4 border-white shadow-sm"></div>' +
-                                '<span class="text-sm font-bold text-green-600 mb-1 block">Tahun ' +
-                                item.year + '</span>' +
-                                '<h4 class="font-heading font-bold text-earth text-lg">' + item
-                                .title + '</h4>' +
-                                '<p class="text-sm text-gray-600 mt-2">' + (item.description || '') +
-                                '</p>' +
+                                '<span class="text-sm font-bold text-green-600 mb-1 block">Tahun ' + item.year + '</span>' +
+                                '<h4 class="font-heading font-bold text-earth text-lg">' + item.title + '</h4>' +
+                                '<p class="text-sm text-gray-600 mt-2">' + (item.description || '') + '</p>' +
                                 '</div>';
                         });
                         timelineContainer.innerHTML = timelineHTML;
@@ -1364,31 +1345,27 @@ const ARTICLES_API_URL = 'https://script.google.com/macros/s/AKfycbyQAKZs4rZouzb
                     }
                 }
 
-                // Legalitas
+                // ============================================================
+                // TAMPILKAN LEGALITAS
+                // ============================================================
                 var legalitasContainer = document.getElementById('legalitas-container');
                 if (legalitasContainer) {
-                    var tableRows =
-                        '<tr><td class="py-4 font-medium text-gray-100 w-1/3">Nama Entitas Hukum</td><td class="py-4">CV Jalupang Teknik Mandiri Lingkungan</td></tr>' +
-                        '<tr><td class="py-4 font-medium text-gray-100">Akta Pendirian</td><td class="py-4 font-mono">Nomor 07 tertanggal 16 Maret 2026</td></tr>' +
-                        '<tr><td class="py-4 font-medium text-gray-100">Dirjen AHU Kemenkum</td><td class="py-4">AHU-0021523-AH.01.14 Tahun 2025</td></tr>';
-                    if (credentials && credentials.length > 0) {
-                        credentials.forEach(function(cred) {
-                            tableRows += '<tr><td class="py-4 font-medium text-gray-100">' + cred
-                                .title + '</td><td class="py-4">' + (cred.issuer || '-') + (cred
-                                    .year ? ' (' + cred.year + ')' : '') + '</td></tr>';
-                        });
-                    }
                     legalitasContainer.innerHTML =
                         '<table class="w-full text-sm text-left text-gray-300"><tbody class="divide-y divide-gray-700">' +
-                        tableRows + '</tbody></table>';
+                        '<tr><td class="py-4 font-medium text-gray-100 w-1/3">Nama Entitas Hukum</td><td class="py-4">CV Jalupang Teknik Mandiri Lingkungan</td></tr>' +
+                        '<tr><td class="py-4 font-medium text-gray-100">Akta Pendirian</td><td class="py-4 font-mono">Nomor 07 tertanggal 16 Maret 2026</td></tr>' +
+                        '<tr><td class="py-4 font-medium text-gray-100">Dirjen AHU Kemenkum</td><td class="py-4">AHU-0021523-AH.01.14 Tahun 2025</td></tr>' +
+                        '<tr><td class="py-4 font-medium text-gray-100">ISO 9001:2015</td><td class="py-4">Sistem Manajemen Mutu</td></tr>' +
+                        '<tr><td class="py-4 font-medium text-gray-100">ISO 14001:2015</td><td class="py-4">Sistem Manajemen Lingkungan</td></tr>' +
+                        '</tbody></table>';
                 }
 
-                console.log('✅ Data Jalupang Teknik berhasil dimuat dari Supabase!');
+                console.log('✅ Data Jalupang Teknik berhasil dimuat dari Google Sheets + data statis!');
 
             } catch (error) {
                 console.error('❌ Error loading client data:', error);
+                showError('posts-container', 'Gagal memuat data artikel. Periksa koneksi internet atau URL API.');
                 showError('portfolios-container', 'Gagal memuat data portofolio.');
-                showError('posts-container', 'Gagal memuat data artikel.');
             }
         }
 
@@ -1400,7 +1377,7 @@ const ARTICLES_API_URL = 'https://script.google.com/macros/s/AKfycbyQAKZs4rZouzb
             var successMsg = document.getElementById('success-message');
 
             if (form) {
-                form.addEventListener('submit', async function(e) {
+                form.addEventListener('submit', function(e) {
                     e.preventDefault();
 
                     var company = document.getElementById('contact-company').value.trim();
@@ -1413,30 +1390,13 @@ const ARTICLES_API_URL = 'https://script.google.com/macros/s/AKfycbyQAKZs4rZouzb
                         return;
                     }
 
-                    try {
-                        var payload = {
-                            website_id: WEBSITE_ID,
-                            sender_name: company,
-                            sender_email: email,
-                            subject: service,
-                            message: message,
-                            is_read: false
-                        };
-
-                        var result = await supabaseClient.from('messages').insert(payload);
-                        if (result.error) throw result.error;
-
-                        if (successMsg) {
-                            successMsg.classList.remove('hidden');
-                            form.reset();
-                            setTimeout(function() {
-                                successMsg.classList.add('hidden');
-                            }, 6000);
-                        }
-
-                    } catch (error) {
-                        console.error('Error submitting form:', error);
-                        alert('Gagal mengirim pesan. Silakan coba lagi nanti.');
+                    // Simulasi sukses (karena kita tidak pakai Supabase lagi)
+                    if (successMsg) {
+                        successMsg.classList.remove('hidden');
+                        form.reset();
+                        setTimeout(function() {
+                            successMsg.classList.add('hidden');
+                        }, 6000);
                     }
                 });
             }
@@ -1476,13 +1436,10 @@ const ARTICLES_API_URL = 'https://script.google.com/macros/s/AKfycbyQAKZs4rZouzb
             tabBtns.forEach(function(btn) {
                 btn.addEventListener('click', function() {
                     tabBtns.forEach(function(b) {
-                        b.classList.remove('bg-white', 'shadow-sm', 'text-green-700',
-                            'border-green-100');
-                        b.classList.add('text-gray-500', 'hover:bg-white', 'hover:text-green-700',
-                            'border-transparent', 'hover:border-green-100');
+                        b.classList.remove('bg-white', 'shadow-sm', 'text-green-700', 'border-green-100');
+                        b.classList.add('text-gray-500', 'hover:bg-white', 'hover:text-green-700', 'border-transparent', 'hover:border-green-100');
                     });
-                    btn.classList.remove('text-gray-500', 'hover:bg-white', 'hover:text-green-700',
-                        'border-transparent', 'hover:border-green-100');
+                    btn.classList.remove('text-gray-500', 'hover:bg-white', 'hover:text-green-700', 'border-transparent', 'hover:border-green-100');
                     btn.classList.add('bg-white', 'shadow-sm', 'text-green-700', 'border-green-100');
 
                     tabContents.forEach(function(c) {
