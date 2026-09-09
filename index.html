@@ -1511,10 +1511,18 @@
                 // ============================================================
                 var response = await fetch(ARTICLES_API_URL);
                 if (!response.ok) throw new Error('Gagal mengambil data artikel dari Google Sheets');
-                allArticles = await response.json();
+                var rawArticles = await response.json();
 
-                console.log('✅ Data artikel berhasil dimuat dari Google Sheets!', allArticles.length, 'artikel');
+// Urutkan dari tanggal terbaru (created_at) ke terlama
+allArticles = rawArticles.sort(function(a, b) {
+    // Jika tidak ada created_at, pakai id sebagai fallback
+    if (!a.created_at && !b.created_at) return b.id - a.id;
+    if (!a.created_at) return 1;
+    if (!b.created_at) return -1;
+    return new Date(b.created_at) - new Date(a.created_at);
+});
 
+console.log('✅ Artikel diurutkan dari terbaru:', allArticles.length, 'artikel');
                 // ============================================================
                 // TAMPILKAN ARTIKEL DENGAN CARD + SHARE + KLIK BUKA MODAL
                 // ============================================================
