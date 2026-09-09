@@ -1052,14 +1052,10 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <script>
-        // ============================================================
-        // KONFIGURASI SUPABASE
-        // ============================================================
-        const SUPABASE_URL = 'https://kxlpvfmsdtgvbnajcchk.supabase.co';
-        const SUPABASE_ANON_KEY =
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt4bHB2Zm1zZHRndmJuYWpjY2hrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM4MjEyODQsImV4cCI6MjA5OTM5NzI4NH0.B88Mfus3FIbTTQF8Gc3I8RwuhmWWa4Xs-mHPEHYG850';
-        const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-        const WEBSITE_ID = '030ad70b-4ae0-4b74-a19f-cf5e2d4fe985';
+      // ============================================================
+// KONFIGURASI GOOGLE SHEETS (via Apps Script)
+// ============================================================
+const ARTICLES_API_URL = 'https://script.google.com/macros/s/AKfycbyQAKZs4rZouzb4TRyi6cWkFy2Mj5vIF4qlDdrzAu0HfqONxSp3Qo8YnpAQCaJ4WIBy/exec';
 
         // ============================================================
         // ZOOM EFFECT ON CLICK
@@ -1244,10 +1240,10 @@
                 if (portfoliosResult.error) throw portfoliosResult.error;
                 var portfolios = portfoliosResult.data;
 
-                var postsResult = await supabaseClient.from('posts').select('*').eq('website_id', WEBSITE_ID).eq(
-                    'status', 'published').order('created_at', { ascending: false });
-                if (postsResult.error) throw postsResult.error;
-                var posts = postsResult.data;
+                // Ambil data artikel dari Google Sheets
+                var response = await fetch(ARTICLES_API_URL);
+                if (!response.ok) throw new Error('Gagal mengambil data artikel');
+                var posts = await response.json();
 
                 var timelinesResult = await supabaseClient.from('timelines').select('*').eq('website_id', WEBSITE_ID)
                     .order('year', { ascending: true });
