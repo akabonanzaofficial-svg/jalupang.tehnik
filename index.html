@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jalupang Teknik | Solusi Teknologi Lingkungan</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet" />
+
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+    <!-- AOS Animation CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        green: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            800: '#166534',
+                            900: '#14532d',
+                        },
+                        earth: '#27272a',
+                    },
+                },
+            },
+        };
+    </script>
+    <style>
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f0fdf4; }
+        ::-webkit-scrollbar-thumb { background: #86efac; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #22c55e; }
+
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(22, 163, 74, 0.1);
+        }
+
+        @keyframes fadeInTab {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in { animation: fadeInTab 0.4s ease-out forwards; }
+
+        /* Article Card */
+        .article-card {
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .article-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+        }
+        .article-card .image-wrapper {
+            overflow: hidden;
+        }
+        .article-card .image-wrapper img {
+            transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .article-card:hover .image-wrapper img {
+            transform: scale(1.05);
+        }
+
+        /* Category Pills */
+        .category-pill {
+            transition: all 0.2s;
+        }
+        .category-pill.active {
+            background: #16a34a;
+            color: white;
+            border-color: #16a34a;
+        }
+        .category-pill:hover:not(.active) {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.2);
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(4px);
+            z-index: 999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+        .modal-content {
+            background: white;
+            border-radius: 24px;
+            max-width: 900px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 30px 40px;
+            position: relative;
+            animation: modalIn 0.3s ease;
+        }
+        @keyframes modalIn {
+            from { opacity: 0; transform: scale(0.95) translateY(20px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        .modal-close {
+            position: sticky;
+            top: 0;
+            float: right;
+            background: #f3f4f6;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            margin-bottom: 10px;
+        }
+        .modal-close:hover {
+            background: #e5e7eb;
+            transform: rotate(90deg);
+        }
+
+        /* Article Content di Modal */
+        .modal-content .article-content h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: #27272a;
+        }
+        .modal-content .article-content h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            color: #27272a;
+        }
+        .modal-content .article-content p {
+            margin-bottom: 1rem;
+            line-height: 1.8;
+            color: #4b5563;
+        }
+        .modal-content .article-content ul, .modal-content .article-content ol {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+            color: #4b5563;
+        }
+        .modal-content .article-content li {
+            margin-bottom: 0.5rem;
+        }
+        .modal-content .article-content blockquote {
+            border-left: 4px solid #22c55e;
+            padding-left: 1.5rem;
+            margin: 1.5rem 0;
+            font-style: italic;
+            color: #4b5563;
+        }
+        .modal-content .article-content img {
+            border-radius: 1rem;
+            margin: 1.5rem 0;
+            max-width: 100%;
+            height: auto;
+        }
+        .modal-content::-webkit-scrollbar { width: 6px; }
+        .modal-content::-webkit-scrollbar-track { background: #f9fafb; border-radius: 10px; }
+        .modal-content::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 10px; }
+
+        .status-published { background: #dcfce7; color: #166534; padding: 2px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+        .status-draft { background: #fef3c7; color: #92400e; padding: 2px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .modal-content { padding: 20px; margin: 10px; max-height: 95vh; }
+            .modal-content .article-content h2 { font-size: 1.25rem; }
+            .modal-content .article-content h3 { font-size: 1.1rem; }
+        }
+    </style>
+</head>
+
+<body class="font-sans text-gray-600 bg-white antialiased selection:bg-green-600 selection:text-white">
+
+    <!-- ========== NAVIGATION ========== -->
+    <nav class="fixed w-full z-50 glass-nav transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex-shrink-0 flex items-center gap-3 cursor-pointer" onclick="window.scrollTo(0,0)">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-green-500 to-green-700 flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-green-500/30">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <span class="font-heading font-bold text-2xl text-earth tracking-tight">Jalupang<span class="text-green-600">Teknik</span></span>
+                </div>
+                <div class="hidden lg:flex space-x-8 items-center">
+                    <a href="#profil" class="text-gray-600 hover:text-green-600 font-medium transition-colors">Profil</a>
+                    <a href="#legalitas" class="text-gray-600 hover:text-green-600 font-medium transition-colors">Legalitas</a>
+                    <a href="#layanan" class="text-gray-600 hover:text-green-600 font-medium transition-colors">Produk</a>
+                    <a href="#portofolio" class="text-gray-600 hover:text-green-600 font-medium transition-colors">Portofolio</a>
+                    <a href="#artikel" class="text-green-600 font-semibold border-b-2 border-green-600 pb-1 transition-colors">Artikel</a>
+                    <a href="#kontak" class="bg-green-700 text-white px-6 py-2.5 rounded-full font-medium hover:bg-green-800 transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5">Hubungi Kami</a>
+                </div>
+                <div class="lg:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-gray-600 hover:text-green-700 focus:outline-none p-2" aria-label="Toggle menu">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="mobile-menu" class="lg:hidden hidden bg-white border-t border-green-50 absolute w-full shadow-xl">
+            <div class="px-4 pt-2 pb-6 space-y-2 flex flex-col">
+                <a href="#profil" class="mobile-link block px-3 py-3 text-base font-medium text-gray-700 hover:text-green-700 hover:bg-green-50 rounded-lg">Profil</a>
+                <a href="#legalitas" class="mobile-link block px-3 py-3 text-base font-medium text-gray-700 hover:text-green-700 hover:bg-green-50 rounded-lg">Legalitas</a>
+                <a href="#layanan" class="mobile-link block px-3 py-3 text-base font-medium text-gray-700 hover:text-green-700 hover:bg-green-50 rounded-lg">Produk</a>
+                <a href="#portofolio" class="mobile-link block px-3 py-3 text-base font-medium text-gray-700 hover:text-green-700 hover:bg-green-50 rounded-lg">Portofolio</a>
+                <a href="#artikel" class="mobile-link block px-3 py-3 text-base font-medium text-green-700 bg-green-50 rounded-lg">Artikel</a>
+                <a href="#kontak" class="mobile-link block px-3 py-3 mt-4 text-center text-base font-medium text-white bg-green-700 rounded-lg">Hubungi Kami</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ========== HERO ========== -->
+    <section class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden bg-green-50/50">
+        <div class="absolute top-0 right-0 w-[500px] h-[500px] rounded-full bg-green-200/50 blur-[80px] -translate-y-1/2 translate-x-1/3 pointer-events-none"></div>
+        <div class="absolute bottom-0 left-0 w-[400px] h-[400px] rounded-full bg-emerald-200/40 blur-[60px] translate-y-1/3 -translate-x-1/4 pointer-events-none"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="flex flex-col lg:flex-row items-center gap-16">
+                <div class="w-full lg:w-1/2 text-center lg:text-left" data-aos="fade-right" data-aos-duration="1000">
+                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-100 border border-green-200 text-green-800 text-sm font-semibold mb-6 shadow-sm">
+                        <i class="fas fa-globe-asia text-green-600"></i> Untuk Bumi yang Lebih Baik
+                    </div>
+                    <h1 class="font-heading text-4xl sm:text-5xl lg:text-6xl font-extrabold text-earth leading-tight mb-6">
+                        Solusi <span class="text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-emerald-500">Teknologi</span> <br />Masa Depan.
+                    </h1>
+                    <p class="text-lg text-gray-600 mb-8 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+                        Jalupang Teknik menghadirkan inovasi rekayasa lingkungan terpadu. Kami mengintegrasikan teknologi ramah lingkungan untuk menciptakan keseimbangan antara kemajuan industri dan kelestarian alam.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                        <a href="#layanan" class="px-8 py-4 bg-green-700 text-white rounded-full font-semibold shadow-lg shadow-green-600/30 hover:bg-green-800 transition-all transform hover:-translate-y-1 text-center flex items-center justify-center gap-2">
+                            Mulai Perubahan <i class="fas fa-arrow-right"></i>
+                        </a>
+                        <a href="#artikel" class="px-8 py-4 bg-white text-earth rounded-full font-semibold border border-gray-200 hover:border-green-600 hover:text-green-700 transition-all text-center flex items-center justify-center gap-2">
+                            Lihat Artikel
+                        </a>
+                    </div>
+                </div>
+                <div class="w-full lg:w-1/2 relative" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
+                    <div class="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white">
+                        <div style="width:100%; padding-top:56.25%; background:#eaf9ef;"></div>
+                        <img src="https://raw.githubusercontent.com/akabonanzaofficial-svg/CP_jalupangtehnik/refs/heads/add-images/images/Jalupang.jpg"
+                             style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; display:block;"
+                             loading="lazy" decoding="async" width="1600" height="900"
+                             onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?w=1600&q=80';" />
+                        <div class="absolute inset-0 bg-green-900/10 mix-blend-multiply pointer-events-none"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== PROFIL ========== -->
+    <section id="profil" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16" data-aos="fade-up">
+                <span class="text-green-600 font-bold tracking-wider uppercase text-sm mb-2 block">Profil Perusahaan</span>
+                <h2 class="font-heading text-3xl md:text-4xl font-bold text-earth mb-4">Mengenal Jalupang Teknik</h2>
+                <div class="w-20 h-1 bg-green-500 mx-auto rounded-full mb-6"></div>
+                <p class="text-gray-500">Berdedikasi sejak 2012 untuk menghadirkan teknologi rekayasa lingkungan yang inovatif demi menjaga kelestarian bumi.</p>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+                <div class="lg:col-span-4" data-aos="fade-right">
+                    <div class="flex flex-col space-y-3 bg-green-50/50 p-3 rounded-2xl border border-green-100/50">
+                        <button class="tab-btn active text-left px-6 py-4 rounded-xl font-semibold transition-all duration-200 bg-white shadow-sm text-green-700 border border-green-100" data-target="tab-deskripsi">
+                            <i class="fas fa-building w-6 text-center mr-2"></i> Deskripsi Perusahaan
+                        </button>
+                        <button class="tab-btn text-gray-500 hover:bg-white hover:text-green-700 text-left px-6 py-4 rounded-xl font-medium transition-all duration-200 border border-transparent hover:border-green-100" data-target="tab-sejarah">
+                            <i class="fas fa-seedling w-6 text-center mr-2"></i> Sejarah & Jejak Langkah
+                        </button>
+                        <button class="tab-btn text-gray-500 hover:bg-white hover:text-green-700 text-left px-6 py-4 rounded-xl font-medium transition-all duration-200 border border-transparent hover:border-green-100" data-target="tab-visi">
+                            <i class="fas fa-eye w-6 text-center mr-2"></i> Visi & Misi
+                        </button>
+                        <button class="tab-btn text-gray-500 hover:bg-white hover:text-green-700 text-left px-6 py-4 rounded-xl font-medium transition-all duration-200 border border-transparent hover:border-green-100" data-target="tab-struktur">
+                            <i class="fas fa-sitemap w-6 text-center mr-2"></i> Struktur Organisasi
+                        </button>
+                    </div>
+                </div>
+                <div class="lg:col-span-8" data-aos="fade-left">
+                    <div id="tab-deskripsi" class="tab-content active bg-white p-8 md:p-10 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100">
+                        <h3 class="font-heading text-2xl font-bold text-earth mb-4">Siapa Kami?</h3>
+                        <p class="text-gray-600 mb-4 leading-relaxed"><strong>CV Jalupang Teknik Lingkungan</strong> adalah perusahaan konsultan dan kontraktor rekayasa teknik (<em>engineering</em>) yang berfokus secara eksklusif pada teknologi hijau (<em>green technology</em>) dan manajemen lingkungan terpadu.</p>
+                        <p class="text-gray-600 mb-8 leading-relaxed">Perusahaan kami berbasis di Bandung, Jawa Barat, memiliki semangat untuk menjadi pionir dalam penyediaan solusi teknis terintegrasi—menyatukan teknologi mesin dan pengelolaan lingkungan dalam satu ekosistem yang saling menguatkan.</p>
+                        <p class="text-gray-600 mb-8 leading-relaxed">Kami bermitra dengan kawasan industri, pemerintah daerah, dan sektor swasta untuk merancang fasilitas pengolahan limbah, instalasi energi terbarukan, serta melakukan pendampingan lingkungan untuk mengelola dan mengatasi limbah.</p>
+                        <div class="grid grid-cols-2 md:grid-cols-3 gap-6 pt-6 border-t border-gray-100">
+                            <div><p class="font-heading text-3xl font-extrabold text-green-600 mb-1">12+</p><p class="text-sm text-gray-500">Tahun Pengalaman</p></div>
+                            <div><p class="font-heading text-3xl font-extrabold text-green-600 mb-1">150+</p><p class="text-sm text-gray-500">Proyek Hijau Selesai</p></div>
+                            <div><p class="font-heading text-3xl font-extrabold text-green-600 mb-1">50+</p><p class="text-sm text-gray-500">Insinyur Tersertifikasi</p></div>
+                        </div>
+                    </div>
+                    <div id="tab-sejarah" class="tab-content hidden bg-white p-8 md:p-10 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100">
+                        <h3 class="font-heading text-2xl font-bold text-earth mb-8">Jejak Langkah Kami</h3>
+                        <div class="relative border-l-2 border-green-200 ml-3 space-y-10">
+                            <div class="relative pl-6"><div class="absolute w-5 h-5 bg-green-500 rounded-full -left-[11px] top-0 border-4 border-white shadow-sm"></div><span class="text-sm font-bold text-green-600 mb-1 block">Tahun 2012</span><h4 class="font-heading font-bold text-earth text-lg">Langkah Pertama</h4><p class="text-sm text-gray-600 mt-2">Didirikan sebagai biro konsultan AMDAL skala lokal di Bandung, Jawa Barat.</p></div>
+                            <div class="relative pl-6"><div class="absolute w-5 h-5 bg-green-500 rounded-full -left-[11px] top-0 border-4 border-white shadow-sm"></div><span class="text-sm font-bold text-green-600 mb-1 block">Tahun 2017</span><h4 class="font-heading font-bold text-earth text-lg">Ekspansi EPC</h4><p class="text-sm text-gray-600 mt-2">Membuka divisi Engineering, Procurement, and Construction (EPC) khusus untuk instalasi Pengolahan Air Limbah (IPAL) industri.</p></div>
+                            <div class="relative pl-6"><div class="absolute w-5 h-5 bg-green-500 rounded-full -left-[11px] top-0 border-4 border-white shadow-sm"></div><span class="text-sm font-bold text-green-600 mb-1 block">Tahun 2023 - Sekarang</span><h4 class="font-heading font-bold text-earth text-lg">Integrasi Energi Terbarukan</h4><p class="text-sm text-gray-600 mt-2">Menambahkan portofolio Pembangkit Listrik Tenaga Surya (PLTS) Atap untuk mendukung target Net Zero Emission Indonesia.</p></div>
+                        </div>
+                    </div>
+                    <div id="tab-visi" class="tab-content hidden bg-white p-8 md:p-10 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100">
+                        <h3 class="font-heading text-2xl font-bold text-earth mb-4">Visi Kami</h3>
+                        <div class="bg-green-50 border-l-4 border-green-600 p-6 rounded-r-xl mb-8"><p class="text-gray-700 italic text-lg font-medium">"Menjadi pionir penyedia solusi teknis industri terintegrasi yang menyelaraskan efisiensi produktivitas dengan keberlanjutan ekosistem lingkungan melalui pendekatan solusi total dari hulu hingga hilir."</p></div>
+                        <h3 class="font-heading text-2xl font-bold text-earth mb-4">Misi Kami</h3>
+                        <ul class="space-y-4">
+                            <li class="flex items-start bg-gray-50 p-4 rounded-xl"><div class="bg-white p-2 rounded-lg text-green-600 shadow-sm mr-4 mt-0.5"><i class="fas fa-leaf"></i></div><span class="text-gray-600">Menerapkan standar teknologi lingkungan yang terukur dan berkelanjutan dalam setiap proyek rekayasa dan pengelolaan limbah.</span></li>
+                            <li class="flex items-start bg-gray-50 p-4 rounded-xl"><div class="bg-white p-2 rounded-lg text-green-600 shadow-sm mr-4 mt-0.5"><i class="fas fa-solar-panel"></i></div><span class="text-gray-600">Mengakselerasi transisi energi perusahaan mitra melalui instalasi energi baru terbarukan (EBT) yang efisien.</span></li>
+                            <li class="flex items-start bg-gray-50 p-4 rounded-xl"><div class="bg-white p-2 rounded-lg text-green-600 shadow-sm mr-4 mt-0.5"><i class="fas fa-users"></i></div><span class="text-gray-600">Meningkatkan produktivitas melalui penyediaan mesin spesifik untuk sektor pertanian, tekstil, dan energi.</span></li>
+                            <li class="flex items-start bg-gray-50 p-4 rounded-xl"><div class="bg-white p-2 rounded-lg text-green-600 shadow-sm mr-4 mt-0.5"><i class="fas fa-users"></i></div><span class="text-gray-600">Meminimalkan dampak ekologis dengan pengelolaan limbah non-B3 yang aman dan terkontrol.</span></li>
+                            <li class="flex items-start bg-gray-50 p-4 rounded-xl"><div class="bg-white p-2 rounded-lg text-green-600 shadow-sm mr-4 mt-0.5"><i class="fas fa-users"></i></div><span class="text-gray-600">Mengimplementasikan ekonomi sirkular dengan mengolah limbah organik menjadi kompos bernilai tambah.</span></li>
+                        </ul>
+                    </div>
+                    <div id="tab-struktur" class="tab-content hidden bg-white p-8 md:p-10 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100">
+                        <h3 class="font-heading text-2xl font-bold text-earth mb-6">Jajaran Manajemen Inti</h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <div class="flex items-center gap-4 bg-gray-50 p-4 rounded-2xl border border-gray-100 hover:border-green-200 transition-colors">
+                                <div class="w-16 h-16 rounded-full bg-green-200 flex items-center justify-center text-green-700 text-2xl font-bold overflow-hidden"><img src="https://ui-avatars.com/api/?name=Asep+Zaenal+Mustofa&background=166534&color=fff&size=100" class="w-full h-full object-cover" alt="Asep Zaenal Mustofa" /></div>
+                                <div><h4 class="font-heading font-bold text-earth">Asep Zaenal Mustofa, S.K.M., M.Epid.</h4><p class="text-xs text-green-600 font-medium uppercase tracking-wider mt-1">Komisaris Utama</p></div>
+                            </div>
+                            <div class="flex items-center gap-4 bg-gray-50 p-4 rounded-2xl border border-gray-100 hover:border-green-200 transition-colors">
+                                <div class="w-16 h-16 rounded-full bg-teal-200 flex items-center justify-center text-teal-700 text-2xl font-bold overflow-hidden"><img src="https://ui-avatars.com/api/?name=Dadang&background=0f766e&color=fff&size=100" class="w-full h-full object-cover" alt="Dadang" /></div>
+                                <div><h4 class="font-heading font-bold text-earth">Drs. Dadang, M.Pd.</h4><p class="text-xs text-teal-600 font-medium uppercase tracking-wider mt-1">Direktur Utama</p></div>
+                            </div>
+                            <div class="flex items-center gap-4 bg-gray-50 p-4 rounded-2xl border border-gray-100 hover:border-green-200 transition-colors">
+                                <div class="w-16 h-16 rounded-full bg-emerald-200 flex items-center justify-center text-emerald-700 text-2xl font-bold overflow-hidden"><img src="https://ui-avatars.com/api/?name=Iwan+Sulistiawan&background=047857&color=fff&size=100" class="w-full h-full object-cover" alt="Iwan Sulistiawan" /></div>
+                                <div><h4 class="font-heading font-bold text-earth">Iwan Sulistiawan.</h4><p class="text-xs text-emerald-600 font-medium uppercase tracking-wider mt-1">Wakil Direktur</p></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== LEGALITAS ========== -->
+    <section id="legalitas" class="py-24 bg-earth text-white relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#22c55e 1px, transparent 1px); background-size: 32px 32px;"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+                <div class="max-w-2xl" data-aos="fade-right"><span class="text-green-400 font-bold tracking-wider uppercase text-sm mb-2 block">Legalitas & Kredibilitas</span><h2 class="font-heading text-3xl md:text-4xl font-bold">Standar Kepatuhan Tertinggi</h2></div>
+                <div data-aos="fade-left"><p class="text-gray-400 max-w-md md:text-right">Sebagai kontraktor lingkungan, operasi kami sepenuhnya mematuhi hukum nasional dan tersertifikasi oleh standar manajemen lingkungan internasional.</p></div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
+                <div class="md:col-span-7 bg-gray-800/80 backdrop-blur-sm p-8 rounded-3xl border border-gray-700" data-aos="fade-up" data-aos-delay="100">
+                    <div class="flex items-center gap-4 mb-6"><div class="w-12 h-12 bg-gray-700 rounded-xl flex items-center justify-center text-green-400 text-xl"><i class="fas fa-file-signature"></i></div><h3 class="font-heading text-xl font-bold">Izin Usaha & Badan Hukum</h3></div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm text-left text-gray-300"><tbody class="divide-y divide-gray-700">
+                            <tr><td class="py-4 font-medium text-gray-100 w-1/3">Nama Entitas Hukum</td><td class="py-4">CV Jalupang Teknik Mandiri Lingkungan</td></tr>
+                            <tr><td class="py-4 font-medium text-gray-100">Akta Pendirian</td><td class="py-4 font-mono">Nomor 07 tertanggal 16 Maret 2026</td></tr>
+                            <tr><td class="py-4 font-medium text-gray-100">Dirjen AHU Kemenkum</td><td class="py-4">AHU-0021523-AH.01.14 Tahun 2025</td></tr>
+                            <tr><td class="py-4 font-medium text-gray-100">ISO 14001:2015</td><td class="py-4">Sistem Manajemen Lingkungan</td></tr>
+                            <tr><td class="py-4 font-medium text-gray-100">ISO 9001:2015</td><td class="py-4">Sistem Manajemen Mutu</td></tr>
+                            <tr><td class="py-4 font-medium text-gray-100">Green Proper Award</td><td class="py-4">Kementerian Lingkungan Hidup (2023)</td></tr>
+                        </tbody></table>
+                    </div>
+                </div>
+                <div class="md:col-span-5 space-y-8" data-aos="fade-up" data-aos-delay="200">
+                    <div class="bg-gradient-to-br from-green-900/50 to-gray-800 p-6 rounded-3xl border border-green-800/50 flex items-center gap-6 transform hover:-translate-y-1 transition-transform">
+                        <div class="w-16 h-16 rounded-full bg-green-500/20 border border-green-500/50 flex items-center justify-center text-green-400 text-3xl flex-shrink-0"><i class="fas fa-certificate"></i></div>
+                        <div><h4 class="font-heading font-bold text-lg text-white">ISO 14001:2015</h4><p class="text-sm text-gray-400 mt-1">Sistem Manajemen Lingkungan</p></div>
+                    </div>
+                    <div class="bg-gradient-to-br from-teal-900/50 to-gray-800 p-6 rounded-3xl border border-teal-800/50 flex items-center gap-6 transform hover:-translate-y-1 transition-transform">
+                        <div class="w-16 h-16 rounded-full bg-teal-500/20 border border-teal-500/50 flex items-center justify-center text-teal-400 text-3xl flex-shrink-0"><i class="fas fa-check-double"></i></div>
+                        <div><h4 class="font-heading font-bold text-lg text-white">ISO 9001:2015</h4><p class="text-sm text-gray-400 mt-1">Sistem Manajemen Mutu</p></div>
+                    </div>
+                    <div class="bg-gradient-to-br from-yellow-900/30 to-gray-800 p-6 rounded-3xl border border-yellow-700/30 flex items-center gap-6 transform hover:-translate-y-1 transition-transform">
+                        <div class="w-16 h-16 rounded-full bg-yellow-500/20 border border-yellow-500/50 flex items-center justify-center text-yellow-400 text-2xl flex-shrink-0"><i class="fas fa-trophy"></i></div>
+                        <div><h4 class="font-heading font-bold text-lg text-white">Green Proper Award</h4><p class="text-sm text-gray-400 mt-1">Kementerian Lingkungan Hidup (2023)</p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== LAYANAN ========== -->
+    <section id="layanan" class="py-24 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16" data-aos="fade-up">
+                <span class="text-green-600 font-bold tracking-wider uppercase text-sm mb-2 block">Layanan Perusahaan</span>
+                <h2 class="font-heading text-3xl md:text-4xl font-bold text-earth mb-4">Solusi Terpadu Rekayasa Lingkungan</h2>
+                <div class="w-20 h-1 bg-green-500 mx-auto rounded-full mb-6"></div>
+                <p class="text-gray-500">Kami menghadirkan solusi lengkap dari hulu ke hilir untuk mendukung industri yang berkelanjutan.</p>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                <div class="bg-white rounded-[2rem] p-8 md:p-10 shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 group" data-aos="fade-up" data-aos-delay="100">
+                    <div class="w-16 h-16 bg-green-50 text-green-600 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:scale-110 group-hover:bg-green-600 group-hover:text-white transition-all"><i class="fas fa-industry"></i></div>
+                    <h3 class="font-heading text-2xl font-bold text-earth mb-4">Perdagangan Mesin Teknik untuk Berbagai Sektor</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed mb-6">Kami menyediakan mesin-mesin berkualitas yang menjadi tulang punggung industri.</p>
+                    <div class="space-y-6">
+                        <div class="bg-green-50/50 p-5 rounded-2xl border border-green-100/50">
+                            <div class="flex items-center gap-3 mb-3"><div class="w-8 h-8 rounded-lg bg-green-100 text-green-700 flex items-center justify-center text-sm"><i class="fas fa-tractor"></i></div><h4 class="font-heading font-bold text-earth text-sm uppercase tracking-wider">Agrikultur & Pangan</h4></div>
+                            <ul class="grid grid-cols-2 gap-2 text-sm text-gray-600"><li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500 text-xs"></i> Traktor</li><li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500 text-xs"></i> Mesin Bajak</li><li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500 text-xs"></i> Rice Milling Unit</li><li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500 text-xs"></i> Mesin Perah Susu</li><li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500 text-xs"></i> Penggiling Kopi</li><li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500 text-xs"></i> Penggiling Tepung</li></ul>
+                        </div>
+                        <div class="bg-blue-50/50 p-5 rounded-2xl border border-blue-100/50">
+                            <div class="flex items-center gap-3 mb-3"><div class="w-8 h-8 rounded-lg bg-blue-100 text-blue-700 flex items-center justify-center text-sm"><i class="fas fa-tshirt"></i></div><h4 class="font-heading font-bold text-earth text-sm uppercase tracking-wider">Tekstil & Garmen</h4></div>
+                            <ul class="grid grid-cols-2 gap-2 text-sm text-gray-600"><li class="flex items-center gap-2"><i class="fas fa-check-circle text-blue-500 text-xs"></i> Mesin Jahit Manual</li><li class="flex items-center gap-2"><i class="fas fa-check-circle text-blue-500 text-xs"></i> Mesin Jahit Kaki</li><li class="flex items-center gap-2"><i class="fas fa-check-circle text-blue-500 text-xs"></i> Mesin Jahit Listrik</li><li class="flex items-center gap-2"><i class="fas fa-check-circle text-blue-500 text-xs"></i> Mesin Obras</li><li class="flex items-center gap-2"><i class="fas fa-check-circle text-blue-500 text-xs"></i> Mesin Bordir</li><li class="flex items-center gap-2"><i class="fas fa-check-circle text-blue-500 text-xs"></i> Mesin Oversum</li></ul>
+                            <p class="text-xs text-gray-400 mt-2 italic">Khusus mendukung industri kreatif Jawa Barat</p>
+                        </div>
+                        <div class="bg-amber-50/50 p-5 rounded-2xl border border-amber-100/50">
+                            <div class="flex items-center gap-3 mb-3"><div class="w-8 h-8 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center text-sm"><i class="fas fa-bolt"></i></div><h4 class="font-heading font-bold text-earth text-sm uppercase tracking-wider">Energi & Manufaktur</h4></div>
+                            <ul class="grid grid-cols-2 gap-2 text-sm text-gray-600"><li class="flex items-center gap-2"><i class="fas fa-check-circle text-amber-500 text-xs"></i> Generator</li><li class="flex items-center gap-2"><i class="fas fa-check-circle text-amber-500 text-xs"></i> Mesin Las</li><li class="flex items-center gap-2"><i class="fas fa-check-circle text-amber-500 text-xs"></i> Mesin Bubut</li><li class="flex items-center gap-2"><i class="fas fa-check-circle text-amber-500 text-xs"></i> Turbin</li><li class="flex items-center gap-2"><i class="fas fa-check-circle text-amber-500 text-xs"></i> Kincir</li><li class="flex items-center gap-2"><i class="fas fa-check-circle text-amber-500 text-xs"></i> Suku Cadang Asli</li></ul>
+                            <p class="text-xs text-gray-400 mt-2 italic">Memastikan kelancaran produksi Anda</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-[2rem] p-8 md:p-10 shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 group" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-16 h-16 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:scale-110 group-hover:bg-emerald-600 group-hover:text-white transition-all"><i class="fas fa-recycle"></i></div>
+                    <h3 class="font-heading text-2xl font-bold text-earth mb-4">Pengelolaan Limbah dan Ekonomi Sirkular</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed mb-6">Kami percaya bahwa setiap sisa produksi memiliki potensi nilai baru. Melalui unit pengelolaan limbah non-berbahaya.</p>
+                    <div class="space-y-6">
+                        <div class="bg-purple-50/50 p-5 rounded-2xl border border-purple-100/50">
+                            <div class="flex items-center gap-3 mb-3"><div class="w-8 h-8 rounded-lg bg-purple-100 text-purple-700 flex items-center justify-center text-sm"><i class="fas fa-flask"></i></div><h4 class="font-heading font-bold text-earth text-sm uppercase tracking-wider">Treatment Limbah</h4></div>
+                            <ul class="space-y-2 text-sm text-gray-600"><li class="flex items-start gap-2"><i class="fas fa-check-circle text-purple-500 text-xs mt-1"></i><span>Metode <strong>insinerasi terkontrol</strong> untuk mengurangi volume limbah</span></li><li class="flex items-start gap-2"><i class="fas fa-check-circle text-purple-500 text-xs mt-1"></i><span><strong>Pemulihan material</strong> bernilai ekonomi dari sisa produksi</span></li></ul>
+                        </div>
+                        <div class="bg-green-50/50 p-5 rounded-2xl border border-green-100/50">
+                            <div class="flex items-center gap-3 mb-3"><div class="w-8 h-8 rounded-lg bg-green-100 text-green-700 flex items-center justify-center text-sm"><i class="fas fa-seedling"></i></div><h4 class="font-heading font-bold text-earth text-sm uppercase tracking-wider">Produksi Kompos Organik</h4></div>
+                            <ul class="space-y-2 text-sm text-gray-600"><li class="flex items-start gap-2"><i class="fas fa-check-circle text-green-500 text-xs mt-1"></i><span>Mengolah <strong>sampah organik</strong> menjadi kompos berkualitas</span></li><li class="flex items-start gap-2"><i class="fas fa-check-circle text-green-500 text-xs mt-1"></i><span>Memanfaatkan <strong>abu tanaman</strong> sebagai bahan baku pupuk</span></li><li class="flex items-start gap-2"><i class="fas fa-check-circle text-green-500 text-xs mt-1"></i><span>Mengubah limbah menjadi <strong>pupuk bernilai ekonomi tinggi</strong> bagi sektor pertanian</span></li></ul>
+                        </div>
+                        <div class="bg-gradient-to-r from-green-100 to-emerald-100 p-4 rounded-2xl text-center border border-green-200"><p class="text-sm font-semibold text-green-800"><i class="fas fa-sync-alt mr-2"></i>Mengubah limbah menjadi sumber daya — Ekonomi Sirkular dalam praktik</p></div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-12" data-aos="fade-up" data-aos-delay="300">
+                <a href="#kontak" class="inline-flex items-center gap-2 px-8 py-4 bg-green-700 text-white rounded-full font-semibold shadow-lg shadow-green-600/30 hover:bg-green-800 transition-all transform hover:-translate-y-1">Konsultasikan Kebutuhan Anda <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== PORTOFOLIO ========== -->
+    <section id="portofolio" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col lg:flex-row justify-between items-end mb-12 gap-8">
+                <div class="max-w-2xl" data-aos="fade-right"><span class="text-green-600 font-bold tracking-wider uppercase text-sm mb-2 block">Portofolio Kami</span><h2 class="font-heading text-3xl md:text-4xl font-bold text-earth">Karya Nyata untuk Bumi</h2></div>
+                <div data-aos="fade-left"><a href="#" class="inline-flex items-center gap-2 text-green-700 font-semibold hover:text-green-800 transition-colors">Lihat Semua Proyek <i class="fas fa-arrow-right"></i></a></div>
+            </div>
+            <div class="bg-green-700 rounded-3xl p-8 md:p-10 mb-12 flex flex-col md:flex-row items-center justify-around text-center text-white shadow-xl shadow-green-700/20" data-aos="zoom-in">
+                <div class="p-4"><p class="text-4xl font-heading font-bold mb-2">1.2M+</p><p class="text-green-100 text-sm">M³ Air Limbah Dimurnikan</p></div>
+                <div class="hidden md:block w-px h-16 bg-green-500/50"></div>
+                <div class="p-4"><p class="text-4xl font-heading font-bold mb-2">450+</p><p class="text-green-100 text-sm">Ton Emisi CO₂ Ditekan</p></div>
+                <div class="hidden md:block w-px h-16 bg-green-500/50"></div>
+                <div class="p-4"><p class="text-4xl font-heading font-bold mb-2">12 MWp</p><p class="text-green-100 text-sm">Kapasitas PLTS Terpasang</p></div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="group relative rounded-[2rem] overflow-hidden shadow-md" data-aos="fade-up"><img src="https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?w=800&q=80" alt="Proyek 1" class="w-full h-80 object-cover transform transition-transform duration-700 group-hover:scale-110"><div class="absolute inset-0 bg-gradient-to-t from-earth/95 via-earth/50 to-transparent"></div><div class="absolute bottom-0 left-0 p-8 w-full"><span class="inline-block px-3 py-1 bg-blue-500/20 border border-blue-400/30 text-blue-300 text-xs font-bold rounded-full mb-3 backdrop-blur-md">IPAL Industri</span><h3 class="font-heading text-2xl font-bold text-white mb-2">Pengolahan Air Limbah</h3></div></div>
+                <div class="group relative rounded-[2rem] overflow-hidden shadow-md md:mt-12" data-aos="fade-up" data-aos-delay="100"><img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=800&q=80" alt="Proyek 2" class="w-full h-80 object-cover transform transition-transform duration-700 group-hover:scale-110"><div class="absolute inset-0 bg-gradient-to-t from-earth/95 via-earth/50 to-transparent"></div><div class="absolute bottom-0 left-0 p-8 w-full"><span class="inline-block px-3 py-1 bg-yellow-500/20 border border-yellow-400/30 text-yellow-300 text-xs font-bold rounded-full mb-3 backdrop-blur-md">Energi</span><h3 class="font-heading text-2xl font-bold text-white mb-2">PLTS Atap Industri</h3></div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== ARTIKEL (GABUNGAN BLOG) ========== -->
+    <section id="artikel" class="py-24 bg-green-50/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-12" data-aos="fade-up">
+                <span class="text-green-600 font-bold tracking-wider uppercase text-sm mb-2 block">Pusat Pengetahuan</span>
+                <h2 class="font-heading text-3xl md:text-4xl font-bold text-earth mb-4">Wawasan & Berita Lingkungan</h2>
+                <p class="text-gray-500">Temukan artikel, tips, dan berita terbaru seputar teknologi lingkungan dari tim Jalupang Teknik.</p>
+            </div>
+
+            <!-- Filter Kategori -->
+            <div class="flex flex-wrap items-center justify-center gap-3 mb-8">
+                <button class="category-pill active px-5 py-2 rounded-full text-sm font-medium border-2 border-green-600 bg-green-600 text-white" data-category="all">Semua</button>
+                <button class="category-pill px-5 py-2 rounded-full text-sm font-medium border-2 border-gray-200 text-gray-600 hover:border-green-500 hover:text-green-600" data-category="teknologi">Teknologi</button>
+                <button class="category-pill px-5 py-2 rounded-full text-sm font-medium border-2 border-gray-200 text-gray-600 hover:border-green-500 hover:text-green-600" data-category="lingkungan">Lingkungan</button>
+                <button class="category-pill px-5 py-2 rounded-full text-sm font-medium border-2 border-gray-200 text-gray-600 hover:border-green-500 hover:text-green-600" data-category="energi">Energi</button>
+                <button class="category-pill px-5 py-2 rounded-full text-sm font-medium border-2 border-gray-200 text-gray-600 hover:border-green-500 hover:text-green-600" data-category="limbah">Limbah</button>
+                <button class="category-pill px-5 py-2 rounded-full text-sm font-medium border-2 border-gray-200 text-gray-600 hover:border-green-500 hover:text-green-600" data-category="berita">Berita</button>
+            </div>
+
+            <!-- Search -->
+            <div class="max-w-xl mx-auto mb-10">
+                <div class="relative">
+                    <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                    <input type="text" id="searchArticles" placeholder="Cari artikel..." class="w-full pl-12 pr-4 py-3 rounded-full border border-gray-200 focus:ring-2 focus:ring-green-500/20 focus:border-green-500 outline-none transition-all bg-white shadow-sm" />
+                </div>
+            </div>
+
+            <!-- Grid Artikel -->
+            <div id="articlesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Akan diisi JavaScript -->
+            </div>
+
+            <!-- Loading -->
+            <div id="loadingState" class="text-center py-12">
+                <div class="w-12 h-12 border-4 border-green-200 border-t-green-600 rounded-full animate-spin mx-auto mb-3"></div>
+                <p class="text-gray-500">Memuat artikel...</p>
+            </div>
+
+            <!-- Empty State -->
+            <div id="emptyState" class="text-center py-12 hidden">
+                <div class="text-5xl mb-3">📚</div>
+                <h3 class="text-xl font-bold text-earth mb-2">Belum Ada Artikel</h3>
+                <p class="text-gray-500">Belum ada artikel yang dipublikasikan.</p>
+            </div>
+
+            <!-- No Results -->
+            <div id="noResultsState" class="text-center py-12 hidden">
+                <div class="text-5xl mb-3">🔍</div>
+                <h3 class="text-xl font-bold text-earth mb-2">Artikel Tidak Ditemukan</h3>
+                <p class="text-gray-500">Tidak ada artikel yang sesuai dengan pencarian Anda.</p>
+                <button onclick="resetSearch()" class="mt-4 px-6 py-2 bg-green-600 text-white rounded-full text-sm hover:bg-green-700 transition-colors">Reset Pencarian</button>
+            </div>
+
+            <!-- Pagination -->
+            <div class="flex justify-center items-center gap-3 mt-10">
+                <button id="prevPage" class="pagination-btn px-4 py-2 rounded-lg border border-gray-200 text-gray-600 text-sm font-medium disabled:opacity-40 disabled:cursor-not-allowed hover:bg-green-600 hover:text-white hover:border-green-600 transition-all" disabled><i class="fas fa-chevron-left mr-1"></i> Sebelumnya</button>
+                <span id="pageInfo" class="text-sm text-gray-500 font-medium">Halaman 1 dari 1</span>
+                <button id="nextPage" class="pagination-btn px-4 py-2 rounded-lg border border-gray-200 text-gray-600 text-sm font-medium disabled:opacity-40 disabled:cursor-not-allowed hover:bg-green-600 hover:text-white hover:border-green-600 transition-all">Selanjutnya <i class="fas fa-chevron-right ml-1"></i></button>
+            </div>
+
+            <!-- Link ke CMS -->
+            <div class="text-center mt-8">
+                <a href="cms.html" target="_blank" class="text-sm text-gray-400 hover:text-green-600 transition-colors">
+                    <i class="fas fa-edit mr-1"></i> Kelola Artikel (CMS)
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== KONTAK ========== -->
+    <section id="kontak" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-earth rounded-[3rem] shadow-2xl overflow-hidden flex flex-col lg:flex-row relative">
+                <div class="absolute top-0 right-0 w-1/2 h-full bg-green-900/20 blur-3xl pointer-events-none rounded-full transform translate-x-1/2 -translate-y-1/2"></div>
+                <div class="w-full lg:w-5/12 p-10 lg:p-14 text-white relative z-10">
+                    <span class="text-green-400 font-bold tracking-wider uppercase text-sm mb-2 block">Konsultasi Gratis</span>
+                    <h3 class="font-heading text-3xl font-bold mb-6">Butuh Solusi untuk Lingkungan anda?</h3>
+                    <p class="text-gray-400 mb-10 text-sm leading-relaxed">Tim kami siap memberikan solusi teknologi lingkungan terbaik untuk anda yang sesuai dengan kebutuhan dan regulasi industri.</p>
+                    <div class="space-y-6">
+                        <div class="flex items-start gap-4"><div class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center flex-shrink-0 text-green-400"><i class="fas fa-map-marker-alt"></i></div><div><h5 class="font-bold text-gray-200">Kantor Pemasaran</h5><p class="text-sm text-gray-400 mt-1">Setra Sari Mall B-2-48, <br />Jl. Surya Sumantri 128 C, Bandung</p></div></div>
+                        <div class="flex items-start gap-4"><div class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center flex-shrink-0 text-green-400"><i class="fas fa-map-marker-alt"></i></div><div><h5 class="font-bold text-gray-200">Workshop</h5><p class="text-sm text-gray-400 mt-1">Jl. PLTA Saguling Citalem Cijenuk, <br />Kp. Jalupang RT/RW 01/07 Desa Citalem Kec. Cipongkor Kab. Bandung Barat</p></div></div>
+                        <div class="flex items-start gap-4"><div class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center flex-shrink-0 text-green-400"><i class="fas fa-envelope"></i></div><div><h5 class="font-bold text-gray-200">Email & Kontak</h5><p class="text-sm text-gray-400 mt-1">info@jalupangteknik.co.id<br />+62 22 1234 5678</p></div></div>
+                    </div>
+                </div>
+                <div class="w-full lg:w-7/12 bg-gray-50 p-10 lg:p-14 relative z-10">
+                    <h4 class="font-heading text-2xl font-bold text-earth mb-6">Kirim Pesan (Inquiry)</h4>
+                    <form id="contact-form" class="space-y-5">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                            <div><label class="block text-sm font-medium text-gray-700 mb-1.5">Nama Perusahaan / Instansi</label><input type="text" id="contact-company" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-green-500/20 focus:border-green-500 outline-none transition-all bg-white" placeholder="PT Industri Jaya" /></div>
+                            <div><label class="block text-sm font-medium text-gray-700 mb-1.5">Email Penanggung Jawab</label><input type="email" id="contact-email" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-green-500/20 focus:border-green-500 outline-none transition-all bg-white" placeholder="nama@perusahaan.com" /></div>
+                        </div>
+                        <div><label class="block text-sm font-medium text-gray-700 mb-1.5">Kategori Layanan</label><select id="contact-service" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-green-500/20 focus:border-green-500 outline-none transition-all bg-white text-gray-600 appearance-none"><option value="WWTP">Desain & Konstruksi IPAL (WWTP)</option><option value="PLTS">Pemasangan Solar Panel (PLTS)</option><option value="AMDAL">Konsultasi AMDAL / UKL-UPL</option><option value="Lainnya">Lainnya</option></select></div>
+                        <div><label class="block text-sm font-medium text-gray-700 mb-1.5">Rincian Kebutuhan</label><textarea id="contact-message" rows="4" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-green-500/20 focus:border-green-500 outline-none transition-all bg-white resize-none" placeholder="Ceritakan kapasitas pabrik atau kebutuhan spesifik Anda..."></textarea></div>
+                        <button type="submit" class="w-full bg-green-600 text-white font-bold py-4 rounded-xl shadow-lg shadow-green-500/30 hover:bg-green-700 transition-all transform hover:-translate-y-0.5">Kirim Permintaan Konsultasi</button>
+                    </form>
+                    <div id="success-message" class="hidden mt-4 p-4 bg-green-100 text-green-700 rounded-xl border border-green-200 flex items-center gap-3"><i class="fas fa-check-circle text-xl"></i><span class="text-sm font-medium">Pesan berhasil dikirim. Tim ahli kami akan menghubungi Anda segera.</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== MODAL DETAIL ARTIKEL ========== -->
+    <div class="modal-overlay" id="articleModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+            <div id="modalBody">
+                <!-- Akan diisi JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="bg-gray-900 border-t border-gray-800 pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                <div class="md:col-span-2">
+                    <div class="flex items-center gap-2 mb-4"><i class="fas fa-leaf text-green-500 text-2xl"></i><span class="font-heading font-bold text-2xl text-white tracking-tight">Jalupang<span class="text-green-500">Teknik</span></span></div>
+                    <p class="text-gray-400 text-sm max-w-sm mb-6">Mewujudkan masa depan industri yang bersih dan berkelanjutan melalui inovasi Teknologi lingkungan yang Handal.</p>
+                    <div class="flex space-x-4"><a href="#" class="w-10 h-10 rounded-full bg-gray-800 text-gray-400 flex items-center justify-center hover:bg-green-600 hover:text-white transition-colors"><i class="fab fa-linkedin-in"></i></a><a href="#" class="w-10 h-10 rounded-full bg-gray-800 text-gray-400 flex items-center justify-center hover:bg-green-600 hover:text-white transition-colors"><i class="fab fa-instagram"></i></a></div>
+                </div>
+                <div>
+                    <h4 class="font-heading font-bold text-white mb-4">Tautan Cepat</h4>
+                    <ul class="space-y-2 text-sm text-gray-400"><li><a href="#profil" class="hover:text-green-400 transition-colors">Profil Perusahaan</a></li><li><a href="#layanan" class="hover:text-green-400 transition-colors">Layanan Kami</a></li><li><a href="#portofolio" class="hover:text-green-400 transition-colors">Portofolio Proyek</a></li><li><a href="#artikel" class="hover:text-green-400 transition-colors">Artikel & Wawasan</a></li></ul>
+                </div>
+                <div>
+                    <h4 class="font-heading font-bold text-white mb-4">Legal & Support</h4>
+                    <ul class="space-y-2 text-sm text-gray-400"><li><a href="#" class="hover:text-green-400 transition-colors">Syarat & Ketentuan</a></li><li><a href="#" class="hover:text-green-400 transition-colors">Kebijakan Privasi</a></li><li><a href="#" class="hover:text-green-400 transition-colors">Karir & Peluang</a></li></ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-8 text-center md:text-left flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
+                <p>&copy; 2026 PT Jalupang Teknik Lingkungan. All rights reserved.</p>
+                <p class="mt-2 md:mt-0">Powered by <span class="font-semibold text-gray-400">Google Apps Script</span></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ========== SCRIPTS ========== -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <script>
+        // ============================================================
+        // KONFIGURASI - GANTI DENGAN URL WEB APP ANDA
+        // ============================================================
+        const API_URL = 'https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec';
+        // ⚠️ Ganti YOUR_DEPLOYMENT_ID dengan ID dari hasil deploy
+
+        // ============================================================
+        // VARIABLES
+        // ============================================================
+        let allPosts = [];
+        let filteredPosts = [];
+        let currentPage = 1;
+        const postsPerPage = 6;
+        let currentCategory = 'all';
+        let searchQuery = '';
+
+        // ============================================================
+        // LOAD ARTICLES
+        // ============================================================
+        async function loadArticles() {
+            const grid = document.getElementById('articlesGrid');
+            const loading = document.getElementById('loadingState');
+            const empty = document.getElementById('emptyState');
+            const noResults = document.getElementById('noResultsState');
+
+            loading.classList.remove('hidden');
+            grid.innerHTML = '';
+            empty.classList.add('hidden');
+            noResults.classList.add('hidden');
+
+            try {
+                const response = await fetch(API_URL);
+                const data = await response.json();
+
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+
+                allPosts = data || [];
+                currentPage = 1;
+                renderArticles();
+
+                console.log('✅', allPosts.length, 'artikel dimuat');
+
+            } catch (error) {
+                console.error('❌ Error:', error);
+                grid.innerHTML = `
+                    <div class="col-span-full text-center py-12">
+                        <div class="text-4xl mb-3">⚠️</div>
+                        <p class="text-gray-500">Gagal memuat artikel.</p>
+                        <button onclick="loadArticles()" class="mt-3 px-5 py-2 bg-green-600 text-white rounded-full text-sm hover:bg-green-700 transition-colors">Coba Lagi</button>
+                    </div>
+                `;
+                loading.classList.add('hidden');
+            } finally {
+                loading.classList.add('hidden');
+            }
+        }
+
+        // ============================================================
+        // RENDER ARTICLES
+        // ============================================================
+        function renderArticles() {
+            const grid = document.getElementById('articlesGrid');
+            const loading = document.getElementById('loadingState');
+            const empty = document.getElementById('emptyState');
+            const noResults = document.getElementById('noResultsState');
+            const prevBtn = document.getElementById('prevPage');
+            const nextBtn = document.getElementById('nextPage');
+            const pageInfo = document.getElementById('pageInfo');
+
+            let filtered = allPosts.filter(post => post.status?.toLowerCase() === 'published');
+
+            if (currentCategory !== 'all') {
+                filtered = filtered.filter(post =>
+                    post.category?.toLowerCase() === currentCategory.toLowerCase()
+                );
+            }
+
+            if (searchQuery.trim()) {
+                const query = searchQuery.toLowerCase().trim();
+                filtered = filtered.filter(post =>
+                    (post.title?.toLowerCase().includes(query) || false) ||
+                    (post.excerpt?.toLowerCase().includes(query) || false) ||
+                    (post.content?.toLowerCase().includes(query) || false) ||
+                    (post.category?.toLowerCase().includes(query) || false)
+                );
+            }
+
+            filteredPosts = filtered;
+
+            if (filtered.length === 0) {
+                if (allPosts.filter(p => p.status?.toLowerCase() === 'published').length === 0) {
+                    empty.classList.remove('hidden');
+                    noResults.classList.add('hidden');
+                    grid.classList.add('hidden');
+                } else {
+                    empty.classList.add('hidden');
+                    noResults.classList.remove('hidden');
+                    grid.classList.add('hidden');
+                }
+                loading.classList.add('hidden');
+                prevBtn.disabled = true;
+                nextBtn.disabled = true;
+                pageInfo.textContent = 'Halaman 1 dari 1';
+                return;
+            }
+
+            empty.classList.add('hidden');
+            noResults.classList.add('hidden');
+            grid.classList.remove('hidden');
+            loading.classList.add('hidden');
+
+            const totalPages = Math.ceil(filtered.length / postsPerPage);
+            if (currentPage > totalPages) currentPage = totalPages;
+            if (currentPage < 1) currentPage = 1;
+
+            const start = (currentPage - 1) * postsPerPage;
+            const end = start + postsPerPage;
+            const pagePosts = filtered.slice(start, end);
+
+            prevBtn.disabled = currentPage === 1;
+            nextBtn.disabled = currentPage === totalPages;
+            pageInfo.textContent = `Halaman ${currentPage} dari ${totalPages}`;
+
+            if (pagePosts.length === 0) {
+                grid.innerHTML = `<div class="col-span-full text-center py-8"><p class="text-gray-500">Tidak ada artikel di halaman ini.</p></div>`;
+                return;
+            }
+
+            grid.innerHTML = pagePosts.map(post => `
+                <article class="article-card bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 cursor-pointer" onclick="openModal('${post.id}')">
+                    <div class="image-wrapper relative h-52 bg-gray-200">
+                        <img src="${post.featured_image || 'https://images.unsplash.com/photo-1518623489648-a173ef7824f3?w=800&q=80'}"
+                             alt="${post.title || 'Artikel'}"
+                             class="w-full h-full object-cover"
+                             loading="lazy"
+                             onerror="this.src='https://images.unsplash.com/photo-1518623489648-a173ef7824f3?w=800&q=80'" />
+                        <div class="absolute top-3 left-3">
+                            <span class="px-3 py-1 rounded-full text-xs font-semibold ${getCategoryColor(post.category)}">
+                                <i class="fas ${getCategoryIcon(post.category)} mr-1"></i>
+                                ${post.category || 'Umum'}
+                            </span>
+                        </div>
+                        ${post.is_featured === true ? `
+                            <div class="absolute top-3 right-3">
+                                <span class="px-3 py-1 rounded-full text-xs font-semibold bg-yellow-500 text-white">
+                                    <i class="fas fa-star mr-1"></i> Unggulan
+                                </span>
+                            </div>
+                        ` : ''}
+                    </div>
+                    <div class="p-5">
+                        <div class="flex items-center text-xs text-gray-400 mb-2">
+                            <span><i class="far fa-calendar mr-1"></i> ${formatDate(post.created_at)}</span>
+                            ${post.read_time ? `<span class="mx-2">•</span><span><i class="far fa-clock mr-1"></i> ${post.read_time} min baca</span>` : ''}
+                        </div>
+                        <h3 class="font-heading text-xl font-bold text-earth mb-2 line-clamp-2">${post.title || 'Judul Artikel'}</h3>
+                        <p class="text-gray-500 text-sm mb-3 line-clamp-2">${post.excerpt || (post.content ? post.content.substring(0, 150).replace(/<[^>]*>/g, '') : '')}</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-green-600 font-semibold text-sm hover:text-green-800 transition-colors inline-flex items-center gap-1">
+                                Baca Selengkapnya <i class="fas fa-arrow-right text-xs"></i>
+                            </span>
+                            ${post.author ? `<span class="text-xs text-gray-400"><i class="fas fa-user mr-1"></i> ${post.author}</span>` : ''}
+                        </div>
+                    </div>
+                </article>
+            `).join('');
+
+            // Re-init AOS untuk elemen baru
+            if (typeof AOS !== 'undefined') {
+                AOS.refresh();
+            }
+        }
+
+        // ============================================================
+        // OPEN MODAL
+        // ============================================================
+        function openModal(id) {
+            const article = allPosts.find(p => String(p.id) === id);
+            if (!article) return;
+
+            const modalBody = document.getElementById('modalBody');
+            const modal = document.getElementById('articleModal');
+
+            const date = article.created_at ? formatDate(article.created_at) : 'Tanggal tidak tersedia';
+            const colorClass = getCategoryColor(article.category);
+            const iconClass = getCategoryIcon(article.category);
+
+            let content = article.content || '<p class="text-gray-500">Konten artikel sedang dalam persiapan.</p>';
+
+            modalBody.innerHTML = `
+                <div class="flex flex-wrap items-center gap-3 mb-4">
+                    <span class="px-3 py-1 rounded-full text-xs font-semibold ${colorClass}">
+                        <i class="fas ${iconClass} mr-1"></i> ${article.category || 'Umum'}
+                    </span>
+                    <span class="text-sm text-gray-400"><i class="far fa-calendar mr-1"></i> ${date}</span>
+                    ${article.read_time ? `<span class="text-sm text-gray-400"><i class="far fa-clock mr-1"></i> ${article.read_time} min baca</span>` : ''}
+                    ${article.author ? `<span class="text-sm text-gray-400"><i class="fas fa-user mr-1"></i> ${article.author}</span>` : ''}
+                    ${article.is_featured === true ? `<span class="px-3 py-1 rounded-full text-xs font-semibold bg-yellow-500 text-white"><i class="fas fa-star mr-1"></i> Unggulan</span>` : ''}
+                </div>
+
+                <h1 class="font-heading text-2xl md:text-3xl font-extrabold text-earth mb-3">${article.title || 'Judul Artikel'}</h1>
+
+                ${article.excerpt ? `<div class="text-base text-gray-600 italic border-l-4 border-green-500 pl-4 mb-5">${article.excerpt}</div>` : ''}
+
+                ${article.featured_image ? `
+                    <div class="rounded-xl overflow-hidden mb-6">
+                        <img src="${article.featured_image}" alt="${article.title}" class="w-full h-auto max-h-[400px] object-cover" onerror="this.style.display='none'" />
+                    </div>
+                ` : ''}
+
+                <div class="article-content">
+                    ${content}
+                </div>
+
+                <div class="mt-6 pt-6 border-t border-gray-100 flex justify-between items-center flex-wrap gap-3">
+                    <span class="text-xs text-gray-400">ID: #${article.id}</span>
+                    <div class="flex gap-2">
+                        <button onclick="shareArticle('facebook')" class="w-9 h-9 rounded-full bg-[#1877f2] text-white flex items-center justify-center hover:bg-[#0d65d9] transition-colors text-sm"><i class="fab fa-facebook-f"></i></button>
+                        <button onclick="shareArticle('twitter')" class="w-9 h-9 rounded-full bg-[#1da1f2] text-white flex items-center justify-center hover:bg-[#0d8bdb] transition-colors text-sm"><i class="fab fa-twitter"></i></button>
+                        <button onclick="shareArticle('whatsapp')" class="w-9 h-9 rounded-full bg-[#25d366] text-white flex items-center justify-center hover:bg-[#1da851] transition-colors text-sm"><i class="fab fa-whatsapp"></i></button>
+                    </div>
+                </div>
+            `;
+
+            // Simpan artikel untuk share
+            window.currentArticle = article;
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // ============================================================
+        // CLOSE MODAL
+        // ============================================================
+        function closeModal() {
+            document.getElementById('articleModal').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Tutup modal dengan klik di luar
+        document.getElementById('articleModal').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+
+        // Tutup modal dengan ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        // ============================================================
+        // SHARE ARTICLE
+        // ============================================================
+        function shareArticle(platform) {
+            const url = window.location.href;
+            const title = window.currentArticle?.title || 'Artikel Jalupang Teknik';
+            const text = window.currentArticle?.excerpt || '';
+
+            const shareUrls = {
+                facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
+                twitter: `https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`,
+                whatsapp: `https://api.whatsapp.com/send?text=${encodeURIComponent(title + ' - ' + url)}`
+            };
+
+            if (shareUrls[platform]) {
+                window.open(shareUrls[platform], '_blank', 'width=600,height=500');
+            }
+            return false;
+        }
+
+        // ============================================================
+        // UTILITY FUNCTIONS
+        // ============================================================
+        function formatDate(dateString) {
+            if (!dateString) return 'Tanggal tidak tersedia';
+            try {
+                const date = new Date(dateString);
+                if (isNaN(date.getTime())) return 'Tanggal tidak valid';
+                return date.toLocaleDateString('id-ID', {
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric'
+                });
+            } catch {
+                return 'Tanggal tidak valid';
+            }
+        }
+
+        function getCategoryIcon(category) {
+            const icons = {
+                'teknologi': 'fa-microchip',
+                'lingkungan': 'fa-leaf',
+                'energi': 'fa-solar-panel',
+                'limbah': 'fa-recycle',
+                'berita': 'fa-newspaper'
+            };
+            return icons[category?.toLowerCase()] || 'fa-file-alt';
+        }
+
+        function getCategoryColor(category) {
+            const colors = {
+                'teknologi': 'bg-blue-100 text-blue-700',
+                'lingkungan': 'bg-green-100 text-green-700',
+                'energi': 'bg-yellow-100 text-yellow-700',
+                'limbah': 'bg-purple-100 text-purple-700',
+                'berita': 'bg-red-100 text-red-700'
+            };
+            return colors[category?.toLowerCase()] || 'bg-gray-100 text-gray-700';
+        }
+
+        function resetSearch() {
+            document.getElementById('searchArticles').value = '';
+            searchQuery = '';
+            currentPage = 1;
+            renderArticles();
+        }
+
+        // ============================================================
+        // TAB LOGIC
+        // ============================================================
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.tab-btn').forEach(b => {
+                    b.classList.remove('bg-white', 'shadow-sm', 'text-green-700', 'border-green-100');
+                    b.classList.add('text-gray-500', 'hover:bg-white', 'hover:text-green-700', 'border-transparent', 'hover:border-green-100');
+                });
+                this.classList.remove('text-gray-500', 'hover:bg-white', 'hover:text-green-700', 'border-transparent', 'hover:border-green-100');
+                this.classList.add('bg-white', 'shadow-sm', 'text-green-700', 'border-green-100');
+
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+                const target = document.getElementById(this.dataset.target);
+                if (target) {
+                    target.classList.remove('hidden');
+                    target.classList.remove('animate-fade-in');
+                    void target.offsetWidth;
+                    target.classList.add('animate-fade-in');
+                }
+            });
+        });
+
+        // ============================================================
+        // EVENT LISTENERS
+        // ============================================================
+        document.addEventListener('DOMContentLoaded', function() {
+            // AOS
+            if (typeof AOS !== 'undefined') {
+                AOS.init({ once: true, offset: 50, duration: 800 });
+            }
+
+            // Mobile menu
+            const btn = document.getElementById('mobile-menu-btn');
+            const menu = document.getElementById('mobile-menu');
+            const links = document.querySelectorAll('.mobile-link');
+            if (btn && menu) {
+                btn.addEventListener('click', function() {
+                    menu.classList.toggle('hidden');
+                });
+                links.forEach(function(link) {
+                    link.addEventListener('click', function() {
+                        menu.classList.add('hidden');
+                    });
+                });
+            }
+
+            // Navbar shadow
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 20) {
+                    navbar.classList.add('shadow-sm');
+                } else {
+                    navbar.classList.remove('shadow-sm');
+                }
+            });
+
+            // Category filter
+            const categoryBtns = document.querySelectorAll('.category-pill');
+            categoryBtns.forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    categoryBtns.forEach(function(b) {
+                        b.classList.remove('active', 'bg-green-600', 'text-white', 'border-green-600');
+                        b.classList.add('border-gray-200', 'text-gray-600');
+                    });
+                    this.classList.add('active', 'bg-green-600', 'text-white', 'border-green-600');
+                    this.classList.remove('border-gray-200', 'text-gray-600');
+
+                    currentCategory = this.dataset.category;
+                    currentPage = 1;
+                    renderArticles();
+                });
+            });
+
+            // Search
+            const searchInput = document.getElementById('searchArticles');
+            if (searchInput) {
+                searchInput.addEventListener('input', function() {
+                    searchQuery = this.value;
+                    currentPage = 1;
+                    renderArticles();
+                });
+            }
+
+            // Pagination
+            document.getElementById('prevPage').addEventListener('click', function() {
+                if (currentPage > 1) {
+                    currentPage--;
+                    renderArticles();
+                    document.getElementById('artikel').scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+
+            document.getElementById('nextPage').addEventListener('click', function() {
+                const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    renderArticles();
+                    document.getElementById('artikel').scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+
+            // Contact form
+            const form = document.getElementById('contact-form');
+            const successMsg = document.getElementById('success-message');
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    // Simulasi kirim - bisa diganti dengan API nanti
+                    successMsg.classList.remove('hidden');
+                    form.reset();
+                    setTimeout(() => successMsg.classList.add('hidden'), 5000);
+                });
+            }
+
+            // Load articles
+            loadArticles();
+        });
+    </script>
+</body>
+</html>
