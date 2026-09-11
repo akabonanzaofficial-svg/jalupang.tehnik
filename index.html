@@ -519,6 +519,190 @@
             }
             .share-btn span { display: none; }
         }
+        /* ===== PRODUK CARD (GRID 3 KOLOM) ===== */
+.produk-card {
+    background: white;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    border: 1px solid #f3f4f6;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.produk-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    border-color: #22c55e;
+}
+
+.produk-card-image {
+    width: 100%;
+    aspect-ratio: 1/1;
+    overflow: hidden;
+    background: #f3f4f6;
+    position: relative;
+}
+
+.produk-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.produk-card:hover .produk-card-image img {
+    transform: scale(1.08);
+}
+
+.produk-card-body {
+    padding: 0.875rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.produk-card-name {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: #27272a;
+    margin-bottom: 0.25rem;
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: 2.4em;
+}
+
+.produk-card-desc {
+    font-size: 0.7rem;
+    color: #9ca3af;
+    line-height: 1.4;
+    margin-bottom: 0.5rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: 2em;
+}
+
+.produk-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: auto;
+    gap: 0.5rem;
+}
+
+.produk-card-price {
+    font-weight: 700;
+    color: #15803d;
+    font-size: 0.8rem;
+    white-space: nowrap;
+}
+
+.produk-card-btn {
+    font-size: 0.7rem;
+    background: #dcfce7;
+    color: #15803d;
+    padding: 0.25rem 0.6rem;
+    border-radius: 9999px;
+    font-weight: 600;
+    transition: all 0.2s;
+    white-space: nowrap;
+    text-decoration: none;
+}
+
+.produk-card-btn:hover {
+    background: #16a34a;
+    color: white;
+}
+
+.produk-featured-badge {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    background: rgba(245, 158, 11, 0.95);
+    color: white;
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 9999px;
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    z-index: 2;
+}
+
+/* ===== ANIMASI FADE IN ===== */
+@keyframes fadeInProduk {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.produk-fade-in {
+    animation: fadeInProduk 0.4s ease-out forwards;
+}
+
+/* ===== TOMBOL EXPAND ===== */
+.btn-expand {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: white;
+    border: 1.5px solid #22c55e;
+    color: #15803d;
+    font-weight: 600;
+    font-size: 0.875rem;
+    border-radius: 9999px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-expand:hover {
+    background: #f0fdf4;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(34, 197, 94, 0.2);
+}
+
+.btn-expand i {
+    transition: transform 0.3s;
+}
+
+.btn-expand.expanded i.fa-chevron-down {
+    transform: rotate(180deg);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .produk-card-name {
+        font-size: 0.85rem;
+    }
+    .produk-card-price {
+        font-size: 0.75rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .produk-card-name {
+        font-size: 0.8rem;
+    }
+    .produk-card-desc {
+        display: none;
+    }
+}
     </style>
 </head>
 
@@ -961,11 +1145,19 @@
                     <p class="text-sm text-gray-500">Peralatan industri berkualitas tinggi</p>
                 </div>
             </div>
-            <div id="produk-mesin-container" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            
+            <div id="produk-mesin-container" class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-5">
                 <div class="col-span-full text-center py-8">
                     <div class="w-10 h-10 border-4 border-green-200 border-t-green-600 rounded-full animate-spin mx-auto"></div>
                     <p class="mt-3 text-gray-500 text-sm">Memuat produk...</p>
                 </div>
+            </div>
+            
+            <div class="text-center mt-8" id="mesin-expand-container" style="display:none;">
+                <button class="btn-expand" id="mesin-expand-btn" onclick="toggleExpand('mesin')">
+                    <i class="fas fa-chevron-down"></i>
+                    <span id="mesin-expand-text">Lihat Semua Mesin</span>
+                </button>
             </div>
         </div>
 
@@ -980,11 +1172,19 @@
                     <p class="text-sm text-gray-500">Layanan profesional untuk kebutuhan industri</p>
                 </div>
             </div>
-            <div id="produk-jasa-container" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            
+            <div id="produk-jasa-container" class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-5">
                 <div class="col-span-full text-center py-8">
                     <div class="w-10 h-10 border-4 border-green-200 border-t-green-600 rounded-full animate-spin mx-auto"></div>
                     <p class="mt-3 text-gray-500 text-sm">Memuat produk...</p>
                 </div>
+            </div>
+            
+            <div class="text-center mt-8" id="jasa-expand-container" style="display:none;">
+                <button class="btn-expand" id="jasa-expand-btn" onclick="toggleExpand('jasa')">
+                    <i class="fas fa-chevron-down"></i>
+                    <span id="jasa-expand-text">Lihat Semua Jasa</span>
+                </button>
             </div>
         </div>
 
@@ -1480,55 +1680,37 @@ console.log('✅ Artikel diurutkan dari terbaru:', allArticles.length, 'artikel'
                     }
                 }
                         // ============================================================
-                        // AMBIL & TAMPILKAN PRODUK
                         // ============================================================
-                            try {
-                            var produkResponse = await fetch(PRODUCTS_API_URL + '?type=produk');
-                            if (produkResponse.ok) {
+// AMBIL & TAMPILKAN PRODUK (dengan Featured + Expand)
+// ============================================================
+try {
+    var produkResponse = await fetch(PRODUCTS_API_URL);
+    if (produkResponse.ok) {
         var products = await produkResponse.json();
         console.log('✅ Produk dimuat:', products.length);
         
-        var mesinHTML = '';
-        var jasaHTML = '';
-        
-        products.forEach(function(produk) {
-            var hargaText = produk.harga && produk.harga !== 'Hubungi Kami' 
-                ? 'Rp ' + Number(produk.harga).toLocaleString('id-ID') 
-                : 'Hubungi Kami';
-            
-            var cardHTML = 
-                '<div class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-gray-100 flex">' +
-                '<div class="w-32 h-32 flex-shrink-0 overflow-hidden bg-gray-100">' +
-                '<img src="' + (produk.gambar || 'https://via.placeholder.com/200') + '" alt="' + produk.nama + '" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">' +
-                '</div>' +
-                '<div class="p-4 flex-1 flex flex-col justify-between min-w-0">' +
-                '<div>' +
-                '<h4 class="font-heading font-bold text-earth text-base mb-1 truncate">' + produk.nama + '</h4>' +
-                '<p class="text-xs text-gray-500 line-clamp-2 mb-2">' + (produk.deskripsi || '') + '</p>' +
-                '</div>' +
-                '<div class="flex items-center justify-between">' +
-                '<span class="font-bold text-green-700 text-sm">' + hargaText + '</span>' +
-                '<a href="#kontak" class="text-xs bg-green-100 hover:bg-green-600 hover:text-white text-green-700 px-3 py-1 rounded-full font-medium transition-all">Tanya</a>' +
-                '</div>' +
-                '</div>' +
-                '</div>';
-            
-            if (produk.kategori === 'Mesin') {
-                mesinHTML += cardHTML;
-            } else if (produk.kategori === 'Jasa') {
-                jasaHTML += cardHTML;
-            }
+        // Filter hanya publish
+        var publishedProducts = products.filter(function(p) {
+            return p.status === 'publish';
         });
         
-        var mesinContainer = document.getElementById('produk-mesin-container');
-        if (mesinContainer) {
-            mesinContainer.innerHTML = mesinHTML || '<div class="col-span-full text-center py-8 text-gray-400">Belum ada produk mesin.</div>';
-        }
+        // Pisahkan per kategori
+        var mesinAll = publishedProducts.filter(function(p) {
+            return p.kategori === 'Mesin';
+        });
+        var jasaAll = publishedProducts.filter(function(p) {
+            return p.kategori === 'Jasa';
+        });
         
-        var jasaContainer = document.getElementById('produk-jasa-container');
-        if (jasaContainer) {
-            jasaContainer.innerHTML = jasaHTML || '<div class="col-span-full text-center py-8 text-gray-400">Belum ada produk jasa.</div>';
-        }
+        // Simpan ke global untuk toggle expand
+        window.__mesinAll = mesinAll;
+        window.__jasaAll = jasaAll;
+        window.__mesinExpanded = false;
+        window.__jasaExpanded = false;
+        
+        // Render awal: hanya 6 unggulan (atau 6 pertama jika featured < 6)
+        renderProdukKategori('mesin', mesinAll, false);
+        renderProdukKategori('jasa', jasaAll, false);
     }
 } catch (err) {
     console.error('Error loading produk:', err);
@@ -1875,6 +2057,128 @@ console.log('✅ Artikel diurutkan dari terbaru:', allArticles.length, 'artikel'
 
             loadClientData();
         });
+        // ============================================================
+// RENDER PRODUK PER KATEGORI
+// ============================================================
+function renderProdukKategori(kategori, allProducts, showAll) {
+    var containerId = 'produk-' + kategori + '-container';
+    var expandContainerId = kategori + '-expand-container';
+    var expandTextId = kategori + '-expand-text';
+    var expandBtnId = kategori + '-expand-btn';
+    
+    var container = document.getElementById(containerId);
+    if (!container) return;
+    
+    // Filter featured
+    var featured = allProducts.filter(function(p) {
+        return p.featured === 'TRUE' || p.featured === true;
+    });
+    
+    // Jika featured kurang dari 6, tambah produk non-featured sampai 6
+    var displayProducts;
+    if (featured.length >= 6) {
+        displayProducts = featured.slice(0, 6);
+    } else {
+        var nonFeatured = allProducts.filter(function(p) {
+            return !(p.featured === 'TRUE' || p.featured === true);
+        });
+        displayProducts = featured.concat(nonFeatured).slice(0, 6);
+    }
+    
+    // Jika showAll, tampilkan semua
+    if (showAll) {
+        displayProducts = allProducts;
+    }
+    
+    // Render
+    var html = '';
+    displayProducts.forEach(function(produk, index) {
+        html += renderProdukCard(produk, showAll && index >= 6);
+    });
+    
+    if (displayProducts.length === 0) {
+        html = '<div class="col-span-full text-center py-8 text-gray-400">Belum ada produk.</div>';
+    }
+    
+    container.innerHTML = html;
+    
+    // Handle tombol expand
+    var expandContainer = document.getElementById(expandContainerId);
+    var expandText = document.getElementById(expandTextId);
+    var expandBtn = document.getElementById(expandBtnId);
+    
+    if (allProducts.length > 6) {
+        expandContainer.style.display = 'block';
+        
+        if (showAll) {
+            expandText.textContent = 'Sembunyikan';
+            expandBtn.classList.add('expanded');
+        } else {
+            expandText.textContent = 'Lihat Semua ' + (kategori === 'mesin' ? 'Mesin' : 'Jasa') + ' (' + allProducts.length + ')';
+            expandBtn.classList.remove('expanded');
+        }
+    } else {
+        expandContainer.style.display = 'none';
+    }
+}
+
+// ============================================================
+// RENDER SATU CARD PRODUK
+// ============================================================
+function renderProdukCard(produk, animate) {
+    var hargaText = 'Hubungi Kami';
+    if (produk.harga && produk.harga !== 'Hubungi Kami' && !isNaN(produk.harga)) {
+        hargaText = 'Rp ' + Number(produk.harga).toLocaleString('id-ID');
+    } else if (produk.harga && produk.harga !== 'Hubungi Kami') {
+        hargaText = produk.harga;
+    }
+    
+    var isFeatured = (produk.featured === 'TRUE' || produk.featured === true);
+    var animateClass = animate ? ' produk-fade-in' : '';
+    
+    return '<div class="produk-card' + animateClass + '">' +
+        '<div class="produk-card-image">' +
+        (isFeatured ? '<div class="produk-featured-badge"><i class="fas fa-star"></i> Unggulan</div>' : '') +
+        '<img src="' + (produk.gambar || 'https://via.placeholder.com/300') + '" alt="' + (produk.nama || 'Produk') + '" loading="lazy">' +
+        '</div>' +
+        '<div class="produk-card-body">' +
+        '<div class="produk-card-name">' + (produk.nama || 'Tanpa Nama') + '</div>' +
+        '<div class="produk-card-desc">' + (produk.deskripsi || '') + '</div>' +
+        '<div class="produk-card-footer">' +
+        '<span class="produk-card-price">' + hargaText + '</span>' +
+        '<a href="#kontak" class="produk-card-btn">Tanya</a>' +
+        '</div>' +
+        '</div>' +
+        '</div>';
+}
+
+// ============================================================
+// TOGGLE EXPAND
+// ============================================================
+function toggleExpand(kategori) {
+    if (kategori === 'mesin') {
+        window.__mesinExpanded = !window.__mesinExpanded;
+        renderProdukKategori('mesin', window.__mesinAll, window.__mesinExpanded);
+        
+        // Scroll ke produk setelah expand
+        setTimeout(function() {
+            document.getElementById('produk-mesin-container').scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }, 100);
+    } else {
+        window.__jasaExpanded = !window.__jasaExpanded;
+        renderProdukKategori('jasa', window.__jasaAll, window.__jasaExpanded);
+        
+        setTimeout(function() {
+            document.getElementById('produk-jasa-container').scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }, 100);
+    }
+}
     </script>
 </body>
 </html>
