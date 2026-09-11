@@ -5,13 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CMS - Jalupang Teknik</title>
     
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-
-    <!-- Quill JS (Rich Text Editor) -->
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
     <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
     
@@ -20,7 +15,6 @@
         .card { transition: all 0.3s; }
         .card:hover { transform: translateY(-2px); box-shadow: 0 10px 40px rgba(0,0,0,0.1); }
         
-        /* Quill Editor */
         #quill-editor {
             min-height: 250px;
             max-height: 400px;
@@ -42,7 +36,6 @@
         }
         .ql-editor { min-height: 200px; }
 
-        /* Tab Button */
         .tab-button {
             padding: 12px 24px;
             border-radius: 12px 12px 0 0;
@@ -66,7 +59,6 @@
             background: rgba(255,255,255,0.5);
         }
 
-        /* Toast */
         .toast-notification {
             position: fixed;
             bottom: 24px;
@@ -80,6 +72,19 @@
             z-index: 1000;
             box-shadow: 0 4px 20px rgba(0,0,0,0.2);
             transition: opacity 0.3s;
+        }
+
+        .editing-indicator {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            color: #92400e;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
     </style>
 </head>
@@ -113,11 +118,17 @@
     <!-- ============================================================ -->
     <div id="tab-artikel" class="tab-content">
         
-        <!-- FORM ARTIKEL -->
         <div class="bg-white rounded-2xl shadow-md p-6 my-6 card">
-            <h2 class="text-xl font-bold text-gray-700 mb-4">➕ Tambah Artikel Baru</h2>
+            <h2 class="text-xl font-bold text-gray-700 mb-4" id="artikel-form-title">➕ Tambah Artikel Baru</h2>
+            
+            <div id="artikel-edit-indicator" class="hidden editing-indicator">
+                <span><i class="fas fa-edit"></i> Mode Edit — Artikel #<span id="artikel-edit-id"></span></span>
+                <button onclick="cancelEditArtikel()" class="text-xs underline">Batalkan</button>
+            </div>
             
             <form id="cms-form" class="space-y-4">
+                <input type="hidden" id="cms-id" />
+                
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Judul Artikel *</label>
                     <input type="text" id="cms-title" required 
@@ -171,19 +182,8 @@
                     </button>
                 </div>
             </form>
-            
-            <div id="cms-success" class="hidden mt-4 p-3 bg-green-100 text-green-700 rounded-lg border border-green-200 text-sm">
-                ✅ Artikel berhasil disimpan!
-            </div>
-            <div id="cms-error" class="hidden mt-4 p-3 bg-red-100 text-red-700 rounded-lg border border-red-200 text-sm">
-                ❌ Gagal menyimpan artikel.
-            </div>
-            <div id="cms-loading" class="hidden mt-4 p-3 bg-blue-100 text-blue-700 rounded-lg border border-blue-200 text-sm">
-                ⏳ Menyimpan artikel...
-            </div>
         </div>
 
-        <!-- DAFTAR ARTIKEL -->
         <div class="bg-white rounded-2xl shadow-md p-6 card">
             <div class="flex justify-between items-center mb-4">
                 <h2 class="text-xl font-bold text-gray-700">📄 Daftar Artikel</h2>
@@ -202,9 +202,13 @@
     <!-- ============================================================ -->
     <div id="tab-produk" class="tab-content hidden">
         
-        <!-- FORM PRODUK -->
         <div class="bg-white rounded-2xl shadow-md p-6 my-6 card">
             <h2 class="text-xl font-bold text-gray-700 mb-4" id="produk-form-title">➕ Tambah Produk Baru</h2>
+            
+            <div id="produk-edit-indicator" class="hidden editing-indicator">
+                <span><i class="fas fa-edit"></i> Mode Edit — Produk #<span id="produk-edit-id"></span></span>
+                <button onclick="cancelEditProduk()" class="text-xs underline">Batalkan</button>
+            </div>
             
             <form id="produk-form" class="space-y-4">
                 <input type="hidden" id="produk-id" />
@@ -270,16 +274,8 @@
                     </button>
                 </div>
             </form>
-            
-            <div id="produk-success" class="hidden mt-4 p-3 bg-green-100 text-green-700 rounded-lg border border-green-200 text-sm">
-                ✅ Produk berhasil disimpan!
-            </div>
-            <div id="produk-error" class="hidden mt-4 p-3 bg-red-100 text-red-700 rounded-lg border border-red-200 text-sm">
-                ❌ Gagal menyimpan produk.
-            </div>
         </div>
 
-        <!-- DAFTAR PRODUK -->
         <div class="bg-white rounded-2xl shadow-md p-6 card">
             <div class="flex justify-between items-center mb-4">
                 <h2 class="text-xl font-bold text-gray-700">📦 Daftar Produk</h2>
@@ -300,23 +296,43 @@
     // ============================================================
     const API_URL = 'https://script.google.com/macros/s/AKfycbyQAKZs4rZouzb4TRyi6cWkFy2Mj5vIF4qlDdrzAu0HfqONxSp3Qo8YnpAQCaJ4WIBy/exec';
 
+    // Cache data (agar edit tidak perlu fetch ulang)
+    let cacheArticles = [];
+    let cacheProducts = [];
+
+    // ============================================================
+    // TOAST NOTIFICATION
+    // ============================================================
+    function showToast(message) {
+        const existing = document.querySelector('.toast-notification');
+        if (existing) existing.remove();
+        
+        const toast = document.createElement('div');
+        toast.className = 'toast-notification';
+        toast.textContent = message;
+        document.body.appendChild(toast);
+        
+        setTimeout(function() {
+            toast.style.opacity = '0';
+            toast.style.transition = 'opacity 0.3s';
+            setTimeout(function() { toast.remove(); }, 300);
+        }, 3000);
+    }
+
     // ============================================================
     // TAB SWITCH
     // ============================================================
     function switchTab(tabId) {
-        // Update button state
         document.querySelectorAll('.tab-button').forEach(function(btn) {
             btn.classList.remove('active');
         });
         document.querySelector('[data-tab="' + tabId + '"]').classList.add('active');
         
-        // Update content
         document.querySelectorAll('.tab-content').forEach(function(content) {
             content.classList.add('hidden');
         });
         document.getElementById(tabId).classList.remove('hidden');
         
-        // Load data sesuai tab
         if (tabId === 'tab-produk') {
             loadProducts();
         } else if (tabId === 'tab-artikel') {
@@ -325,10 +341,8 @@
     }
 
     // ============================================================
-    // ============ ARTIKEL =======================================
+    // QUILL EDITOR
     // ============================================================
-    
-    // Quill Editor
     var quill = new Quill('#quill-editor', {
         theme: 'snow',
         placeholder: 'Tulis konten artikel di sini...',
@@ -346,7 +360,10 @@
         }
     });
 
-    // Load Artikel
+    // ============================================================
+    // ============ ARTIKEL =======================================
+    // ============================================================
+
     async function loadArticles() {
         const listContainer = document.getElementById('cms-article-list');
         listContainer.innerHTML = '<p class="text-gray-400 text-sm">Memuat data...</p>';
@@ -355,6 +372,7 @@
             const response = await fetch(API_URL + '?type=artikel');
             if (!response.ok) throw new Error('Gagal memuat data');
             const articles = await response.json();
+            cacheArticles = articles;
             
             if (articles.length === 0) {
                 listContainer.innerHTML = '<p class="text-gray-400 text-sm">Belum ada artikel.</p>';
@@ -367,12 +385,13 @@
                 const statusText = article.status === 'publish' ? 'Published' : 'Draft';
                 const contentPreview = article.content ? article.content.replace(/<[^>]*>/g, '').substring(0, 80) + '...' : '(kosong)';
                 const date = article.created_at || 'Tanggal tidak tersedia';
+                const articleId = article.id || index + 1;
                 
                 html += `
                     <div class="flex justify-between items-center p-4 bg-gray-50 rounded-xl border border-gray-100 hover:border-green-200 transition-colors">
                         <div class="flex-1 min-w-0">
                             <div class="flex items-center gap-2 flex-wrap">
-                                <span class="text-sm font-bold text-gray-400">#${article.id || index + 1}</span>
+                                <span class="text-sm font-bold text-gray-400">#${articleId}</span>
                                 <span class="text-sm font-semibold text-gray-800 truncate">${article.title || 'Tanpa Judul'}</span>
                             </div>
                             <div class="text-xs text-gray-400 truncate mt-0.5">${contentPreview}</div>
@@ -380,9 +399,12 @@
                                 <i class="far fa-calendar-alt"></i> ${date}
                             </div>
                         </div>
-                        <div class="flex items-center gap-3 flex-shrink-0 ml-4">
+                        <div class="flex items-center gap-2 flex-shrink-0 ml-4">
                             <span class="px-2 py-0.5 text-xs rounded-full bg-${statusColor}-100 text-${statusColor}-700 font-medium">${statusText}</span>
-                            <button onclick="deleteArticle('${article.id || index + 1}')" class="text-red-400 hover:text-red-600 transition-colors text-sm" title="Hapus">
+                            <button onclick="editArticle('${articleId}')" class="text-blue-400 hover:text-blue-600 transition-colors text-sm" title="Edit">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button onclick="deleteArticle('${articleId}')" class="text-red-400 hover:text-red-600 transition-colors text-sm" title="Hapus">
                                 <i class="fas fa-trash-alt"></i>
                             </button>
                         </div>
@@ -398,10 +420,51 @@
         }
     }
 
-    // Submit Artikel
+    // EDIT ARTIKEL - Isi form dengan data yang ada
+    function editArticle(id) {
+        const article = cacheArticles.find(a => String(a.id) === String(id));
+        if (!article) {
+            showToast('❌ Artikel tidak ditemukan');
+            return;
+        }
+        
+        // Isi form
+        document.getElementById('cms-id').value = article.id;
+        document.getElementById('cms-title').value = article.title || '';
+        quill.root.innerHTML = article.content || '';
+        document.getElementById('cms-image').value = article.image || '';
+        document.getElementById('cms-status').value = article.status || 'publish';
+        document.getElementById('cms-date').value = article.created_at || '';
+        
+        // Update UI ke mode edit
+        document.getElementById('artikel-form-title').innerHTML = '✏️ Edit Artikel';
+        document.getElementById('artikel-edit-id').textContent = article.id;
+        document.getElementById('artikel-edit-indicator').classList.remove('hidden');
+        
+        // Scroll ke form
+        document.getElementById('cms-form').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        
+        showToast('✏️ Mode edit artikel aktif');
+    }
+
+    // CANCEL EDIT ARTIKEL
+    function cancelEditArtikel() {
+        document.getElementById('cms-id').value = '';
+        document.getElementById('cms-title').value = '';
+        quill.root.innerHTML = '';
+        document.getElementById('cms-image').value = '';
+        document.getElementById('cms-status').value = 'publish';
+        document.getElementById('cms-date').value = '';
+        
+        document.getElementById('artikel-form-title').innerHTML = '➕ Tambah Artikel Baru';
+        document.getElementById('artikel-edit-indicator').classList.add('hidden');
+    }
+
+    // SUBMIT ARTIKEL (Tambah / Edit)
     document.getElementById('cms-form').addEventListener('submit', async function(e) {
         e.preventDefault();
         
+        const id = document.getElementById('cms-id').value;
         const title = document.getElementById('cms-title').value.trim();
         const content = quill.root.innerHTML;
         const image = document.getElementById('cms-image').value.trim();
@@ -421,18 +484,24 @@
         }
         
         const submitBtn = document.getElementById('cms-submit-btn');
-        const loadingDiv = document.getElementById('cms-loading');
-        const successDiv = document.getElementById('cms-success');
-        const errorDiv = document.getElementById('cms-error');
-        
         submitBtn.disabled = true;
         submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Menyimpan...';
-        loadingDiv.classList.remove('hidden');
-        successDiv.classList.add('hidden');
-        errorDiv.classList.add('hidden');
         
         try {
-            const payload = { type: 'artikel', title, content, image, status, created_at: date };
+            const payload = {
+                type: 'artikel',
+                title: title,
+                content: content,
+                image: image,
+                status: status,
+                created_at: date
+            };
+            
+            // Jika ada ID, berarti EDIT
+            if (id) {
+                payload.action = 'update';
+                payload.id = id;
+            }
             
             await fetch(API_URL, {
                 method: 'POST',
@@ -441,43 +510,30 @@
                 body: JSON.stringify(payload)
             });
             
-            loadingDiv.classList.add('hidden');
-            successDiv.classList.remove('hidden');
-            
-            document.getElementById('cms-title').value = '';
-            quill.root.innerHTML = '';
-            document.getElementById('cms-image').value = '';
-            document.getElementById('cms-status').value = 'publish';
-            document.getElementById('cms-date').value = '';
+            showToast(id ? '✅ Artikel berhasil diperbarui!' : '✅ Artikel berhasil ditambahkan!');
+            cancelEditArtikel();
             
             setTimeout(() => {
                 loadArticles();
-                successDiv.classList.add('hidden');
-            }, 2000);
+            }, 1500);
             
         } catch (error) {
             console.error('Error saving article:', error);
-            loadingDiv.classList.add('hidden');
-            errorDiv.classList.remove('hidden');
-            setTimeout(() => errorDiv.classList.add('hidden'), 4000);
+            showToast('❌ Gagal menyimpan artikel.');
         }
         
         submitBtn.disabled = false;
         submitBtn.innerHTML = '<i class="fas fa-save"></i> Simpan Artikel';
     });
 
-    // Reset Artikel
+    // RESET FORM ARTIKEL
     document.getElementById('cms-clear-btn').addEventListener('click', function() {
         if (confirm('Reset form artikel?')) {
-            document.getElementById('cms-title').value = '';
-            quill.root.innerHTML = '';
-            document.getElementById('cms-image').value = '';
-            document.getElementById('cms-status').value = 'publish';
-            document.getElementById('cms-date').value = '';
+            cancelEditArtikel();
         }
     });
 
-    // Tombol Hari Ini (Artikel)
+    // TOMBOL HARI INI
     document.getElementById('cms-date-today').addEventListener('click', function() {
         const today = new Date();
         const dateStr = today.getFullYear() + '-' + 
@@ -486,11 +542,33 @@
         document.getElementById('cms-date').value = dateStr;
     });
 
-    // Hapus Artikel
-    function deleteArticle(id) {
-        if (confirm(`Yakin ingin menghapus artikel #${id}?`)) {
-            alert(`Fungsi hapus artikel #${id} akan segera tersedia.\n\nUntuk sekarang, hapus manual di Google Sheets.`);
-            window.open('https://docs.google.com/spreadsheets/d/1RfUDGqz6Rtvnka0FaflJ99C5U5n72e0WfzJT5WTW9qc/edit', '_blank');
+    // HAPUS ARTIKEL
+    async function deleteArticle(id) {
+        if (!confirm('Yakin ingin menghapus artikel #' + id + '? Tindakan ini tidak bisa dibatalkan.')) {
+            return;
+        }
+        
+        try {
+            await fetch(API_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    action: 'delete',
+                    type: 'artikel',
+                    id: id
+                })
+            });
+            
+            showToast('✅ Artikel berhasil dihapus!');
+            
+            setTimeout(() => {
+                loadArticles();
+            }, 1500);
+            
+        } catch (error) {
+            console.error('Error deleting article:', error);
+            showToast('❌ Gagal menghapus artikel.');
         }
     }
 
@@ -498,7 +576,6 @@
     // ============ PRODUK ========================================
     // ============================================================
 
-    // Load Produk
     async function loadProducts() {
         const listContainer = document.getElementById('cms-produk-list');
         listContainer.innerHTML = '<p class="text-gray-400 text-sm">Memuat data...</p>';
@@ -507,6 +584,7 @@
             const response = await fetch(API_URL + '?type=produk');
             if (!response.ok) throw new Error('Gagal memuat data');
             const products = await response.json();
+            cacheProducts = products;
             
             if (products.length === 0) {
                 listContainer.innerHTML = '<p class="text-gray-400 text-sm">Belum ada produk.</p>';
@@ -518,6 +596,7 @@
                 const statusColor = produk.status === 'publish' ? 'green' : 'yellow';
                 const statusText = produk.status === 'publish' ? 'Published' : 'Draft';
                 const kategoriColor = produk.kategori === 'Mesin' ? 'blue' : 'purple';
+                const produkId = produk.id || index + 1;
                 
                 let hargaText = 'Hubungi Kami';
                 if (produk.harga && produk.harga !== 'Hubungi Kami' && !isNaN(produk.harga)) {
@@ -534,7 +613,7 @@
                             </div>
                             <div class="flex-1 min-w-0">
                                 <div class="flex items-center gap-2 flex-wrap">
-                                    <span class="text-xs font-bold text-gray-400">#${produk.id || index + 1}</span>
+                                    <span class="text-xs font-bold text-gray-400">#${produkId}</span>
                                     <span class="text-sm font-semibold text-gray-800 truncate">${produk.nama || 'Tanpa Nama'}</span>
                                     <span class="px-2 py-0.5 text-xs rounded-full bg-${kategoriColor}-100 text-${kategoriColor}-700 font-medium">${produk.kategori || '-'}</span>
                                 </div>
@@ -544,10 +623,10 @@
                         </div>
                         <div class="flex items-center gap-2 flex-shrink-0 ml-4">
                             <span class="px-2 py-0.5 text-xs rounded-full bg-${statusColor}-100 text-${statusColor}-700 font-medium">${statusText}</span>
-                            <button onclick="editProduk('${produk.id}')" class="text-blue-400 hover:text-blue-600 transition-colors text-sm" title="Edit">
+                            <button onclick="editProduk('${produkId}')" class="text-blue-400 hover:text-blue-600 transition-colors text-sm" title="Edit">
                                 <i class="fas fa-edit"></i>
                             </button>
-                            <button onclick="deleteProduk('${produk.id}')" class="text-red-400 hover:text-red-600 transition-colors text-sm" title="Hapus">
+                            <button onclick="deleteProduk('${produkId}')" class="text-red-400 hover:text-red-600 transition-colors text-sm" title="Hapus">
                                 <i class="fas fa-trash-alt"></i>
                             </button>
                         </div>
@@ -563,7 +642,46 @@
         }
     }
 
-    // Submit Produk (Tambah / Edit)
+    // EDIT PRODUK - Isi form dengan data yang ada
+    function editProduk(id) {
+        const produk = cacheProducts.find(p => String(p.id) === String(id));
+        if (!produk) {
+            showToast('❌ Produk tidak ditemukan');
+            return;
+        }
+        
+        document.getElementById('produk-id').value = produk.id;
+        document.getElementById('produk-nama').value = produk.nama || '';
+        document.getElementById('produk-kategori').value = produk.kategori || 'Mesin';
+        document.getElementById('produk-harga').value = (produk.harga && !isNaN(produk.harga)) ? produk.harga : '';
+        document.getElementById('produk-gambar').value = produk.gambar || '';
+        document.getElementById('produk-deskripsi').value = produk.deskripsi || '';
+        document.getElementById('produk-status').value = produk.status || 'publish';
+        
+        document.getElementById('produk-form-title').innerHTML = '✏️ Edit Produk';
+        document.getElementById('produk-edit-id').textContent = produk.id;
+        document.getElementById('produk-edit-indicator').classList.remove('hidden');
+        
+        document.getElementById('produk-form').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        
+        showToast('✏️ Mode edit produk aktif');
+    }
+
+    // CANCEL EDIT PRODUK
+    function cancelEditProduk() {
+        document.getElementById('produk-id').value = '';
+        document.getElementById('produk-nama').value = '';
+        document.getElementById('produk-kategori').value = 'Mesin';
+        document.getElementById('produk-harga').value = '';
+        document.getElementById('produk-gambar').value = '';
+        document.getElementById('produk-deskripsi').value = '';
+        document.getElementById('produk-status').value = 'publish';
+        
+        document.getElementById('produk-form-title').innerHTML = '➕ Tambah Produk Baru';
+        document.getElementById('produk-edit-indicator').classList.add('hidden');
+    }
+
+    // SUBMIT PRODUK (Tambah / Edit)
     document.getElementById('produk-form').addEventListener('submit', async function(e) {
         e.preventDefault();
         
@@ -581,13 +699,8 @@
         }
         
         const submitBtn = document.getElementById('produk-submit-btn');
-        const successDiv = document.getElementById('produk-success');
-        const errorDiv = document.getElementById('produk-error');
-        
         submitBtn.disabled = true;
         submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Menyimpan...';
-        successDiv.classList.add('hidden');
-        errorDiv.classList.add('hidden');
         
         try {
             const payload = {
@@ -597,12 +710,11 @@
                 harga: harga || 'Hubungi Kami',
                 deskripsi: deskripsi,
                 gambar: gambar,
-                status: status,
-                created_at: ''
+                status: status
             };
             
+            // Jika ada ID, berarti EDIT
             if (id) {
-                // Mode EDIT
                 payload.action = 'update';
                 payload.id = id;
             }
@@ -614,78 +726,56 @@
                 body: JSON.stringify(payload)
             });
             
-            successDiv.classList.remove('hidden');
-            
-            resetProdukForm();
+            showToast(id ? '✅ Produk berhasil diperbarui!' : '✅ Produk berhasil ditambahkan!');
+            cancelEditProduk();
             
             setTimeout(() => {
                 loadProducts();
-                successDiv.classList.add('hidden');
-            }, 2000);
+            }, 1500);
             
         } catch (error) {
             console.error('Error saving product:', error);
-            errorDiv.classList.remove('hidden');
-            setTimeout(() => errorDiv.classList.add('hidden'), 4000);
+            showToast('❌ Gagal menyimpan produk.');
         }
         
         submitBtn.disabled = false;
         submitBtn.innerHTML = '<i class="fas fa-save"></i> Simpan Produk';
     });
 
-    // Reset Form Produk
-    function resetProdukForm() {
-        document.getElementById('produk-id').value = '';
-        document.getElementById('produk-nama').value = '';
-        document.getElementById('produk-kategori').value = 'Mesin';
-        document.getElementById('produk-harga').value = '';
-        document.getElementById('produk-gambar').value = '';
-        document.getElementById('produk-deskripsi').value = '';
-        document.getElementById('produk-status').value = 'publish';
-        document.getElementById('produk-form-title').innerHTML = '➕ Tambah Produk Baru';
-    }
-
+    // RESET FORM PRODUK
     document.getElementById('produk-clear-btn').addEventListener('click', function() {
         if (confirm('Reset form produk?')) {
-            resetProdukForm();
+            cancelEditProduk();
         }
     });
 
-    // Edit Produk
-    async function editProduk(id) {
+    // HAPUS PRODUK
+    async function deleteProduk(id) {
+        if (!confirm('Yakin ingin menghapus produk #' + id + '? Tindakan ini tidak bisa dibatalkan.')) {
+            return;
+        }
+        
         try {
-            const response = await fetch(API_URL + '?type=produk');
-            const products = await response.json();
-            const produk = products.find(p => String(p.id) === String(id));
+            await fetch(API_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    action: 'delete',
+                    type: 'produk',
+                    id: id
+                })
+            });
             
-            if (!produk) {
-                alert('Produk tidak ditemukan');
-                return;
-            }
+            showToast('✅ Produk berhasil dihapus!');
             
-            document.getElementById('produk-id').value = produk.id;
-            document.getElementById('produk-nama').value = produk.nama || '';
-            document.getElementById('produk-kategori').value = produk.kategori || 'Mesin';
-            document.getElementById('produk-harga').value = (produk.harga && !isNaN(produk.harga)) ? produk.harga : '';
-            document.getElementById('produk-gambar').value = produk.gambar || '';
-            document.getElementById('produk-deskripsi').value = produk.deskripsi || '';
-            document.getElementById('produk-status').value = produk.status || 'publish';
-            document.getElementById('produk-form-title').innerHTML = '✏️ Edit Produk #' + produk.id;
-            
-            // Scroll ke form
-            document.getElementById('produk-form').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            setTimeout(() => {
+                loadProducts();
+            }, 1500);
             
         } catch (error) {
-            console.error('Error edit produk:', error);
-            alert('Gagal memuat data produk');
-        }
-    }
-
-    // Hapus Produk
-    function deleteProduk(id) {
-        if (confirm(`Yakin ingin menghapus produk #${id}?`)) {
-            alert(`Fungsi hapus produk #${id} akan segera tersedia.\n\nUntuk sekarang, hapus manual di Google Sheets.`);
-            window.open('https://docs.google.com/spreadsheets/d/1RfUDGqz6Rtvnka0FaflJ99C5U5n72e0WfzJT5WTW9qc/edit', '_blank');
+            console.error('Error deleting product:', error);
+            showToast('❌ Gagal menghapus produk.');
         }
     }
 
