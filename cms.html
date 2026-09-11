@@ -253,7 +253,19 @@
                               class="w-full px-4 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none resize-y"
                               placeholder="Deskripsi singkat produk..."></textarea>
                 </div>
-                
+                    <!-- Toggle Produk Unggulan -->
+<div class="bg-amber-50 border border-amber-200 rounded-lg p-4">
+    <label class="flex items-center gap-3 cursor-pointer">
+        <input type="checkbox" id="produk-featured" 
+               class="w-5 h-5 text-amber-500 rounded focus:ring-2 focus:ring-amber-400 cursor-pointer" />
+        <div>
+            <span class="font-semibold text-amber-800 text-sm">
+                <i class="fas fa-star"></i> Produk Unggulan
+            </span>
+            <p class="text-xs text-amber-600 mt-0.5">Centang untuk menampilkan di halaman utama (maks 6 per kategori)</p>
+        </div>
+    </label>
+</div>
                 <div class="flex flex-wrap gap-4 items-center">
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
@@ -616,6 +628,9 @@
                                     <span class="text-xs font-bold text-gray-400">#${produkId}</span>
                                     <span class="text-sm font-semibold text-gray-800 truncate">${produk.nama || 'Tanpa Nama'}</span>
                                     <span class="px-2 py-0.5 text-xs rounded-full bg-${kategoriColor}-100 text-${kategoriColor}-700 font-medium">${produk.kategori || '-'}</span>
+                                    ${(produk.featured === 'TRUE' || produk.featured === true) 
+    ? '<span class="px-2 py-0.5 text-xs rounded-full bg-amber-100 text-amber-700 font-medium"><i class="fas fa-star"></i> Unggulan</span>' 
+    : ''}
                                 </div>
                                 <div class="text-xs text-gray-400 truncate mt-0.5">${produk.deskripsi || '(tanpa deskripsi)'}</div>
                                 <div class="text-xs font-bold text-green-700 mt-0.5">${hargaText}</div>
@@ -657,6 +672,8 @@
         document.getElementById('produk-gambar').value = produk.gambar || '';
         document.getElementById('produk-deskripsi').value = produk.deskripsi || '';
         document.getElementById('produk-status').value = produk.status || 'publish';
+        document.getElementById('produk-featured').checked = 
+    (produk.featured === 'TRUE' || produk.featured === true);
         
         document.getElementById('produk-form-title').innerHTML = '✏️ Edit Produk';
         document.getElementById('produk-edit-id').textContent = produk.id;
@@ -676,7 +693,7 @@
         document.getElementById('produk-gambar').value = '';
         document.getElementById('produk-deskripsi').value = '';
         document.getElementById('produk-status').value = 'publish';
-        
+        document.getElementById('produk-featured').checked = false;
         document.getElementById('produk-form-title').innerHTML = '➕ Tambah Produk Baru';
         document.getElementById('produk-edit-indicator').classList.add('hidden');
     }
@@ -692,7 +709,7 @@
         const gambar = document.getElementById('produk-gambar').value.trim();
         const deskripsi = document.getElementById('produk-deskripsi').value.trim();
         const status = document.getElementById('produk-status').value;
-        
+        const featured = document.getElementById('produk-featured').checked;
         if (!nama) {
             alert('Nama produk harus diisi!');
             return;
@@ -704,14 +721,15 @@
         
         try {
             const payload = {
-                type: 'produk',
-                nama: nama,
-                kategori: kategori,
-                harga: harga || 'Hubungi Kami',
-                deskripsi: deskripsi,
-                gambar: gambar,
-                status: status
-            };
+    type: 'produk',
+    nama: nama,
+    kategori: kategori,
+    harga: harga || 'Hubungi Kami',
+    deskripsi: deskripsi,
+    gambar: gambar,
+    status: status,
+    featured: featured
+};
             
             // Jika ada ID, berarti EDIT
             if (id) {
