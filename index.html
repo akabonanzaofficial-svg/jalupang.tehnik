@@ -5,21 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Jalupang Teknik | Solusi Teknologi Lingkungan</title>
 
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet" />
 
-    <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
-    <!-- AOS Animation CSS -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
 
-    <!-- Tailwind Config -->
     <script>
         tailwind.config = {
             theme: {
@@ -45,22 +40,11 @@
         };
     </script>
     <style>
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #f0fdf4;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #86efac;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #22c55e;
-        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f0fdf4; }
+        ::-webkit-scrollbar-thumb { background: #86efac; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #22c55e; }
 
-        /* Glass Navigation */
         .glass-nav {
             background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(12px);
@@ -69,20 +53,12 @@
         }
 
         @keyframes fadeInTab {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        .animate-fade-in {
-            animation: fadeInTab 0.4s ease-out forwards;
-        }
+        .animate-fade-in { animation: fadeInTab 0.4s ease-out forwards; }
 
-        /* ===== SLIDER / CAROUSEL ===== */
+        /* SLIDER */
         .slider-container {
             position: relative;
             width: 100%;
@@ -94,14 +70,12 @@
             aspect-ratio: 16/9;
             max-height: 480px;
         }
-
         .slider-track {
             display: flex;
             transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             will-change: transform;
             height: 100%;
         }
-
         .slider-slide {
             min-width: 100%;
             position: relative;
@@ -111,7 +85,6 @@
             overflow: hidden;
             cursor: pointer;
         }
-
         .slider-slide img {
             width: 100%;
             height: 100%;
@@ -119,23 +92,14 @@
             display: block;
             transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
-
-        .slider-slide:hover img {
-            transform: scale(1.08);
-        }
-
-        .slider-slide.zoomed img {
-            transform: scale(1.15);
-            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-
+        .slider-slide:hover img { transform: scale(1.08); }
+        .slider-slide.zoomed img { transform: scale(1.15); }
         .slider-slide .video-wrapper {
             position: relative;
             width: 100%;
             height: 100%;
             background: #000;
         }
-
         .slider-slide .video-wrapper iframe {
             width: 100%;
             height: 100%;
@@ -144,7 +108,6 @@
             top: 0;
             left: 0;
         }
-
         .slider-btn {
             position: absolute;
             top: 50%;
@@ -164,14 +127,9 @@
             align-items: center;
             justify-content: center;
         }
-        .slider-btn:hover {
-            background: #ffffff;
-            transform: translateY(-50%) scale(1.05);
-            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25);
-        }
+        .slider-btn:hover { background: #ffffff; transform: translateY(-50%) scale(1.05); }
         .slider-btn.prev { left: 12px; }
         .slider-btn.next { right: 12px; }
-
         .slider-dots {
             position: absolute;
             bottom: 16px;
@@ -195,10 +153,6 @@
             border-color: #22c55e;
             transform: scale(1.2);
         }
-        .slider-dots .dot:hover {
-            background: rgba(255, 255, 255, 0.8);
-        }
-
         .slider-label {
             position: absolute;
             bottom: 50px;
@@ -216,97 +170,12 @@
             font-size: 10px;
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
             margin-bottom: 4px;
         }
-        .slider-label h3 {
-            font-size: 18px;
-            font-weight: 700;
-            font-family: 'Outfit', sans-serif;
-        }
-        .slider-label p {
-            font-size: 12px;
-            opacity: 0.85;
-            margin-top: 2px;
-        }
+        .slider-label h3 { font-size: 18px; font-weight: 700; font-family: 'Outfit', sans-serif; }
+        .slider-label p { font-size: 12px; opacity: 0.85; margin-top: 2px; }
 
-        .slider-zoom-hint {
-            position: absolute;
-            bottom: 50px;
-            right: 24px;
-            z-index: 10;
-            background: rgba(0,0,0,0.5);
-            backdrop-filter: blur(8px);
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 11px;
-            color: rgba(255,255,255,0.7);
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-        .slider-slide:hover .slider-zoom-hint {
-            opacity: 1;
-        }
-        .slider-zoom-hint i {
-            font-size: 12px;
-        }
-
-        @media (max-width: 768px) {
-            .slider-container {
-                max-height: 300px;
-                border-radius: 1rem;
-            }
-            .slider-btn {
-                width: 32px;
-                height: 32px;
-                font-size: 12px;
-            }
-            .slider-btn.prev { left: 6px; }
-            .slider-btn.next { right: 6px; }
-            .slider-label {
-                bottom: 36px;
-                left: 14px;
-            }
-            .slider-label h3 {
-                font-size: 14px;
-            }
-            .slider-label p {
-                font-size: 10px;
-            }
-            .slider-label .badge {
-                font-size: 8px;
-                padding: 2px 10px;
-            }
-            .slider-dots .dot {
-                width: 8px;
-                height: 8px;
-            }
-            .slider-zoom-hint {
-                display: none;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .slider-container {
-                max-height: 220px;
-            }
-            .slider-label {
-                bottom: 28px;
-                left: 10px;
-            }
-            .slider-label h3 {
-                font-size: 12px;
-            }
-            .slider-label p {
-                font-size: 9px;
-            }
-        }
-
-        /* ===== MODAL POPUP ===== */
+        /* MODAL */
         .modal-overlay {
             position: fixed;
             inset: 0;
@@ -321,12 +190,7 @@
             visibility: hidden;
             transition: all 0.3s ease;
         }
-
-        .modal-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
+        .modal-overlay.active { opacity: 1; visibility: visible; }
         .modal-box {
             background: white;
             border-radius: 2rem;
@@ -339,11 +203,7 @@
             transition: all 0.3s ease;
             position: relative;
         }
-
-        .modal-overlay.active .modal-box {
-            transform: scale(1) translateY(0);
-        }
-
+        .modal-overlay.active .modal-box { transform: scale(1) translateY(0); }
         .modal-close {
             position: sticky;
             top: 0;
@@ -355,22 +215,11 @@
             border-radius: 50%;
             font-size: 20px;
             cursor: pointer;
-            transition: all 0.2s;
-            z-index: 10;
             display: flex;
             align-items: center;
             justify-content: center;
         }
-
-        .modal-close:hover {
-            background: #fee2e2;
-            color: #dc2626;
-        }
-
-        .modal-content {
-            margin-top: 0.5rem;
-        }
-
+        .modal-close:hover { background: #fee2e2; color: #dc2626; }
         .modal-content h2 {
             font-family: 'Outfit', sans-serif;
             font-size: 1.75rem;
@@ -378,27 +227,9 @@
             color: #1f2937;
             margin-bottom: 0.75rem;
         }
-
-        .modal-content .modal-meta {
-            font-size: 0.875rem;
-            color: #6b7280;
-            margin-bottom: 1rem;
-        }
-
-        .modal-content .modal-image {
-            width: 100%;
-            max-height: 300px;
-            object-fit: cover;
-            border-radius: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .modal-content .modal-body {
-            font-size: 1rem;
-            line-height: 1.8;
-            color: #374151;
-        }
-
+        .modal-content .modal-meta { font-size: 0.875rem; color: #6b7280; margin-bottom: 1rem; }
+        .modal-content .modal-image { width: 100%; max-height: 300px; object-fit: cover; border-radius: 1rem; margin-bottom: 1.5rem; }
+        .modal-content .modal-body { font-size: 1rem; line-height: 1.8; color: #374151; }
         .modal-content .modal-body h1 { font-size: 1.75rem; font-weight: 700; margin: 1.5rem 0 0.75rem; }
         .modal-content .modal-body h2 { font-size: 1.5rem; font-weight: 700; margin: 1.25rem 0 0.75rem; }
         .modal-content .modal-body h3 { font-size: 1.25rem; font-weight: 600; margin: 1rem 0 0.5rem; }
@@ -414,12 +245,8 @@
         }
         .modal-content .modal-body img { max-width: 100%; border-radius: 0.5rem; margin: 0.75rem 0; }
         .modal-content .modal-body iframe { max-width: 100%; border-radius: 0.5rem; margin: 0.75rem 0; }
-        .modal-content .modal-body strong { font-weight: 700; color: #1f2937; }
-        .modal-content .modal-body .ql-align-center { text-align: center; }
-        .modal-content .modal-body .ql-align-right { text-align: right; }
-        .modal-content .modal-body .ql-align-justify { text-align: justify; }
 
-        /* ===== SHARE BUTTONS ===== */
+        /* SHARE */
         .share-buttons {
             display: flex;
             flex-wrap: wrap;
@@ -428,7 +255,6 @@
             padding-top: 1.25rem;
             border-top: 1px solid #e5e7eb;
         }
-
         .share-btn {
             display: inline-flex;
             align-items: center;
@@ -439,34 +265,14 @@
             font-size: 0.8rem;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s;
-            text-decoration: none;
             color: white;
         }
-
-        .share-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        }
-
         .share-btn.whatsapp { background: #25D366; }
-        .share-btn.whatsapp:hover { background: #1da851; }
-
         .share-btn.facebook { background: #1877F2; }
-        .share-btn.facebook:hover { background: #166fe5; }
-
         .share-btn.twitter { background: #000000; }
-        .share-btn.twitter:hover { background: #1a1a1a; }
-
         .share-btn.email { background: #6b7280; }
-        .share-btn.email:hover { background: #4b5563; }
-
         .share-btn.copy { background: #22c55e; }
-        .share-btn.copy:hover { background: #16a34a; }
-
-        .share-btn i { font-size: 0.9rem; }
-
-        /* Share di card */
+        .share-btn:hover { transform: translateY(-2px); }
         .card-share {
             display: inline-flex;
             align-items: center;
@@ -478,16 +284,10 @@
             font-size: 0.7rem;
             color: #6b7280;
             cursor: pointer;
-            transition: all 0.2s;
         }
+        .card-share:hover { background: #f3f4f6; border-color: #22c55e; color: #22c55e; }
 
-        .card-share:hover {
-            background: #f3f4f6;
-            border-color: #22c55e;
-            color: #22c55e;
-        }
-
-        /* Toast */
+        /* TOAST */
         .toast-notification {
             position: fixed;
             bottom: 24px;
@@ -500,215 +300,149 @@
             font-size: 0.875rem;
             z-index: 1000;
             box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-            transition: opacity 0.3s;
         }
 
-        /* Responsive Modal */
+        /* ===== PRODUK CARD ===== */
+        .produk-card {
+            background: white;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+            border: 1px solid #f3f4f6;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        .produk-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            border-color: #22c55e;
+        }
+        .produk-card-image {
+            width: 100%;
+            aspect-ratio: 1/1;
+            overflow: hidden;
+            background: #f3f4f6;
+            position: relative;
+        }
+        .produk-card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .produk-card:hover .produk-card-image img { transform: scale(1.08); }
+        .produk-card-body {
+            padding: 0.875rem;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+        .produk-card-name {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: #27272a;
+            margin-bottom: 0.25rem;
+            line-height: 1.3;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            min-height: 2.4em;
+        }
+        .produk-card-desc {
+            font-size: 0.7rem;
+            color: #9ca3af;
+            line-height: 1.4;
+            margin-bottom: 0.5rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            min-height: 2em;
+        }
+        .produk-card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: auto;
+            gap: 0.5rem;
+        }
+        .produk-card-price {
+            font-weight: 700;
+            color: #15803d;
+            font-size: 0.8rem;
+            white-space: nowrap;
+        }
+        .produk-card-btn {
+            font-size: 0.7rem;
+            background: #dcfce7;
+            color: #15803d;
+            padding: 0.25rem 0.6rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            text-decoration: none;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+        .produk-card-btn:hover { background: #16a34a; color: white; }
+        .produk-featured-badge {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            background: rgba(245, 158, 11, 0.95);
+            color: white;
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 9999px;
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            z-index: 2;
+        }
+        @keyframes fadeInProduk {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .produk-fade-in { animation: fadeInProduk 0.4s ease-out forwards; }
+        .btn-expand {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: white;
+            border: 1.5px solid #22c55e;
+            color: #15803d;
+            font-weight: 600;
+            font-size: 0.875rem;
+            border-radius: 9999px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .btn-expand:hover {
+            background: #f0fdf4;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.2);
+        }
+        .btn-expand i { transition: transform 0.3s; }
+        .btn-expand.expanded i.fa-chevron-down { transform: rotate(180deg); }
+
         @media (max-width: 640px) {
-            .modal-box {
-                padding: 1.25rem;
-                border-radius: 1.25rem;
-                max-height: 95vh;
-            }
-            .modal-content h2 {
-                font-size: 1.25rem;
-            }
-            .share-btn {
-                font-size: 0.7rem;
-                padding: 0.35rem 0.75rem;
-            }
+            .modal-box { padding: 1.25rem; border-radius: 1.25rem; }
+            .share-btn { font-size: 0.7rem; padding: 0.35rem 0.75rem; }
             .share-btn span { display: none; }
+            .produk-card-desc { display: none; }
         }
-        /* ===== PRODUK CARD (GRID 3 KOLOM) ===== */
-.produk-card {
-    background: white;
-    border-radius: 1rem;
-    overflow: hidden;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-    border: 1px solid #f3f4f6;
-    transition: all 0.3s ease;
-    display: flex;
-    flex-direction: column;
-}
-
-.produk-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-    border-color: #22c55e;
-}
-
-.produk-card-image {
-    width: 100%;
-    aspect-ratio: 1/1;
-    overflow: hidden;
-    background: #f3f4f6;
-    position: relative;
-}
-
-.produk-card-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s ease;
-}
-
-.produk-card:hover .produk-card-image img {
-    transform: scale(1.08);
-}
-
-.produk-card-body {
-    padding: 0.875rem;
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-}
-
-.produk-card-name {
-    font-family: 'Outfit', sans-serif;
-    font-weight: 700;
-    font-size: 0.9rem;
-    color: #27272a;
-    margin-bottom: 0.25rem;
-    line-height: 1.3;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    min-height: 2.4em;
-}
-
-.produk-card-desc {
-    font-size: 0.7rem;
-    color: #9ca3af;
-    line-height: 1.4;
-    margin-bottom: 0.5rem;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    min-height: 2em;
-}
-
-.produk-card-footer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: auto;
-    gap: 0.5rem;
-}
-
-.produk-card-price {
-    font-weight: 700;
-    color: #15803d;
-    font-size: 0.8rem;
-    white-space: nowrap;
-}
-
-.produk-card-btn {
-    font-size: 0.7rem;
-    background: #dcfce7;
-    color: #15803d;
-    padding: 0.25rem 0.6rem;
-    border-radius: 9999px;
-    font-weight: 600;
-    transition: all 0.2s;
-    white-space: nowrap;
-    text-decoration: none;
-}
-
-.produk-card-btn:hover {
-    background: #16a34a;
-    color: white;
-}
-
-.produk-featured-badge {
-    position: absolute;
-    top: 8px;
-    left: 8px;
-    background: rgba(245, 158, 11, 0.95);
-    color: white;
-    font-size: 0.65rem;
-    font-weight: 700;
-    padding: 3px 8px;
-    border-radius: 9999px;
-    backdrop-filter: blur(4px);
-    display: flex;
-    align-items: center;
-    gap: 3px;
-    z-index: 2;
-}
-
-/* ===== ANIMASI FADE IN ===== */
-@keyframes fadeInProduk {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.produk-fade-in {
-    animation: fadeInProduk 0.4s ease-out forwards;
-}
-
-/* ===== TOMBOL EXPAND ===== */
-.btn-expand {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    padding: 0.75rem 1.5rem;
-    background: white;
-    border: 1.5px solid #22c55e;
-    color: #15803d;
-    font-weight: 600;
-    font-size: 0.875rem;
-    border-radius: 9999px;
-    cursor: pointer;
-    transition: all 0.3s;
-}
-
-.btn-expand:hover {
-    background: #f0fdf4;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(34, 197, 94, 0.2);
-}
-
-.btn-expand i {
-    transition: transform 0.3s;
-}
-
-.btn-expand.expanded i.fa-chevron-down {
-    transform: rotate(180deg);
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-    .produk-card-name {
-        font-size: 0.85rem;
-    }
-    .produk-card-price {
-        font-size: 0.75rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .produk-card-name {
-        font-size: 0.8rem;
-    }
-    .produk-card-desc {
-        display: none;
-    }
-}
     </style>
 </head>
 
 <body class="font-sans text-gray-600 bg-white antialiased selection:bg-green-600 selection:text-white">
 
-    <!-- ========== NAVIGATION ========== -->
+    <!-- NAVIGATION -->
     <nav class="fixed w-full z-50 glass-nav transition-all duration-300" id="navbar">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
@@ -724,10 +458,10 @@
                     <a href="#layanan" class="text-gray-600 hover:text-green-600 font-medium transition-colors">Produk</a>
                     <a href="#portofolio" class="text-gray-600 hover:text-green-600 font-medium transition-colors">Portofolio</a>
                     <a href="#berita" class="text-gray-600 hover:text-green-600 font-medium transition-colors">Berita</a>
-                    <a href="#kontak" class="bg-green-700 text-white px-6 py-2.5 rounded-full font-medium hover:bg-green-800 transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5">Hubungi Kami</a>
+                    <a href="#kontak" class="bg-green-700 text-white px-6 py-2.5 rounded-full font-medium hover:bg-green-800 transition-all shadow-md">Hubungi Kami</a>
                 </div>
                 <div class="lg:hidden flex items-center">
-                    <button id="mobile-menu-btn" class="text-gray-600 hover:text-green-700 focus:outline-none p-2" aria-label="Toggle menu">
+                    <button id="mobile-menu-btn" class="text-gray-600 hover:text-green-700 p-2" aria-label="Toggle menu">
                         <i class="fas fa-bars text-2xl"></i>
                     </button>
                 </div>
@@ -735,17 +469,17 @@
         </div>
         <div id="mobile-menu" class="lg:hidden hidden bg-white border-t border-green-50 absolute w-full shadow-xl">
             <div class="px-4 pt-2 pb-6 space-y-2 flex flex-col">
-                <a href="#profil" class="mobile-link block px-3 py-3 text-base font-medium text-gray-700 hover:text-green-700 hover:bg-green-50 rounded-lg">Profil</a>
-                <a href="#legalitas" class="mobile-link block px-3 py-3 text-base font-medium text-gray-700 hover:text-green-700 hover:bg-green-50 rounded-lg">Legalitas</a>
-                <a href="#layanan" class="mobile-link block px-3 py-3 text-base font-medium text-gray-700 hover:text-green-700 hover:bg-green-50 rounded-lg">Produk</a>
-                <a href="#portofolio" class="mobile-link block px-3 py-3 text-base font-medium text-gray-700 hover:text-green-700 hover:bg-green-50 rounded-lg">Portofolio</a>
-                <a href="#berita" class="mobile-link block px-3 py-3 text-base font-medium text-gray-700 hover:text-green-700 hover:bg-green-50 rounded-lg">Berita</a>
+                <a href="#profil" class="mobile-link block px-3 py-3 text-base font-medium text-gray-700 hover:bg-green-50 rounded-lg">Profil</a>
+                <a href="#legalitas" class="mobile-link block px-3 py-3 text-base font-medium text-gray-700 hover:bg-green-50 rounded-lg">Legalitas</a>
+                <a href="#layanan" class="mobile-link block px-3 py-3 text-base font-medium text-gray-700 hover:bg-green-50 rounded-lg">Produk</a>
+                <a href="#portofolio" class="mobile-link block px-3 py-3 text-base font-medium text-gray-700 hover:bg-green-50 rounded-lg">Portofolio</a>
+                <a href="#berita" class="mobile-link block px-3 py-3 text-base font-medium text-gray-700 hover:bg-green-50 rounded-lg">Berita</a>
                 <a href="#kontak" class="mobile-link block px-3 py-3 mt-4 text-center text-base font-medium text-white bg-green-700 rounded-lg">Hubungi Kami</a>
             </div>
         </div>
     </nav>
 
-    <!-- ========== HERO ========== -->
+    <!-- HERO -->
     <section class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden bg-green-50/50">
         <div class="absolute top-0 right-0 w-[500px] h-[500px] rounded-full bg-green-200/50 blur-[80px] -translate-y-1/2 translate-x-1/3 pointer-events-none"></div>
         <div class="absolute bottom-0 left-0 w-[400px] h-[400px] rounded-full bg-emerald-200/40 blur-[60px] translate-y-1/3 -translate-x-1/4 pointer-events-none"></div>
@@ -774,162 +508,79 @@
                     <div class="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white w-full max-w-[900px]">
                         <div class="slider-container" id="heroSlider">
                             <div class="slider-track" id="sliderTrack">
-                                <!-- SLIDE 1: VIDEO -->
                                 <div class="slider-slide" data-index="0">
                                     <div class="video-wrapper">
-                                        <iframe 
-                                            src="https://www.youtube.com/embed/iEbzET24hZA?si=SMfCqJOXIJdbaJMQ"
-                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                            allowfullscreen
-                                            loading="lazy"
-                                            title="Jalupang Teknik - Video Profil"
-                                        ></iframe>
+                                        <iframe src="https://www.youtube.com/embed/iEbzET24hZA?si=SMfCqJOXIJdbaJMQ" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy" title="Video Profil"></iframe>
                                     </div>
                                     <div class="slider-label">
                                         <span class="badge"><i class="fas fa-play mr-1"></i> Video Profil</span>
                                         <h3>Jalupang Teknik</h3>
                                         <p>Solusi Teknologi Lingkungan</p>
                                     </div>
-                                    <div class="slider-zoom-hint">
-                                        <i class="fas fa-expand"></i> Zoom
-                                    </div>
                                 </div>
-
-                                <!-- SLIDE 2: VIDEO -->
                                 <div class="slider-slide" data-index="0">
                                     <div class="video-wrapper">
-                                        <iframe 
-                                            src="https://www.youtube.com/embed/-FE9__Ybr60"
-                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                            allowfullscreen
-                                            loading="lazy"
-                                            title="Jalupang Teknik - Video Profil"
-                                        ></iframe>
+                                        <iframe src="https://www.youtube.com/embed/-FE9__Ybr60" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy" title="Video Profil"></iframe>
                                     </div>
                                     <div class="slider-label">
                                         <span class="badge"><i class="fas fa-play mr-1"></i> Video Profil</span>
                                         <h3>Jalupang Teknik</h3>
                                         <p>Solusi Teknologi Lingkungan</p>
                                     </div>
-                                    <div class="slider-zoom-hint">
-                                        <i class="fas fa-expand"></i> Zoom
-                                    </div>
                                 </div>
-
-                                <!-- SLIDE 3: VIDEO -->
                                 <div class="slider-slide" data-index="0">
                                     <div class="video-wrapper">
-                                        <iframe 
-                                            src="https://www.youtube.com/embed/41Q0sy-hia8?si=MS0Zc9X5OharQf7S"
-                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                            allowfullscreen
-                                            loading="lazy"
-                                            title="Jalupang Teknik - Video Profil"
-                                        ></iframe>
+                                        <iframe src="https://www.youtube.com/embed/41Q0sy-hia8?si=MS0Zc9X5OharQf7S" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy" title="Video Profil"></iframe>
                                     </div>
                                     <div class="slider-label">
                                         <span class="badge"><i class="fas fa-play mr-1"></i> Video Profil</span>
                                         <h3>Jalupang Teknik</h3>
                                         <p>Solusi Teknologi Lingkungan</p>
                                     </div>
-                                    <div class="slider-zoom-hint">
-                                        <i class="fas fa-expand"></i> Zoom
-                                    </div>
                                 </div>
-
-                                <!-- SLIDE 4: GAMBAR -->
                                 <div class="slider-slide" data-index="1">
-                                    <img 
-                                        src="https://raw.githubusercontent.com/akabonanzaofficial-svg/CP_jalupangtehnik/refs/heads/add-images/images/Jalupang.jpg"
-                                        alt="Jalupang Teknik - Kantor"
-                                        loading="lazy"
-                                    />
+                                    <img src="https://raw.githubusercontent.com/akabonanzaofficial-svg/CP_jalupangtehnik/refs/heads/add-images/images/Jalupang.jpg" alt="Kantor" loading="lazy" />
                                     <div class="slider-label">
                                         <span class="badge"><i class="fas fa-building mr-1"></i> Kantor</span>
                                         <h3>Kantor Pemasaran</h3>
                                         <p>Setra Sari Mall, Bandung</p>
                                     </div>
-                                    <div class="slider-zoom-hint">
-                                        <i class="fas fa-expand"></i> Zoom
-                                    </div>
                                 </div>
-
-                                <!-- SLIDE 5: GAMBAR -->
                                 <div class="slider-slide" data-index="2">
-                                    <img 
-                                        src="https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?w=1200&q=80"
-                                        alt="Jalupang Teknik - Proyek Lingkungan"
-                                        loading="lazy"
-                                    />
+                                    <img src="https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?w=1200&q=80" alt="Proyek" loading="lazy" />
                                     <div class="slider-label">
                                         <span class="badge"><i class="fas fa-water mr-1"></i> Proyek</span>
                                         <h3>Pengolahan Air Limbah</h3>
                                         <p>IPAL Industri Terpadu</p>
                                     </div>
-                                    <div class="slider-zoom-hint">
-                                        <i class="fas fa-expand"></i> Zoom
-                                    </div>
                                 </div>
-
-                                <!-- SLIDE 6: GAMBAR -->
                                 <div class="slider-slide" data-index="3">
-                                    <img 
-                                        src="https://images.unsplash.com/photo-1518623489648-a173ef7824f3?w=1200&q=80"
-                                        alt="Jalupang Teknik - Energi Terbarukan"
-                                        loading="lazy"
-                                    />
+                                    <img src="https://images.unsplash.com/photo-1518623489648-a173ef7824f3?w=1200&q=80" alt="Energi" loading="lazy" />
                                     <div class="slider-label">
                                         <span class="badge"><i class="fas fa-solar-panel mr-1"></i> Energi</span>
                                         <h3>PLTS Atap</h3>
-                                        <p>Energi Terbarukan untuk Industri</p>
-                                    </div>
-                                    <div class="slider-zoom-hint">
-                                        <i class="fas fa-expand"></i> Zoom
+                                        <p>Energi Terbarukan</p>
                                     </div>
                                 </div>
-
-                                <!-- SLIDE 7: GAMBAR -->
                                 <div class="slider-slide" data-index="4">
-                                    <img 
-                                        src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200&q=80"
-                                        alt="Jalupang Teknik - Workshop"
-                                        loading="lazy"
-                                    />
+                                    <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200&q=80" alt="Workshop" loading="lazy" />
                                     <div class="slider-label">
                                         <span class="badge"><i class="fas fa-tools mr-1"></i> Workshop</span>
                                         <h3>Workshop Teknik</h3>
                                         <p>Citalem, Bandung Barat</p>
                                     </div>
-                                    <div class="slider-zoom-hint">
-                                        <i class="fas fa-expand"></i> Zoom
-                                    </div>
                                 </div>
-
-                                <!-- SLIDE 8: GAMBAR -->
                                 <div class="slider-slide" data-index="5">
-                                    <img 
-                                        src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=1200&q=80"
-                                        alt="Jalupang Teknik - Kompos Organik"
-                                        loading="lazy"
-                                    />
+                                    <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=1200&q=80" alt="Kompos" loading="lazy" />
                                     <div class="slider-label">
                                         <span class="badge"><i class="fas fa-recycle mr-1"></i> Ekonomi Sirkular</span>
                                         <h3>Produksi Kompos</h3>
                                         <p>Pengolahan Limbah Organik</p>
                                     </div>
-                                    <div class="slider-zoom-hint">
-                                        <i class="fas fa-expand"></i> Zoom
-                                    </div>
                                 </div>
                             </div>
-
-                            <button class="slider-btn prev" id="sliderPrev" aria-label="Previous slide">
-                                <i class="fas fa-chevron-left"></i>
-                            </button>
-                            <button class="slider-btn next" id="sliderNext" aria-label="Next slide">
-                                <i class="fas fa-chevron-right"></i>
-                            </button>
-
+                            <button class="slider-btn prev" id="sliderPrev" aria-label="Prev"><i class="fas fa-chevron-left"></i></button>
+                            <button class="slider-btn next" id="sliderNext" aria-label="Next"><i class="fas fa-chevron-right"></i></button>
                             <div class="slider-dots" id="sliderDots"></div>
                         </div>
                     </div>
@@ -938,30 +589,30 @@
         </div>
     </section>
 
-    <!-- ========== PROFIL ========== -->
+    <!-- PROFIL -->
     <section id="profil" class="py-24 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-3xl mx-auto mb-16" data-aos="fade-up">
                 <span class="text-green-600 font-bold tracking-wider uppercase text-sm mb-2 block">Profil Perusahaan</span>
                 <h2 class="font-heading text-3xl md:text-4xl font-bold text-earth mb-4">Mengenal Jalupang Teknik</h2>
                 <div class="w-20 h-1 bg-green-500 mx-auto rounded-full mb-6"></div>
-                <p id="profil-deskripsi" class="text-gray-500">Berdedikasi sejak 2012 untuk menghadirkan teknologi rekayasa lingkungan yang inovatif demi menjaga kelestarian bumi.</p>
+                <p id="profil-deskripsi" class="text-gray-500">Berdedikasi sejak 2012 untuk menghadirkan teknologi rekayasa lingkungan yang inovatif.</p>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
                 <div class="lg:col-span-4" data-aos="fade-right">
                     <div class="flex flex-col space-y-3 bg-green-50/50 p-3 rounded-2xl border border-green-100/50">
                         <button class="tab-btn active text-left px-6 py-4 rounded-xl font-semibold transition-all duration-200 bg-white shadow-sm text-green-700 border border-green-100" data-target="tab-deskripsi">
-                            <i class="fas fa-building w-6 text-center mr-2"></i> Deskripsi Perusahaan
+                            <i class="fas fa-building w-6 text-center mr-2"></i> Deskripsi
                         </button>
                         <button class="tab-btn text-gray-500 hover:bg-white hover:text-green-700 text-left px-6 py-4 rounded-xl font-medium transition-all duration-200 border border-transparent hover:border-green-100" data-target="tab-sejarah">
-                            <i class="fas fa-seedling w-6 text-center mr-2"></i> Sejarah & Jejak Langkah
+                            <i class="fas fa-seedling w-6 text-center mr-2"></i> Sejarah
                         </button>
                         <button class="tab-btn text-gray-500 hover:bg-white hover:text-green-700 text-left px-6 py-4 rounded-xl font-medium transition-all duration-200 border border-transparent hover:border-green-100" data-target="tab-visi">
                             <i class="fas fa-eye w-6 text-center mr-2"></i> Visi & Misi
                         </button>
                         <button class="tab-btn text-gray-500 hover:bg-white hover:text-green-700 text-left px-6 py-4 rounded-xl font-medium transition-all duration-200 border border-transparent hover:border-green-100" data-target="tab-struktur">
-                            <i class="fas fa-sitemap w-6 text-center mr-2"></i> Struktur Organisasi
+                            <i class="fas fa-sitemap w-6 text-center mr-2"></i> Struktur
                         </button>
                     </div>
                 </div>
@@ -969,28 +620,12 @@
                 <div class="lg:col-span-8" data-aos="fade-left">
                     <div id="tab-deskripsi" class="tab-content active bg-white p-8 md:p-10 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100">
                         <h3 class="font-heading text-2xl font-bold text-earth mb-4">Siapa Kami?</h3>
-                        <p class="text-gray-600 mb-4 leading-relaxed">
-                            <strong>CV Jalupang Teknik Lingkungan</strong> adalah perusahaan konsultan dan kontraktor rekayasa teknik (<em>engineering</em>) yang berfokus secara eksklusif pada teknologi hijau (<em>green technology</em>) dan manajemen lingkungan terpadu.
-                        </p>
-                        <p class="text-gray-600 mb-8 leading-relaxed">
-                            Perusahaan kami berbasis di Bandung, Jawa Barat, memiliki semangat untuk menjadi pionir dalam penyediaan solusi teknis terintegrasi—menyatukan teknologi mesin dan pengelolaan lingkungan dalam satu ekosistem yang saling menguatkan
-                        </p>
-                        <p class="text-gray-600 mb-8 leading-relaxed">
-                            Kami bermitra dengan kawasan industri, pemerintah daerah, dan sektor swasta untuk merancang fasilitas pengolahan limbah, instalasi energi terbarukan, serta melakukan pendampingan lingkungan untuk mengelola dan mengatasi limbah.
-                        </p>
+                        <p class="text-gray-600 mb-4 leading-relaxed"><strong>CV Jalupang Teknik Lingkungan</strong> adalah perusahaan konsultan dan kontraktor rekayasa teknik yang berfokus pada teknologi hijau dan manajemen lingkungan terpadu.</p>
+                        <p class="text-gray-600 mb-8 leading-relaxed">Kami bermitra dengan kawasan industri, pemerintah daerah, dan sektor swasta untuk merancang fasilitas pengolahan limbah, instalasi energi terbarukan, serta pendampingan lingkungan.</p>
                         <div class="grid grid-cols-2 md:grid-cols-3 gap-6 pt-6 border-t border-gray-100">
-                            <div>
-                                <p class="font-heading text-3xl font-extrabold text-green-600 mb-1">12+</p>
-                                <p class="text-sm text-gray-500">Tahun Pengalaman</p>
-                            </div>
-                            <div>
-                                <p class="font-heading text-3xl font-extrabold text-green-600 mb-1">150+</p>
-                                <p class="text-sm text-gray-500">Proyek Hijau Selesai</p>
-                            </div>
-                            <div>
-                                <p class="font-heading text-3xl font-extrabold text-green-600 mb-1">50+</p>
-                                <p class="text-sm text-gray-500">Insinyur Tersertifikasi</p>
-                            </div>
+                            <div><p class="font-heading text-3xl font-extrabold text-green-600 mb-1">12+</p><p class="text-sm text-gray-500">Tahun Pengalaman</p></div>
+                            <div><p class="font-heading text-3xl font-extrabold text-green-600 mb-1">150+</p><p class="text-sm text-gray-500">Proyek Hijau</p></div>
+                            <div><p class="font-heading text-3xl font-extrabold text-green-600 mb-1">50+</p><p class="text-sm text-gray-500">Insinyur Ahli</p></div>
                         </div>
                     </div>
 
@@ -1002,64 +637,31 @@
                     <div id="tab-visi" class="tab-content hidden bg-white p-8 md:p-10 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100">
                         <h3 class="font-heading text-2xl font-bold text-earth mb-4">Visi Kami</h3>
                         <div class="bg-green-50 border-l-4 border-green-600 p-6 rounded-r-xl mb-8">
-                            <p class="text-gray-700 italic text-lg font-medium">
-                                "Menjadi pionir penyedia solusi teknis industri terintegrasi yang menyelaraskan efisiensi produktivitas dengan keberlanjutan ekosistem lingkungan melalui pendekatan solusi total dari hulu hingga hilir."
-                            </p>
+                            <p class="text-gray-700 italic text-lg font-medium">"Menjadi pionir penyedia solusi teknis industri terintegrasi yang menyelaraskan efisiensi produktivitas dengan keberlanjutan ekosistem lingkungan."</p>
                         </div>
                         <h3 class="font-heading text-2xl font-bold text-earth mb-4">Misi Kami</h3>
                         <ul class="space-y-4">
-                            <li class="flex items-start bg-gray-50 p-4 rounded-xl">
-                                <div class="bg-white p-2 rounded-lg text-green-600 shadow-sm mr-4 mt-0.5"><i class="fas fa-leaf"></i></div>
-                                <span class="text-gray-600">Menerapkan standar teknologi lingkungan yang terukur dan berkelanjutan dalam setiap proyek rekayasa dan pengelolaan limbah.</span>
-                            </li>
-                            <li class="flex items-start bg-gray-50 p-4 rounded-xl">
-                                <div class="bg-white p-2 rounded-lg text-green-600 shadow-sm mr-4 mt-0.5"><i class="fas fa-solar-panel"></i></div>
-                                <span class="text-gray-600">Mengakselerasi transisi energi perusahaan mitra melalui instalasi energi baru terbarukan (EBT) yang efisien.</span>
-                            </li>
-                            <li class="flex items-start bg-gray-50 p-4 rounded-xl">
-                                <div class="bg-white p-2 rounded-lg text-green-600 shadow-sm mr-4 mt-0.5"><i class="fas fa-users"></i></div>
-                                <span class="text-gray-600">Meningkatkan produktivitas melalui penyediaan mesin spesifik untuk sektor pertanian, tekstil, dan energi.</span>
-                            </li>
-                            <li class="flex items-start bg-gray-50 p-4 rounded-xl">
-                                <div class="bg-white p-2 rounded-lg text-green-600 shadow-sm mr-4 mt-0.5"><i class="fas fa-users"></i></div>
-                                <span class="text-gray-600">Meminimalkan dampak ekologis dengan pengelolaan limbah non-B3 yang aman dan terkontrol.</span>
-                            </li>
-                            <li class="flex items-start bg-gray-50 p-4 rounded-xl">
-                                <div class="bg-white p-2 rounded-lg text-green-600 shadow-sm mr-4 mt-0.5"><i class="fas fa-users"></i></div>
-                                <span class="text-gray-600">Mengimplementasikan ekonomi sirkular dengan mengolah limbah organik menjadi kompos bernilai tambah.</span>
-                            </li>
+                            <li class="flex items-start bg-gray-50 p-4 rounded-xl"><div class="bg-white p-2 rounded-lg text-green-600 shadow-sm mr-4"><i class="fas fa-leaf"></i></div><span class="text-gray-600">Menerapkan standar teknologi lingkungan yang terukur dan berkelanjutan.</span></li>
+                            <li class="flex items-start bg-gray-50 p-4 rounded-xl"><div class="bg-white p-2 rounded-lg text-green-600 shadow-sm mr-4"><i class="fas fa-solar-panel"></i></div><span class="text-gray-600">Mengakselerasi transisi energi melalui instalasi EBT yang efisien.</span></li>
+                            <li class="flex items-start bg-gray-50 p-4 rounded-xl"><div class="bg-white p-2 rounded-lg text-green-600 shadow-sm mr-4"><i class="fas fa-users"></i></div><span class="text-gray-600">Meningkatkan produktivitas melalui penyediaan mesin spesifik.</span></li>
+                            <li class="flex items-start bg-gray-50 p-4 rounded-xl"><div class="bg-white p-2 rounded-lg text-green-600 shadow-sm mr-4"><i class="fas fa-recycle"></i></div><span class="text-gray-600">Mengimplementasikan ekonomi sirkular dari limbah organik.</span></li>
                         </ul>
                     </div>
 
                     <div id="tab-struktur" class="tab-content hidden bg-white p-8 md:p-10 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100">
                         <h3 class="font-heading text-2xl font-bold text-earth mb-6">Jajaran Manajemen Inti</h3>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                            <div class="flex items-center gap-4 bg-gray-50 p-4 rounded-2xl border border-gray-100 hover:border-green-200 transition-colors">
-                                <div class="w-16 h-16 rounded-full bg-green-200 flex items-center justify-center text-green-700 text-2xl font-bold overflow-hidden">
-                                    <img src="https://ui-avatars.com/api/?name=Asep+Zaenal+Mustofa&background=166534&color=fff&size=100" class="w-full h-full object-cover" alt="Asep Zaenal Mustofa" />
-                                </div>
-                                <div>
-                                    <h4 class="font-heading font-bold text-earth">Asep Zaenal Mustofa, S.K.M., M.Epid.</h4>
-                                    <p class="text-xs text-green-600 font-medium uppercase tracking-wider mt-1">Komisaris Utama</p>
-                                </div>
+                            <div class="flex items-center gap-4 bg-gray-50 p-4 rounded-2xl border border-gray-100">
+                                <img src="https://ui-avatars.com/api/?name=Asep+Zaenal+Mustofa&background=166534&color=fff&size=100" class="w-16 h-16 rounded-full object-cover" alt="Asep" />
+                                <div><h4 class="font-heading font-bold text-earth">Asep Zaenal Mustofa</h4><p class="text-xs text-green-600 font-medium uppercase mt-1">Komisaris Utama</p></div>
                             </div>
-                            <div class="flex items-center gap-4 bg-gray-50 p-4 rounded-2xl border border-gray-100 hover:border-green-200 transition-colors">
-                                <div class="w-16 h-16 rounded-full bg-teal-200 flex items-center justify-center text-teal-700 text-2xl font-bold overflow-hidden">
-                                    <img src="https://ui-avatars.com/api/?name=Dadang&background=0f766e&color=fff&size=100" class="w-full h-full object-cover" alt="Dadang" />
-                                </div>
-                                <div>
-                                    <h4 class="font-heading font-bold text-earth">Drs. Dadang, M.Pd.</h4>
-                                    <p class="text-xs text-teal-600 font-medium uppercase tracking-wider mt-1">Direktur Utama</p>
-                                </div>
+                            <div class="flex items-center gap-4 bg-gray-50 p-4 rounded-2xl border border-gray-100">
+                                <img src="https://ui-avatars.com/api/?name=Dadang&background=0f766e&color=fff&size=100" class="w-16 h-16 rounded-full object-cover" alt="Dadang" />
+                                <div><h4 class="font-heading font-bold text-earth">Drs. Dadang, M.Pd.</h4><p class="text-xs text-teal-600 font-medium uppercase mt-1">Direktur Utama</p></div>
                             </div>
-                            <div class="flex items-center gap-4 bg-gray-50 p-4 rounded-2xl border border-gray-100 hover:border-green-200 transition-colors">
-                                <div class="w-16 h-16 rounded-full bg-emerald-200 flex items-center justify-center text-emerald-700 text-2xl font-bold overflow-hidden">
-                                    <img src="https://ui-avatars.com/api/?name=Iwan+Sulistiawan&background=047857&color=fff&size=100" class="w-full h-full object-cover" alt="Iwan Sulistiawan" />
-                                </div>
-                                <div>
-                                    <h4 class="font-heading font-bold text-earth">Iwan Sulistiawan.</h4>
-                                    <p class="text-xs text-emerald-600 font-medium uppercase tracking-wider mt-1">Wakil Direktur</p>
-                                </div>
+                            <div class="flex items-center gap-4 bg-gray-50 p-4 rounded-2xl border border-gray-100">
+                                <img src="https://ui-avatars.com/api/?name=Iwan+Sulistiawan&background=047857&color=fff&size=100" class="w-16 h-16 rounded-full object-cover" alt="Iwan" />
+                                <div><h4 class="font-heading font-bold text-earth">Iwan Sulistiawan</h4><p class="text-xs text-emerald-600 font-medium uppercase mt-1">Wakil Direktur</p></div>
                             </div>
                         </div>
                     </div>
@@ -1068,134 +670,111 @@
         </div>
     </section>
 
-    <!-- ========== LEGALITAS ========== -->
+    <!-- LEGALITAS -->
     <section id="legalitas" class="py-24 bg-earth text-white relative overflow-hidden">
         <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#22c55e 1px, transparent 1px); background-size: 32px 32px;"></div>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
                 <div class="max-w-2xl" data-aos="fade-right">
-                    <span class="text-green-400 font-bold tracking-wider uppercase text-sm mb-2 block">Legalitas & Kredibilitas</span>
+                    <span class="text-green-400 font-bold tracking-wider uppercase text-sm mb-2 block">Legalitas</span>
                     <h2 class="font-heading text-3xl md:text-4xl font-bold">Standar Kepatuhan Tertinggi</h2>
-                </div>
-                <div data-aos="fade-left">
-                    <p class="text-gray-400 max-w-md md:text-right">Sebagai kontraktor lingkungan, operasi kami sepenuhnya mematuhi hukum nasional dan tersertifikasi oleh standar manajemen lingkungan internasional.</p>
                 </div>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
-                <div class="md:col-span-7 bg-gray-800/80 backdrop-blur-sm p-8 rounded-3xl border border-gray-700" data-aos="fade-up" data-aos-delay="100">
+                <div class="md:col-span-7 bg-gray-800/80 backdrop-blur-sm p-8 rounded-3xl border border-gray-700" data-aos="fade-up">
                     <div class="flex items-center gap-4 mb-6">
-                        <div class="w-12 h-12 bg-gray-700 rounded-xl flex items-center justify-center text-green-400 text-xl">
-                            <i class="fas fa-file-signature"></i>
-                        </div>
+                        <div class="w-12 h-12 bg-gray-700 rounded-xl flex items-center justify-center text-green-400 text-xl"><i class="fas fa-file-signature"></i></div>
                         <h3 class="font-heading text-xl font-bold">Izin Usaha & Badan Hukum</h3>
                     </div>
                     <div id="legalitas-container" class="overflow-x-auto"></div>
                 </div>
-                <div class="md:col-span-5 space-y-8" data-aos="fade-up" data-aos-delay="200">
-                    <div class="bg-gradient-to-br from-green-900/50 to-gray-800 p-6 rounded-3xl border border-green-800/50 flex items-center gap-6 transform hover:-translate-y-1 transition-transform">
-                        <div class="w-16 h-16 rounded-full bg-green-500/20 border border-green-500/50 flex items-center justify-center text-green-400 text-3xl flex-shrink-0">
-                            <i class="fas fa-certificate"></i>
-                        </div>
-                        <div>
-                            <h4 class="font-heading font-bold text-lg text-white">ISO 14001:2015</h4>
-                            <p class="text-sm text-gray-400 mt-1">Sistem Manajemen Lingkungan</p>
-                        </div>
+                <div class="md:col-span-5 space-y-8" data-aos="fade-up" data-aos-delay="100">
+                    <div class="bg-gradient-to-br from-green-900/50 to-gray-800 p-6 rounded-3xl border border-green-800/50 flex items-center gap-6">
+                        <div class="w-16 h-16 rounded-full bg-green-500/20 border border-green-500/50 flex items-center justify-center text-green-400 text-3xl flex-shrink-0"><i class="fas fa-certificate"></i></div>
+                        <div><h4 class="font-heading font-bold text-lg text-white">ISO 14001:2015</h4><p class="text-sm text-gray-400 mt-1">Sistem Manajemen Lingkungan</p></div>
                     </div>
-                    <div class="bg-gradient-to-br from-teal-900/50 to-gray-800 p-6 rounded-3xl border border-teal-800/50 flex items-center gap-6 transform hover:-translate-y-1 transition-transform">
-                        <div class="w-16 h-16 rounded-full bg-teal-500/20 border border-teal-500/50 flex items-center justify-center text-teal-400 text-3xl flex-shrink-0">
-                            <i class="fas fa-check-double"></i>
-                        </div>
-                        <div>
-                            <h4 class="font-heading font-bold text-lg text-white">ISO 9001:2015</h4>
-                            <p class="text-sm text-gray-400 mt-1">Sistem Manajemen Mutu</p>
-                        </div>
+                    <div class="bg-gradient-to-br from-teal-900/50 to-gray-800 p-6 rounded-3xl border border-teal-800/50 flex items-center gap-6">
+                        <div class="w-16 h-16 rounded-full bg-teal-500/20 border border-teal-500/50 flex items-center justify-center text-teal-400 text-3xl flex-shrink-0"><i class="fas fa-check-double"></i></div>
+                        <div><h4 class="font-heading font-bold text-lg text-white">ISO 9001:2015</h4><p class="text-sm text-gray-400 mt-1">Sistem Manajemen Mutu</p></div>
                     </div>
-                    <div class="bg-gradient-to-br from-yellow-900/30 to-gray-800 p-6 rounded-3xl border border-yellow-700/30 flex items-center gap-6 transform hover:-translate-y-1 transition-transform">
-                        <div class="w-16 h-16 rounded-full bg-yellow-500/20 border border-yellow-500/50 flex items-center justify-center text-yellow-400 text-2xl flex-shrink-0">
-                            <i class="fas fa-trophy"></i>
-                        </div>
-                        <div>
-                            <h4 class="font-heading font-bold text-lg text-white">Green Proper Award</h4>
-                            <p class="text-sm text-gray-400 mt-1">Kementerian Lingkungan Hidup (2023)</p>
-                        </div>
+                    <div class="bg-gradient-to-br from-yellow-900/30 to-gray-800 p-6 rounded-3xl border border-yellow-700/30 flex items-center gap-6">
+                        <div class="w-16 h-16 rounded-full bg-yellow-500/20 border border-yellow-500/50 flex items-center justify-center text-yellow-400 text-2xl flex-shrink-0"><i class="fas fa-trophy"></i></div>
+                        <div><h4 class="font-heading font-bold text-lg text-white">Green Proper Award</h4><p class="text-sm text-gray-400 mt-1">Kementerian Lingkungan Hidup (2023)</p></div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ========== PRODUK ========== -->
-<section id="layanan" class="py-24 bg-gray-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center max-w-3xl mx-auto mb-16" data-aos="fade-up">
-            <span class="text-green-600 font-bold tracking-wider uppercase text-sm mb-2 block">Produk Kami</span>
-            <h2 class="font-heading text-3xl md:text-4xl font-bold text-earth mb-4">Solusi Mesin & Jasa Terpadu</h2>
-            <div class="w-20 h-1 bg-green-500 mx-auto rounded-full mb-6"></div>
-            <p class="text-gray-500">Kami menyediakan mesin berkualitas dan jasa profesional untuk mendukung industri yang berkelanjutan.</p>
-        </div>
+    <!-- PRODUK -->
+    <section id="layanan" class="py-24 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16" data-aos="fade-up">
+                <span class="text-green-600 font-bold tracking-wider uppercase text-sm mb-2 block">Produk Kami</span>
+                <h2 class="font-heading text-3xl md:text-4xl font-bold text-earth mb-4">Solusi Mesin & Jasa Terpadu</h2>
+                <div class="w-20 h-1 bg-green-500 mx-auto rounded-full mb-6"></div>
+                <p class="text-gray-500">Kami menyediakan mesin berkualitas dan jasa profesional untuk mendukung industri yang berkelanjutan.</p>
+            </div>
 
-        <!-- Kategori: MESIN -->
-        <div class="mb-16" data-aos="fade-up">
-            <div class="flex items-center gap-3 mb-8">
-                <div class="w-12 h-12 bg-green-100 text-green-700 rounded-2xl flex items-center justify-center text-2xl">
-                    <i class="fas fa-industry"></i>
+            <!-- MESIN -->
+            <div class="mb-16" data-aos="fade-up">
+                <div class="flex items-center gap-3 mb-8">
+                    <div class="w-12 h-12 bg-green-100 text-green-700 rounded-2xl flex items-center justify-center text-2xl">
+                        <i class="fas fa-industry"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-heading text-2xl font-bold text-earth">Mesin</h3>
+                        <p class="text-sm text-gray-500">Peralatan industri berkualitas tinggi</p>
+                    </div>
                 </div>
-                <div>
-                    <h3 class="font-heading text-2xl font-bold text-earth">Mesin</h3>
-                    <p class="text-sm text-gray-500">Peralatan industri berkualitas tinggi</p>
+                <div id="produk-mesin-container" class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-5">
+                    <div class="col-span-full text-center py-8">
+                        <div class="w-10 h-10 border-4 border-green-200 border-t-green-600 rounded-full animate-spin mx-auto"></div>
+                        <p class="mt-3 text-gray-500 text-sm">Memuat produk...</p>
+                    </div>
+                </div>
+                <div class="text-center mt-8" id="mesin-expand-container" style="display:none;">
+                    <button class="btn-expand" id="mesin-expand-btn" onclick="toggleExpand('mesin')">
+                        <i class="fas fa-chevron-down"></i>
+                        <span id="mesin-expand-text">Lihat Semua Mesin</span>
+                    </button>
                 </div>
             </div>
-            
-            <div id="produk-mesin-container" class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-5">
-                <div class="col-span-full text-center py-8">
-                    <div class="w-10 h-10 border-4 border-green-200 border-t-green-600 rounded-full animate-spin mx-auto"></div>
-                    <p class="mt-3 text-gray-500 text-sm">Memuat produk...</p>
-                </div>
-            </div>
-            
-            <div class="text-center mt-8" id="mesin-expand-container" style="display:none;">
-                <button class="btn-expand" id="mesin-expand-btn" onclick="toggleExpand('mesin')">
-                    <i class="fas fa-chevron-down"></i>
-                    <span id="mesin-expand-text">Lihat Semua Mesin</span>
-                </button>
-            </div>
-        </div>
 
-        <!-- Kategori: JASA -->
-        <div data-aos="fade-up">
-            <div class="flex items-center gap-3 mb-8">
-                <div class="w-12 h-12 bg-emerald-100 text-emerald-700 rounded-2xl flex items-center justify-center text-2xl">
-                    <i class="fas fa-tools"></i>
+            <!-- JASA -->
+            <div data-aos="fade-up">
+                <div class="flex items-center gap-3 mb-8">
+                    <div class="w-12 h-12 bg-emerald-100 text-emerald-700 rounded-2xl flex items-center justify-center text-2xl">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-heading text-2xl font-bold text-earth">Jasa</h3>
+                        <p class="text-sm text-gray-500">Layanan profesional untuk kebutuhan industri</p>
+                    </div>
                 </div>
-                <div>
-                    <h3 class="font-heading text-2xl font-bold text-earth">Jasa</h3>
-                    <p class="text-sm text-gray-500">Layanan profesional untuk kebutuhan industri</p>
+                <div id="produk-jasa-container" class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-5">
+                    <div class="col-span-full text-center py-8">
+                        <div class="w-10 h-10 border-4 border-green-200 border-t-green-600 rounded-full animate-spin mx-auto"></div>
+                        <p class="mt-3 text-gray-500 text-sm">Memuat produk...</p>
+                    </div>
+                </div>
+                <div class="text-center mt-8" id="jasa-expand-container" style="display:none;">
+                    <button class="btn-expand" id="jasa-expand-btn" onclick="toggleExpand('jasa')">
+                        <i class="fas fa-chevron-down"></i>
+                        <span id="jasa-expand-text">Lihat Semua Jasa</span>
+                    </button>
                 </div>
             </div>
-            
-            <div id="produk-jasa-container" class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-5">
-                <div class="col-span-full text-center py-8">
-                    <div class="w-10 h-10 border-4 border-green-200 border-t-green-600 rounded-full animate-spin mx-auto"></div>
-                    <p class="mt-3 text-gray-500 text-sm">Memuat produk...</p>
-                </div>
-            </div>
-            
-            <div class="text-center mt-8" id="jasa-expand-container" style="display:none;">
-                <button class="btn-expand" id="jasa-expand-btn" onclick="toggleExpand('jasa')">
-                    <i class="fas fa-chevron-down"></i>
-                    <span id="jasa-expand-text">Lihat Semua Jasa</span>
-                </button>
-            </div>
-        </div>
 
-        <div class="text-center mt-12" data-aos="fade-up">
-            <a href="#kontak" class="inline-flex items-center gap-2 px-8 py-4 bg-green-700 text-white rounded-full font-semibold shadow-lg shadow-green-600/30 hover:bg-green-800 transition-all transform hover:-translate-y-1">
-                Konsultasikan Kebutuhan Anda <i class="fas fa-arrow-right"></i>
-            </a>
+            <div class="text-center mt-12" data-aos="fade-up">
+                <a href="#kontak" class="inline-flex items-center gap-2 px-8 py-4 bg-green-700 text-white rounded-full font-semibold shadow-lg hover:bg-green-800 transition-all transform hover:-translate-y-1">
+                    Konsultasikan Kebutuhan Anda <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
         </div>
-    </div>
-</section>
-    <!-- ========== PORTOFOLIO ========== -->
+    </section>
+
+    <!-- PORTOFOLIO -->
     <section id="portofolio" class="py-24 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col lg:flex-row justify-between items-end mb-12 gap-8">
@@ -1203,35 +782,19 @@
                     <span class="text-green-600 font-bold tracking-wider uppercase text-sm mb-2 block">Portofolio Kami</span>
                     <h2 class="font-heading text-3xl md:text-4xl font-bold text-earth">Karya Nyata untuk Bumi</h2>
                 </div>
-                <div data-aos="fade-left">
-                    <a href="#" class="inline-flex items-center gap-2 text-green-700 font-semibold hover:text-green-800 transition-colors">
-                        Lihat Semua Proyek <i class="fas fa-arrow-right"></i>
-                    </a>
-                </div>
             </div>
-
-            <div class="bg-green-700 rounded-3xl p-8 md:p-10 mb-12 flex flex-col md:flex-row items-center justify-around text-center text-white shadow-xl shadow-green-700/20" data-aos="zoom-in">
-                <div class="p-4">
-                    <p class="text-4xl font-heading font-bold mb-2">1.2M+</p>
-                    <p class="text-green-100 text-sm">M³ Air Limbah Dimurnikan</p>
-                </div>
+            <div class="bg-green-700 rounded-3xl p-8 md:p-10 mb-12 flex flex-col md:flex-row items-center justify-around text-center text-white shadow-xl" data-aos="zoom-in">
+                <div class="p-4"><p class="text-4xl font-heading font-bold mb-2">1.2M+</p><p class="text-green-100 text-sm">M³ Air Limbah Dimurnikan</p></div>
                 <div class="hidden md:block w-px h-16 bg-green-500/50"></div>
-                <div class="p-4">
-                    <p class="text-4xl font-heading font-bold mb-2">450+</p>
-                    <p class="text-green-100 text-sm">Ton Emisi CO₂ Ditekan</p>
-                </div>
+                <div class="p-4"><p class="text-4xl font-heading font-bold mb-2">450+</p><p class="text-green-100 text-sm">Ton Emisi CO₂ Ditekan</p></div>
                 <div class="hidden md:block w-px h-16 bg-green-500/50"></div>
-                <div class="p-4">
-                    <p class="text-4xl font-heading font-bold mb-2">12 MWp</p>
-                    <p class="text-green-100 text-sm">Kapasitas PLTS Terpasang</p>
-                </div>
+                <div class="p-4"><p class="text-4xl font-heading font-bold mb-2">12 MWp</p><p class="text-green-100 text-sm">Kapasitas PLTS Terpasang</p></div>
             </div>
-
             <div id="portfolios-container" class="grid grid-cols-1 md:grid-cols-2 gap-8"></div>
         </div>
     </section>
 
-    <!-- ========== BERITA ========== -->
+    <!-- BERITA -->
     <section id="berita" class="py-24 bg-green-50/50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-3xl mx-auto mb-16" data-aos="fade-up">
@@ -1240,44 +803,33 @@
             </div>
             <div id="posts-container" class="grid grid-cols-1 md:grid-cols-3 gap-8"></div>
         </div>
+        <div class="text-center mt-12" data-aos="fade-up">
+            <a href="cms.html" target="_blank" class="inline-flex items-center gap-2 px-8 py-4 bg-green-700 text-white rounded-full font-semibold shadow-lg hover:bg-green-800 transition-all transform hover:-translate-y-1">
+                <i class="fas fa-edit mr-2"></i> Kelola Artikel (CMS)
+            </a>
+        </div>
     </section>
 
-    <!-- ========== KONTAK ========== -->
+    <!-- KONTAK -->
     <section id="kontak" class="py-24 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="bg-earth rounded-[3rem] shadow-2xl overflow-hidden flex flex-col lg:flex-row relative">
-                <div class="absolute top-0 right-0 w-1/2 h-full bg-green-900/20 blur-3xl pointer-events-none rounded-full transform translate-x-1/2 -translate-y-1/2"></div>
                 <div class="w-full lg:w-5/12 p-10 lg:p-14 text-white relative z-10">
                     <span class="text-green-400 font-bold tracking-wider uppercase text-sm mb-2 block">Konsultasi Gratis</span>
                     <h3 class="font-heading text-3xl font-bold mb-6">Butuh Solusi untuk Lingkungan anda?</h3>
-                    <p class="text-gray-400 mb-10 text-sm leading-relaxed">Tim kami siap memberikan solusi teknologi lingkungan terbaik untuk anda yang sesuai dengan kebutuhan dan regulasi industri.</p>
+                    <p class="text-gray-400 mb-10 text-sm leading-relaxed">Tim kami siap memberikan solusi teknologi lingkungan terbaik untuk anda.</p>
                     <div class="space-y-6">
                         <div class="flex items-start gap-4">
-                            <div class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center flex-shrink-0 text-green-400">
-                                <i class="fas fa-map-marker-alt"></i>
-                            </div>
-                            <div>
-                                <h5 class="font-bold text-gray-200">Kantor Pemasaran</h5>
-                                <p class="text-sm text-gray-400 mt-1">Setra Sari Mall B-2-48, <br />Jl. Surya Sumantri 128 C, Bandung</p>
-                            </div>
+                            <div class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center flex-shrink-0 text-green-400"><i class="fas fa-map-marker-alt"></i></div>
+                            <div><h5 class="font-bold text-gray-200">Kantor Pemasaran</h5><p class="text-sm text-gray-400 mt-1">Setra Sari Mall B-2-48, Jl. Surya Sumantri 128 C, Bandung</p></div>
                         </div>
                         <div class="flex items-start gap-4">
-                            <div class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center flex-shrink-0 text-green-400">
-                                <i class="fas fa-map-marker-alt"></i>
-                            </div>
-                            <div>
-                                <h5 class="font-bold text-gray-200">Workshop</h5>
-                                <p class="text-sm text-gray-400 mt-1">Jl. PLTA Saguling Citalem Cijenuk, <br />Kp. Jalupang RT/RW 01/07 Desa Citalem Kec. Cipongkor Kab. Bandung Barat</p>
-                            </div>
+                            <div class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center flex-shrink-0 text-green-400"><i class="fas fa-map-marker-alt"></i></div>
+                            <div><h5 class="font-bold text-gray-200">Workshop</h5><p class="text-sm text-gray-400 mt-1">Jl. PLTA Saguling Citalem Cijenuk, Bandung Barat</p></div>
                         </div>
                         <div class="flex items-start gap-4">
-                            <div class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center flex-shrink-0 text-green-400">
-                                <i class="fas fa-envelope"></i>
-                            </div>
-                            <div>
-                                <h5 class="font-bold text-gray-200">Email & Kontak</h5>
-                                <p class="text-sm text-gray-400 mt-1">info@jalupangteknik.co.id<br />+62 22 1234 5678</p>
-                            </div>
+                            <div class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center flex-shrink-0 text-green-400"><i class="fas fa-envelope"></i></div>
+                            <div><h5 class="font-bold text-gray-200">Email & Kontak</h5><p class="text-sm text-gray-400 mt-1">info@jalupangteknik.co.id<br />+62 22 1234 5678</p></div>
                         </div>
                     </div>
                 </div>
@@ -1287,69 +839,69 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-1.5">Nama Perusahaan / Instansi</label>
-                                <input type="text" id="contact-company" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-green-500/20 focus:border-green-500 outline-none transition-all bg-white" placeholder="PT Industri Jaya" />
+                                <input type="text" id="contact-company" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-green-500/20 focus:border-green-500 outline-none bg-white" placeholder="PT Industri Jaya" />
                             </div>
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-1.5">Email Penanggung Jawab</label>
-                                <input type="email" id="contact-email" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-green-500/20 focus:border-green-500 outline-none transition-all bg-white" placeholder="nama@perusahaan.com" />
+                                <input type="email" id="contact-email" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-green-500/20 focus:border-green-500 outline-none bg-white" placeholder="nama@perusahaan.com" />
                             </div>
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1.5">Kategori Layanan</label>
-                            <select id="contact-service" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-green-500/20 focus:border-green-500 outline-none transition-all bg-white text-gray-600 appearance-none">
-                                <option value="WWTP">Desain & Konstruksi IPAL (WWTP)</option>
-                                <option value="PLTS">Pemasangan Solar Panel (PLTS)</option>
-                                <option value="AMDAL">Konsultasi AMDAL / UKL-UPL</option>
-                                <option value="Lainnya">Lainnya</option>
+                            <select id="contact-service" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-green-500/20 focus:border-green-500 outline-none bg-white text-gray-600">
+                                <option>Desain & Konstruksi IPAL</option>
+                                <option>Pemasangan Solar Panel (PLTS)</option>
+                                <option>Konsultasi AMDAL / UKL-UPL</option>
+                                <option>Lainnya</option>
                             </select>
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1.5">Rincian Kebutuhan</label>
-                            <textarea id="contact-message" rows="4" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-green-500/20 focus:border-green-500 outline-none transition-all bg-white resize-none" placeholder="Ceritakan kapasitas pabrik atau kebutuhan spesifik Anda..."></textarea>
+                            <textarea id="contact-message" rows="4" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-green-500/20 focus:border-green-500 outline-none bg-white resize-none" placeholder="Ceritakan kebutuhan Anda..."></textarea>
                         </div>
-                        <button type="submit" class="w-full bg-green-600 text-white font-bold py-4 rounded-xl shadow-lg shadow-green-500/30 hover:bg-green-700 transition-all transform hover:-translate-y-0.5">
+                        <button type="submit" class="w-full bg-green-600 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-green-700 transition-all transform hover:-translate-y-0.5">
                             Kirim Permintaan Konsultasi
                         </button>
                     </form>
                     <div id="success-message" class="hidden mt-4 p-4 bg-green-100 text-green-700 rounded-xl border border-green-200 flex items-center gap-3">
                         <i class="fas fa-check-circle text-xl"></i>
-                        <span class="text-sm font-medium">Pesan berhasil dikirim. Tim ahli kami akan menghubungi Anda segera.</span>
+                        <span class="text-sm font-medium">Pesan berhasil dikirim. Tim kami akan menghubungi Anda segera.</span>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ========== FOOTER ========== -->
+    <!-- FOOTER -->
     <footer class="bg-gray-900 border-t border-gray-800 pt-16 pb-8">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
                 <div class="md:col-span-2">
                     <div class="flex items-center gap-2 mb-4">
                         <i class="fas fa-leaf text-green-500 text-2xl"></i>
-                        <span class="font-heading font-bold text-2xl text-white tracking-tight">Jalupang<span class="text-green-500">Teknik</span></span>
+                        <span class="font-heading font-bold text-2xl text-white">Jalupang<span class="text-green-500">Teknik</span></span>
                     </div>
-                    <p class="text-gray-400 text-sm max-w-sm mb-6">Mewujudkan masa depan industri yang bersih dan berkelanjutan melalui inovasi Teknologi lingkungan yang Handal.</p>
+                    <p class="text-gray-400 text-sm max-w-sm mb-6">Mewujudkan masa depan industri yang bersih dan berkelanjutan.</p>
                     <div class="flex space-x-4">
-                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 text-gray-400 flex items-center justify-center hover:bg-green-600 hover:text-white transition-colors" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 text-gray-400 flex items-center justify-center hover:bg-green-600 hover:text-white transition-colors" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 text-gray-400 flex items-center justify-center hover:bg-green-600 hover:text-white transition-colors"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 text-gray-400 flex items-center justify-center hover:bg-green-600 hover:text-white transition-colors"><i class="fab fa-instagram"></i></a>
                     </div>
                 </div>
                 <div>
                     <h4 class="font-heading font-bold text-white mb-4">Tautan Cepat</h4>
                     <ul class="space-y-2 text-sm text-gray-400">
-                        <li><a href="#profil" class="hover:text-green-400 transition-colors">Profil Perusahaan</a></li>
-                        <li><a href="#layanan" class="hover:text-green-400 transition-colors">Layanan Kami</a></li>
-                        <li><a href="#portofolio" class="hover:text-green-400 transition-colors">Portofolio Proyek</a></li>
-                        <li><a href="#berita" class="hover:text-green-400 transition-colors">Berita</a></li>
+                        <li><a href="#profil" class="hover:text-green-400">Profil Perusahaan</a></li>
+                        <li><a href="#layanan" class="hover:text-green-400">Produk Kami</a></li>
+                        <li><a href="#portofolio" class="hover:text-green-400">Portofolio</a></li>
+                        <li><a href="#berita" class="hover:text-green-400">Berita</a></li>
                     </ul>
                 </div>
                 <div>
                     <h4 class="font-heading font-bold text-white mb-4">Legal & Support</h4>
                     <ul class="space-y-2 text-sm text-gray-400">
-                        <li><a href="#" class="hover:text-green-400 transition-colors">Syarat & Ketentuan</a></li>
-                        <li><a href="#" class="hover:text-green-400 transition-colors">Kebijakan Privasi</a></li>
-                        <li><a href="#" class="hover:text-green-400 transition-colors">Karir & Peluang</a></li>
+                        <li><a href="#" class="hover:text-green-400">Syarat & Ketentuan</a></li>
+                        <li><a href="#" class="hover:text-green-400">Kebijakan Privasi</a></li>
+                        <li><a href="#" class="hover:text-green-400">Karir</a></li>
                     </ul>
                 </div>
             </div>
@@ -1360,12 +912,10 @@
         </div>
     </footer>
 
-    <!-- ========== MODAL POPUP ARTIKEL ========== -->
+    <!-- MODAL ARTIKEL -->
     <div class="modal-overlay" id="articleModal">
         <div class="modal-box">
-            <button class="modal-close" id="modalCloseBtn" aria-label="Tutup">
-                <i class="fas fa-times"></i>
-            </button>
+            <button class="modal-close" id="modalCloseBtn" aria-label="Tutup"><i class="fas fa-times"></i></button>
             <div class="modal-content" id="modalContent">
                 <div id="modalLoading" class="text-center py-8">
                     <div class="w-10 h-10 border-4 border-green-200 border-t-green-600 rounded-full animate-spin mx-auto"></div>
@@ -1376,23 +926,12 @@
                     <div class="modal-meta" id="modalMeta"></div>
                     <img id="modalImage" class="modal-image hidden" alt="Gambar artikel" />
                     <div class="modal-body" id="modalBody"></div>
-                    <!-- Share Buttons -->
                     <div class="share-buttons" id="modalShareButtons">
-                        <button class="share-btn whatsapp" onclick="shareArticle('whatsapp')">
-                            <i class="fab fa-whatsapp"></i> <span>WhatsApp</span>
-                        </button>
-                        <button class="share-btn facebook" onclick="shareArticle('facebook')">
-                            <i class="fab fa-facebook-f"></i> <span>Facebook</span>
-                        </button>
-                        <button class="share-btn twitter" onclick="shareArticle('twitter')">
-                            <i class="fab fa-x-twitter"></i> <span>Twitter</span>
-                        </button>
-                        <button class="share-btn email" onclick="shareArticle('email')">
-                            <i class="fas fa-envelope"></i> <span>Email</span>
-                        </button>
-                        <button class="share-btn copy" onclick="shareArticle('copy')">
-                            <i class="fas fa-link"></i> <span>Salin Link</span>
-                        </button>
+                        <button class="share-btn whatsapp" onclick="shareArticle('whatsapp')"><i class="fab fa-whatsapp"></i> <span>WhatsApp</span></button>
+                        <button class="share-btn facebook" onclick="shareArticle('facebook')"><i class="fab fa-facebook-f"></i> <span>Facebook</span></button>
+                        <button class="share-btn twitter" onclick="shareArticle('twitter')"><i class="fab fa-x-twitter"></i> <span>Twitter</span></button>
+                        <button class="share-btn email" onclick="shareArticle('email')"><i class="fas fa-envelope"></i> <span>Email</span></button>
+                        <button class="share-btn copy" onclick="shareArticle('copy')"><i class="fas fa-link"></i> <span>Salin Link</span></button>
                     </div>
                 </div>
                 <div id="modalError" class="hidden text-center py-8">
@@ -1403,53 +942,154 @@
         </div>
     </div>
 
-    <!-- ========== SCRIPTS ========== -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
     <script>
         // ============================================================
-        // KONFIGURASI GOOGLE SHEETS API
+        // KONFIGURASI
         // ============================================================
-        const ARTICLES_API_URL = 'https://script.google.com/macros/s/AKfycbyQAKZs4rZouzb4TRyi6cWkFy2Mj5vIF4qlDdrzAu0HfqONxSp3Qo8YnpAQCaJ4WIBy/exec';
-        const PRODUCTS_API_URL = ARTICLES_API_URL; // sama, hanya beda parameter ?type=
+        const API_URL = 'https://script.google.com/macros/s/AKfycbyQAKZs4rZouzb4TRyi6cWkFy2Mj5vIF4qlDdrzAu0HfqONxSp3Qo8YnpAQCaJ4WIBy/exec';
+        const ARTICLES_API_URL = API_URL + '?type=artikel';
+        const PRODUCTS_API_URL = API_URL + '?type=produk';
 
         // ============================================================
-        // DATA STATIS (Portofolio, Timeline)
+        // DATA STATIS
         // ============================================================
         const PORTFOLIOS = [
-            {
-                title: 'IPAL Industri Tekstil',
-                description: 'Pengolahan air limbah industri tekstil kapasitas 500 m³/hari',
-                image_url: 'https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?w=800&q=80',
-                type: 'IPAL'
-            },
-            {
-                title: 'PLTS Atap 1 MWp',
-                description: 'Pemasangan solar panel di atap pabrik makanan',
-                image_url: 'https://images.unsplash.com/photo-1518623489648-a173ef7824f3?w=800&q=80',
-                type: 'Energi'
-            },
-            {
-                title: 'Workshop Teknik Citalem',
-                description: 'Fasilitas perakitan dan perawatan mesin industri',
-                image_url: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80',
-                type: 'Workshop'
-            },
-            {
-                title: 'Produksi Kompos Organik',
-                description: 'Pengolahan sampah organik menjadi pupuk berkualitas',
-                image_url: 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=800&q=80',
-                type: 'Ekonomi Sirkular'
-            }
+            { title: 'IPAL Industri Tekstil', description: 'Pengolahan air limbah industri tekstil kapasitas 500 m³/hari', image_url: 'https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?w=800&q=80', type: 'IPAL' },
+            { title: 'PLTS Atap 1 MWp', description: 'Pemasangan solar panel di atap pabrik makanan', image_url: 'https://images.unsplash.com/photo-1518623489648-a173ef7824f3?w=800&q=80', type: 'Energi' },
+            { title: 'Workshop Teknik Citalem', description: 'Fasilitas perakitan dan perawatan mesin industri', image_url: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80', type: 'Workshop' },
+            { title: 'Produksi Kompos Organik', description: 'Pengolahan sampah organik menjadi pupuk berkualitas', image_url: 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=800&q=80', type: 'Ekonomi Sirkular' }
         ];
 
         const TIMELINES = [
-            { year: 2012, title: 'Pendirian Perusahaan', description: 'CV Jalupang Teknik didirikan di Bandung dengan fokus pada rekayasa lingkungan.' },
-            { year: 2015, title: 'Ekspansi Layanan', description: 'Menambah divisi perdagangan mesin industri dan energi terbarukan.' },
-            { year: 2018, title: 'Sertifikasi ISO', description: 'Mendapatkan sertifikasi ISO 9001 dan ISO 14001.' },
-            { year: 2021, title: 'Proyek PLTS Pertama', description: 'Menyelesaikan pemasangan PLTS atap 500 kWp untuk pabrik tekstil.' },
-            { year: 2023, title: 'Green Proper Award', description: 'Menerima penghargaan dari Kementerian Lingkungan Hidup.' }
+            { year: 2012, title: 'Pendirian Perusahaan', description: 'CV Jalupang Teknik didirikan di Bandung.' },
+            { year: 2015, title: 'Ekspansi Layanan', description: 'Menambah divisi mesin industri dan EBT.' },
+            { year: 2018, title: 'Sertifikasi ISO', description: 'Mendapatkan ISO 9001 dan ISO 14001.' },
+            { year: 2021, title: 'Proyek PLTS Pertama', description: 'PLTS atap 500 kWp untuk pabrik tekstil.' },
+            { year: 2023, title: 'Green Proper Award', description: 'Penghargaan dari Kementerian Lingkungan Hidup.' }
         ];
+
+        // ============================================================
+        // STATE
+        // ============================================================
+        var allArticles = [];
+        var currentArticleId = null;
+        var produkMesinAll = [];
+        var produkJasaAll = [];
+        var mesinExpanded = false;
+        var jasaExpanded = false;
+
+        // ============================================================
+        // RENDER PRODUK CARD
+        // ============================================================
+        function renderProdukCard(produk, animate) {
+            var hargaText = 'Hubungi Kami';
+            if (produk.harga && produk.harga !== 'Hubungi Kami' && !isNaN(produk.harga)) {
+                hargaText = 'Rp ' + Number(produk.harga).toLocaleString('id-ID');
+            } else if (produk.harga && produk.harga !== 'Hubungi Kami') {
+                hargaText = produk.harga;
+            }
+            
+            var isFeatured = (produk.featured === 'TRUE' || produk.featured === true);
+            var animateClass = animate ? ' produk-fade-in' : '';
+            
+            return '<div class="produk-card' + animateClass + '">' +
+                '<div class="produk-card-image">' +
+                (isFeatured ? '<div class="produk-featured-badge"><i class="fas fa-star"></i> Unggulan</div>' : '') +
+                '<img src="' + (produk.gambar || 'https://via.placeholder.com/300') + '" alt="' + (produk.nama || 'Produk') + '" loading="lazy" onerror="this.src=\'https://via.placeholder.com/300\'">' +
+                '</div>' +
+                '<div class="produk-card-body">' +
+                '<div class="produk-card-name">' + (produk.nama || 'Tanpa Nama') + '</div>' +
+                '<div class="produk-card-desc">' + (produk.deskripsi || '') + '</div>' +
+                '<div class="produk-card-footer">' +
+                '<span class="produk-card-price">' + hargaText + '</span>' +
+                '<a href="#kontak" class="produk-card-btn">Tanya</a>' +
+                '</div>' +
+                '</div>' +
+                '</div>';
+        }
+
+        // ============================================================
+        // RENDER PRODUK PER KATEGORI
+        // ============================================================
+        function renderProdukKategori(kategori, allProducts, showAll) {
+            var containerId = 'produk-' + kategori + '-container';
+            var expandContainerId = kategori + '-expand-container';
+            var expandTextId = kategori + '-expand-text';
+            var expandBtnId = kategori + '-expand-btn';
+            
+            var container = document.getElementById(containerId);
+            if (!container) return;
+            
+            var featured = allProducts.filter(function(p) {
+                return p.featured === 'TRUE' || p.featured === true;
+            });
+            
+            var displayProducts;
+            if (featured.length >= 6) {
+                displayProducts = featured.slice(0, 6);
+            } else {
+                var nonFeatured = allProducts.filter(function(p) {
+                    return !(p.featured === 'TRUE' || p.featured === true);
+                });
+                displayProducts = featured.concat(nonFeatured).slice(0, 6);
+            }
+            
+            if (showAll) {
+                displayProducts = allProducts;
+            }
+            
+            var html = '';
+            displayProducts.forEach(function(produk, index) {
+                html += renderProdukCard(produk, showAll && index >= 6);
+            });
+            
+            if (displayProducts.length === 0) {
+                html = '<div class="col-span-full text-center py-8 text-gray-400">Belum ada produk.</div>';
+            }
+            
+            container.innerHTML = html;
+            
+            var expandContainer = document.getElementById(expandContainerId);
+            var expandText = document.getElementById(expandTextId);
+            var expandBtn = document.getElementById(expandBtnId);
+            
+            if (expandContainer && expandText && expandBtn) {
+                if (allProducts.length > 6) {
+                    expandContainer.style.display = 'block';
+                    
+                    if (showAll) {
+                        expandText.textContent = 'Sembunyikan';
+                        expandBtn.classList.add('expanded');
+                    } else {
+                        expandText.textContent = 'Lihat Semua ' + (kategori === 'mesin' ? 'Mesin' : 'Jasa') + ' (' + allProducts.length + ')';
+                        expandBtn.classList.remove('expanded');
+                    }
+                } else {
+                    expandContainer.style.display = 'none';
+                }
+            }
+        }
+
+        // ============================================================
+        // TOGGLE EXPAND
+        // ============================================================
+        function toggleExpand(kategori) {
+            if (kategori === 'mesin') {
+                mesinExpanded = !mesinExpanded;
+                renderProdukKategori('mesin', produkMesinAll, mesinExpanded);
+                setTimeout(function() {
+                    document.getElementById('produk-mesin-container').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 100);
+            } else {
+                jasaExpanded = !jasaExpanded;
+                renderProdukKategori('jasa', produkJasaAll, jasaExpanded);
+                setTimeout(function() {
+                    document.getElementById('produk-jasa-container').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 100);
+            }
+        }
 
         // ============================================================
         // SLIDER
@@ -1487,11 +1127,9 @@
                     if (index >= totalSlides) index = 0;
                     currentIndex = index;
                     track.style.transform = 'translateX(-' + (currentIndex * 100) + '%)';
-
                     document.querySelectorAll('.slider-slide.zoomed').forEach(function(el) {
                         el.classList.remove('zoomed');
                     });
-
                     const dots = dotsContainer ? dotsContainer.querySelectorAll('.dot') : [];
                     dots.forEach(function(dot, i) {
                         dot.classList.toggle('active', i === currentIndex);
@@ -1505,41 +1143,17 @@
                     if (autoPlayInterval) clearInterval(autoPlayInterval);
                     autoPlayInterval = setInterval(nextSlide, AUTO_PLAY_DELAY);
                 }
-
                 function stopAutoplay() {
-                    if (autoPlayInterval) {
-                        clearInterval(autoPlayInterval);
-                        autoPlayInterval = null;
-                    }
+                    if (autoPlayInterval) { clearInterval(autoPlayInterval); autoPlayInterval = null; }
                 }
+                function resetAutoplay() { stopAutoplay(); startAutoplay(); }
 
-                function resetAutoplay() {
-                    stopAutoplay();
-                    startAutoplay();
-                }
-
-                if (nextBtn) {
-                    nextBtn.addEventListener('click', function() {
-                        nextSlide();
-                        resetAutoplay();
-                    });
-                }
-
-                if (prevBtn) {
-                    prevBtn.addEventListener('click', function() {
-                        prevSlide();
-                        resetAutoplay();
-                    });
-                }
+                if (nextBtn) nextBtn.addEventListener('click', function() { nextSlide(); resetAutoplay(); });
+                if (prevBtn) prevBtn.addEventListener('click', function() { prevSlide(); resetAutoplay(); });
 
                 document.addEventListener('keydown', function(e) {
-                    if (e.key === 'ArrowRight') {
-                        nextSlide();
-                        resetAutoplay();
-                    } else if (e.key === 'ArrowLeft') {
-                        prevSlide();
-                        resetAutoplay();
-                    }
+                    if (e.key === 'ArrowRight') { nextSlide(); resetAutoplay(); }
+                    else if (e.key === 'ArrowLeft') { prevSlide(); resetAutoplay(); }
                 });
 
                 const sliderContainer = document.getElementById('heroSlider');
@@ -1554,16 +1168,12 @@
                     sliderContainer.addEventListener('touchstart', function(e) {
                         touchStartX = e.changedTouches[0].screenX;
                     }, { passive: true });
-
                     sliderContainer.addEventListener('touchend', function(e) {
                         touchEndX = e.changedTouches[0].screenX;
                         var diff = touchStartX - touchEndX;
                         if (Math.abs(diff) > 50) {
-                            if (diff > 0) {
-                                nextSlide();
-                            } else {
-                                prevSlide();
-                            }
+                            if (diff > 0) nextSlide();
+                            else prevSlide();
                             resetAutoplay();
                         }
                     }, { passive: true });
@@ -1572,75 +1182,53 @@
                 createDots();
                 goToSlide(0);
                 startAutoplay();
-
-                console.log('✅ Slider initialized with', totalSlides, 'slides');
             }
         });
 
-        // ============================================================
-        // ZOOM EFFECT ON CLICK
-        // ============================================================
+        // Zoom effect
         document.addEventListener('DOMContentLoaded', function() {
             const slides = document.querySelectorAll('.slider-slide');
             slides.forEach(function(slide) {
                 slide.addEventListener('click', function(e) {
-                    if (e.target.closest('.slider-btn') || e.target.closest('.slider-dots')) {
-                        return;
-                    }
+                    if (e.target.closest('.slider-btn') || e.target.closest('.slider-dots')) return;
                     this.classList.toggle('zoomed');
                 });
             });
         });
 
         // ============================================================
-        // LOAD DATA
+        // LOADING & ERROR
         // ============================================================
         function showLoading(containerId) {
             var el = document.getElementById(containerId);
             if (el) {
-                el.innerHTML =
-                    '<div class="col-span-full flex flex-col items-center justify-center py-16"><div class="w-12 h-12 border-4 border-green-200 border-t-green-600 rounded-full animate-spin"></div><p class="mt-4 text-gray-500 text-sm">Memuat data...</p></div>';
+                el.innerHTML = '<div class="col-span-full flex flex-col items-center justify-center py-16"><div class="w-12 h-12 border-4 border-green-200 border-t-green-600 rounded-full animate-spin"></div><p class="mt-4 text-gray-500 text-sm">Memuat data...</p></div>';
             }
         }
 
         function showError(containerId, message) {
             var el = document.getElementById(containerId);
             if (el) {
-                el.innerHTML =
-                    '<div class="col-span-full text-center py-16"><div class="w-16 h-16 mx-auto mb-4 text-red-400"><i class="fas fa-exclamation-circle text-4xl"></i></div><p class="text-gray-500">' +
-                    (message || 'Gagal memuat data. Silakan refresh halaman.') +
-                    '</p><button onclick="location.reload()" class="mt-4 px-6 py-2 bg-green-600 text-white rounded-full text-sm hover:bg-green-700 transition-colors">Coba Lagi</button></div>';
+                el.innerHTML = '<div class="col-span-full text-center py-16"><div class="w-16 h-16 mx-auto mb-4 text-red-400"><i class="fas fa-exclamation-circle text-4xl"></i></div><p class="text-gray-500">' + (message || 'Gagal memuat data.') + '</p></div>';
             }
         }
 
-        var allArticles = [];
-        var currentArticleId = null;
-
+        // ============================================================
+        // LOAD CLIENT DATA
+        // ============================================================
         async function loadClientData() {
             showLoading('portfolios-container');
             showLoading('posts-container');
 
             try {
                 // ============================================================
-                // AMBIL DATA ARTIKEL DARI GOOGLE SHEETS
+                // ARTIKEL
                 // ============================================================
                 var response = await fetch(ARTICLES_API_URL);
-                if (!response.ok) throw new Error('Gagal mengambil data artikel dari Google Sheets');
-                var rawArticles = await response.json();
+                if (!response.ok) throw new Error('Gagal mengambil data artikel');
+                allArticles = await response.json();
+                console.log('✅ Artikel dimuat:', allArticles.length);
 
-// Urutkan dari tanggal terbaru (created_at) ke terlama
-allArticles = rawArticles.sort(function(a, b) {
-    // Jika tidak ada created_at, pakai id sebagai fallback
-    if (!a.created_at && !b.created_at) return b.id - a.id;
-    if (!a.created_at) return 1;
-    if (!b.created_at) return -1;
-    return new Date(b.created_at) - new Date(a.created_at);
-});
-
-console.log('✅ Artikel diurutkan dari terbaru:', allArticles.length, 'artikel');
-                // ============================================================
-                // TAMPILKAN ARTIKEL DENGAN CARD + SHARE + KLIK BUKA MODAL
-                // ============================================================
                 var postsContainer = document.getElementById('posts-container');
                 if (postsContainer) {
                     if (allArticles && allArticles.length > 0) {
@@ -1650,18 +1238,15 @@ console.log('✅ Artikel diurutkan dari terbaru:', allArticles.length, 'artikel'
                             var contentPreview = post.content ? post.content.replace(/<[^>]*>/g, '').substring(0, 120) + '...' : '';
                             
                             postsHTML +=
-                                '<article class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-gray-100 group cursor-pointer" data-aos="fade-up" data-aos-delay="' +
-                                ((index + 1) * 100) + '" onclick="openModal(' + post.id + ')">' +
+                                '<article class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-gray-100 group cursor-pointer" data-aos="fade-up" data-aos-delay="' + ((index + 1) * 100) + '" onclick="openModal(' + post.id + ')">' +
                                 '<div class="relative overflow-hidden h-48">' +
-                                '<img src="' + imageUrl + '" alt="' + (post.title || 'Artikel') +
-                                '" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500" loading="lazy">' +
+                                '<img src="' + imageUrl + '" alt="' + (post.title || 'Artikel') + '" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500" loading="lazy">' +
                                 '</div>' +
                                 '<div class="p-6">' +
                                 '<div class="flex items-center justify-between text-xs text-gray-400 mb-3">' +
                                 '<span class="bg-green-100 text-green-700 px-2 py-1 rounded font-medium">Artikel</span>' +
                                 '</div>' +
-                                '<h4 class="font-heading text-xl font-bold text-earth mb-3 group-hover:text-green-600 transition-colors line-clamp-2">' +
-                                (post.title || 'Artikel') + '</h4>' +
+                                '<h4 class="font-heading text-xl font-bold text-earth mb-3 group-hover:text-green-600 transition-colors line-clamp-2">' + (post.title || 'Artikel') + '</h4>' +
                                 '<p class="text-gray-500 text-sm mb-3 line-clamp-3">' + contentPreview + '</p>' +
                                 '<div class="flex items-center justify-between">' +
                                 '<button class="card-share" onclick="event.stopPropagation(); shareArticleCard(\'' + encodeURIComponent(window.location.origin + window.location.pathname + '?id=' + post.id) + '\', \'' + (post.title || 'Artikel') + '\')">' +
@@ -1675,101 +1260,74 @@ console.log('✅ Artikel diurutkan dari terbaru:', allArticles.length, 'artikel'
                         });
                         postsContainer.innerHTML = postsHTML;
                     } else {
-                        postsContainer.innerHTML =
-                            '<div class="col-span-full text-center py-16"><div class="text-4xl mb-4">📰</div><p class="text-gray-500">Belum ada artikel yang dipublikasikan.</p></div>';
+                        postsContainer.innerHTML = '<div class="col-span-full text-center py-16"><p class="text-gray-500">Belum ada artikel.</p></div>';
                     }
                 }
-                        // ============================================================
-                        // ============================================================
-// AMBIL & TAMPILKAN PRODUK (dengan Featured + Expand)
-// ============================================================
-try {
-    var produkResponse = await fetch(PRODUCTS_API_URL);
-    if (produkResponse.ok) {
-        var products = await produkResponse.json();
-        console.log('✅ Produk dimuat:', products.length);
-        
-        // Filter hanya publish
-        var publishedProducts = products.filter(function(p) {
-            return p.status === 'publish';
-        });
-        
-        // Pisahkan per kategori
-        var mesinAll = publishedProducts.filter(function(p) {
-            return p.kategori === 'Mesin';
-        });
-        var jasaAll = publishedProducts.filter(function(p) {
-            return p.kategori === 'Jasa';
-        });
-        
-        // Simpan ke global untuk toggle expand
-        window.__mesinAll = mesinAll;
-        window.__jasaAll = jasaAll;
-        window.__mesinExpanded = false;
-        window.__jasaExpanded = false;
-        
-        // Render awal: hanya 6 unggulan (atau 6 pertama jika featured < 6)
-        renderProdukKategori('mesin', mesinAll, false);
-        renderProdukKategori('jasa', jasaAll, false);
-    }
-} catch (err) {
-    console.error('Error loading produk:', err);
-}
+
                 // ============================================================
-                // TAMPILKAN PORTOFOLIO (STATIS)
+                // PRODUK
+                // ============================================================
+                try {
+                    var produkResponse = await fetch(PRODUCTS_API_URL);
+                    if (produkResponse.ok) {
+                        var products = await produkResponse.json();
+                        console.log('✅ Produk dimuat:', products.length);
+                        
+                        var publishedProducts = products.filter(function(p) {
+                            return p.status === 'publish';
+                        });
+                        
+                        produkMesinAll = publishedProducts.filter(function(p) { return p.kategori === 'Mesin'; });
+                        produkJasaAll = publishedProducts.filter(function(p) { return p.kategori === 'Jasa'; });
+                        
+                        renderProdukKategori('mesin', produkMesinAll, false);
+                        renderProdukKategori('jasa', produkJasaAll, false);
+                    }
+                } catch (err) {
+                    console.error('Error loading produk:', err);
+                }
+
+                // ============================================================
+                // PORTOFOLIO
                 // ============================================================
                 var portfoliosContainer = document.getElementById('portfolios-container');
-                if (portfoliosContainer) {
-                    if (PORTFOLIOS && PORTFOLIOS.length > 0) {
-                        var portfolioHTML = '';
-                        PORTFOLIOS.forEach(function(item, index) {
-                            var alignClass = index % 2 !== 0 ? 'md:mt-12' : '';
-                            var imageUrl = item.image_url || 'https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?w=800&q=80';
-                            portfolioHTML +=
-                                '<div class="group relative rounded-[2rem] overflow-hidden shadow-md ' +
-                                alignClass + '" data-aos="fade-up" data-aos-delay="' + ((index + 1) * 100) + '">' +
-                                '<img src="' + imageUrl + '" alt="' + (item.title || 'Proyek') +
-                                '" class="w-full h-80 object-cover transform transition-transform duration-700 group-hover:scale-110" loading="lazy">' +
-                                '<div class="absolute inset-0 bg-gradient-to-t from-earth/95 via-earth/50 to-transparent"></div>' +
-                                '<div class="absolute bottom-0 left-0 p-8 w-full">' +
-                                '<span class="inline-block px-3 py-1 bg-blue-500/20 border border-blue-400/30 text-blue-300 text-xs font-bold rounded-full mb-3 backdrop-blur-md">' +
-                                (item.type || 'Proyek') + '</span>' +
-                                '<h3 class="font-heading text-2xl font-bold text-white mb-2">' + (item.title || 'Proyek') + '</h3>' +
-                                (item.description ? '<p class="text-green-200 text-sm">' + item.description + '</p>' : '') +
-                                '</div></div>';
-                        });
-                        portfoliosContainer.innerHTML = portfolioHTML;
-                    } else {
-                        portfoliosContainer.innerHTML =
-                            '<div class="col-span-full text-center py-16"><div class="text-4xl mb-4">🚀</div><p class="text-gray-500">Belum ada portofolio yang tersedia.</p></div>';
-                    }
+                if (portfoliosContainer && PORTFOLIOS && PORTFOLIOS.length > 0) {
+                    var portfolioHTML = '';
+                    PORTFOLIOS.forEach(function(item, index) {
+                        var alignClass = index % 2 !== 0 ? 'md:mt-12' : '';
+                        portfolioHTML +=
+                            '<div class="group relative rounded-[2rem] overflow-hidden shadow-md ' + alignClass + '" data-aos="fade-up">' +
+                            '<img src="' + item.image_url + '" alt="' + item.title + '" class="w-full h-80 object-cover transform transition-transform duration-700 group-hover:scale-110" loading="lazy">' +
+                            '<div class="absolute inset-0 bg-gradient-to-t from-earth/95 via-earth/50 to-transparent"></div>' +
+                            '<div class="absolute bottom-0 left-0 p-8 w-full">' +
+                            '<span class="inline-block px-3 py-1 bg-blue-500/20 border border-blue-400/30 text-blue-300 text-xs font-bold rounded-full mb-3 backdrop-blur-md">' + item.type + '</span>' +
+                            '<h3 class="font-heading text-2xl font-bold text-white mb-2">' + item.title + '</h3>' +
+                            '<p class="text-green-200 text-sm">' + item.description + '</p>' +
+                            '</div></div>';
+                    });
+                    portfoliosContainer.innerHTML = portfolioHTML;
                 }
 
                 // ============================================================
-                // TAMPILKAN TIMELINE
+                // TIMELINE
                 // ============================================================
                 var timelineContainer = document.getElementById('timeline-container');
-                if (timelineContainer) {
-                    if (TIMELINES && TIMELINES.length > 0) {
-                        var timelineHTML = '';
-                        TIMELINES.forEach(function(item) {
-                            timelineHTML +=
-                                '<div class="relative pl-6">' +
-                                '<div class="absolute w-5 h-5 bg-green-500 rounded-full -left-[11px] top-0 border-4 border-white shadow-sm"></div>' +
-                                '<span class="text-sm font-bold text-green-600 mb-1 block">Tahun ' + item.year + '</span>' +
-                                '<h4 class="font-heading font-bold text-earth text-lg">' + item.title + '</h4>' +
-                                '<p class="text-sm text-gray-600 mt-2">' + (item.description || '') + '</p>' +
-                                '</div>';
-                        });
-                        timelineContainer.innerHTML = timelineHTML;
-                    } else {
-                        timelineContainer.innerHTML =
-                            '<div class="text-center text-gray-500 py-8">Belum ada data sejarah.</div>';
-                    }
+                if (timelineContainer && TIMELINES && TIMELINES.length > 0) {
+                    var timelineHTML = '';
+                    TIMELINES.forEach(function(item) {
+                        timelineHTML +=
+                            '<div class="relative pl-6">' +
+                            '<div class="absolute w-5 h-5 bg-green-500 rounded-full -left-[11px] top-0 border-4 border-white shadow-sm"></div>' +
+                            '<span class="text-sm font-bold text-green-600 mb-1 block">Tahun ' + item.year + '</span>' +
+                            '<h4 class="font-heading font-bold text-earth text-lg">' + item.title + '</h4>' +
+                            '<p class="text-sm text-gray-600 mt-2">' + item.description + '</p>' +
+                            '</div>';
+                    });
+                    timelineContainer.innerHTML = timelineHTML;
                 }
 
                 // ============================================================
-                // TAMPILKAN LEGALITAS
+                // LEGALITAS
                 // ============================================================
                 var legalitasContainer = document.getElementById('legalitas-container');
                 if (legalitasContainer) {
@@ -1778,31 +1336,29 @@ try {
                         '<tr><td class="py-4 font-medium text-gray-100 w-1/3">Nama Entitas Hukum</td><td class="py-4">CV Jalupang Teknik Mandiri Lingkungan</td></tr>' +
                         '<tr><td class="py-4 font-medium text-gray-100">Akta Pendirian</td><td class="py-4 font-mono">Nomor 07 tertanggal 16 Maret 2026</td></tr>' +
                         '<tr><td class="py-4 font-medium text-gray-100">Dirjen AHU Kemenkum</td><td class="py-4">AHU-0021523-AH.01.14 Tahun 2025</td></tr>' +
+                        '<tr><td class="py-4 font-medium text-gray-100">ISO 9001:2015</td><td class="py-4">Sistem Manajemen Mutu</td></tr>' +
+                        '<tr><td class="py-4 font-medium text-gray-100">ISO 14001:2015</td><td class="py-4">Sistem Manajemen Lingkungan</td></tr>' +
                         '</tbody></table>';
                 }
 
-                console.log('✅ Data Jalupang Teknik berhasil dimuat dari Google Sheets + data statis!');
+                console.log('✅ Data Jalupang Teknik berhasil dimuat!');
 
-                // ============================================================
-                // CEK PARAMETER ID DI URL UNTUK AUTO OPEN MODAL
-                // ============================================================
+                // Auto open modal dari URL
                 const params = new URLSearchParams(window.location.search);
                 const id = params.get('id');
                 if (id) {
-                    setTimeout(function() {
-                        openModal(id);
-                    }, 600);
+                    setTimeout(function() { openModal(id); }, 600);
                 }
 
             } catch (error) {
                 console.error('❌ Error loading client data:', error);
-                showError('posts-container', 'Gagal memuat data artikel. Periksa koneksi internet atau URL API.');
+                showError('posts-container', 'Gagal memuat data artikel.');
                 showError('portfolios-container', 'Gagal memuat data portofolio.');
             }
         }
 
         // ============================================================
-        // MODAL POPUP ARTIKEL
+        // MODAL ARTIKEL
         // ============================================================
         function openModal(articleId) {
             const modal = document.getElementById('articleModal');
@@ -1813,7 +1369,6 @@ try {
             loading.classList.remove('hidden');
             articleDiv.classList.add('hidden');
             errorDiv.classList.add('hidden');
-            
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
             
@@ -1827,15 +1382,10 @@ try {
                 }
                 
                 currentArticleId = articleId;
-                
                 document.getElementById('modalTitle').textContent = article.title || 'Tanpa Judul';
                 document.getElementById('modalBody').innerHTML = article.content || 'Konten kosong.';
                 
-                const date = new Date().toLocaleDateString('id-ID', {
-                    day: 'numeric',
-                    month: 'long',
-                    year: 'numeric'
-                });
+                const date = new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
                 document.getElementById('modalMeta').textContent = '📅 ' + date;
                 
                 const img = document.getElementById('modalImage');
@@ -1865,14 +1415,13 @@ try {
             const modal = document.getElementById('articleModal');
             modal.classList.remove('active');
             document.body.style.overflow = '';
-            
             const url = new URL(window.location);
             url.searchParams.delete('id');
             window.history.pushState({}, '', url);
         }
 
         // ============================================================
-        // SHARE FUNCTIONS
+        // SHARE
         // ============================================================
         function getCurrentArticleUrl() {
             const url = new URL(window.location);
@@ -1887,17 +1436,11 @@ try {
         }
 
         function shareArticleCard(url, title) {
-            const shareData = {
-                title: title,
-                text: 'Baca artikel: ' + title + ' dari Jalupang Teknik',
-                url: decodeURIComponent(url)
-            };
-            
+            const shareData = { title: title, text: 'Baca artikel: ' + title, url: decodeURIComponent(url) };
             if (navigator.share) {
                 navigator.share(shareData).catch(() => {});
                 return;
             }
-            
             navigator.clipboard.writeText(decodeURIComponent(url)).then(function() {
                 showToast('✅ Link artikel berhasil disalin!');
             }).catch(function() {
@@ -1913,43 +1456,29 @@ try {
             let shareUrl = '';
             
             switch(platform) {
-                case 'whatsapp':
-                    shareUrl = 'https://api.whatsapp.com/send?text=' + encodeURIComponent(text + '\n' + url);
-                    break;
-                case 'facebook':
-                    shareUrl = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(url) + '&quote=' + encodeURIComponent(text);
-                    break;
-                case 'twitter':
-                    shareUrl = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(text) + '&url=' + encodeURIComponent(url);
-                    break;
-                case 'email':
-                    shareUrl = 'mailto:?subject=' + encodeURIComponent(title) + '&body=' + encodeURIComponent(text + '\n\n' + url);
-                    break;
+                case 'whatsapp': shareUrl = 'https://api.whatsapp.com/send?text=' + encodeURIComponent(text + '\n' + url); break;
+                case 'facebook': shareUrl = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(url); break;
+                case 'twitter': shareUrl = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(text) + '&url=' + encodeURIComponent(url); break;
+                case 'email': shareUrl = 'mailto:?subject=' + encodeURIComponent(title) + '&body=' + encodeURIComponent(text + '\n\n' + url); break;
                 case 'copy':
                     navigator.clipboard.writeText(url).then(function() {
-                        showToast('✅ Link artikel berhasil disalin!');
+                        showToast('✅ Link berhasil disalin!');
                     }).catch(function() {
                         prompt('Salin link ini:', url);
                     });
                     return;
-                default:
-                    return;
             }
             
-            if (shareUrl) {
-                window.open(shareUrl, '_blank', 'width=600,height=500');
-            }
+            if (shareUrl) window.open(shareUrl, '_blank', 'width=600,height=500');
         }
 
         function showToast(message) {
             const existing = document.querySelector('.toast-notification');
             if (existing) existing.remove();
-            
             const toast = document.createElement('div');
             toast.className = 'toast-notification';
             toast.textContent = message;
             document.body.appendChild(toast);
-            
             setTimeout(function() {
                 toast.style.opacity = '0';
                 toast.style.transition = 'opacity 0.3s';
@@ -1967,17 +1496,6 @@ try {
             if (form) {
                 form.addEventListener('submit', function(e) {
                     e.preventDefault();
-
-                    var company = document.getElementById('contact-company').value.trim();
-                    var email = document.getElementById('contact-email').value.trim();
-                    var service = document.getElementById('contact-service').value;
-                    var message = document.getElementById('contact-message').value.trim();
-
-                    if (!company || !email || !message) {
-                        alert('Harap isi semua bidang yang wajib.');
-                        return;
-                    }
-
                     if (successMsg) {
                         successMsg.classList.remove('hidden');
                         form.reset();
@@ -1990,7 +1508,7 @@ try {
         });
 
         // ============================================================
-        // AOS, MOBILE MENU, TAB, MODAL EVENTS
+        // AOS, MOBILE MENU, TAB, MODAL
         // ============================================================
         document.addEventListener('DOMContentLoaded', function() {
             AOS.init({ once: true, offset: 50, duration: 800 });
@@ -1999,23 +1517,16 @@ try {
             var menu = document.getElementById('mobile-menu');
             var links = document.querySelectorAll('.mobile-link');
             if (btn && menu) {
-                btn.addEventListener('click', function() {
-                    menu.classList.toggle('hidden');
-                });
+                btn.addEventListener('click', function() { menu.classList.toggle('hidden'); });
                 links.forEach(function(link) {
-                    link.addEventListener('click', function() {
-                        menu.classList.add('hidden');
-                    });
+                    link.addEventListener('click', function() { menu.classList.add('hidden'); });
                 });
             }
 
             var navbar = document.getElementById('navbar');
             window.addEventListener('scroll', function() {
-                if (window.scrollY > 20) {
-                    navbar.classList.add('shadow-sm');
-                } else {
-                    navbar.classList.remove('shadow-sm');
-                }
+                if (window.scrollY > 20) navbar.classList.add('shadow-sm');
+                else navbar.classList.remove('shadow-sm');
             });
 
             var tabBtns = document.querySelectorAll('.tab-btn');
@@ -2024,14 +1535,12 @@ try {
                 btn.addEventListener('click', function() {
                     tabBtns.forEach(function(b) {
                         b.classList.remove('bg-white', 'shadow-sm', 'text-green-700', 'border-green-100');
-                        b.classList.add('text-gray-500', 'hover:bg-white', 'hover:text-green-700', 'border-transparent', 'hover:border-green-100');
+                        b.classList.add('text-gray-500');
                     });
-                    btn.classList.remove('text-gray-500', 'hover:bg-white', 'hover:text-green-700', 'border-transparent', 'hover:border-green-100');
+                    btn.classList.remove('text-gray-500');
                     btn.classList.add('bg-white', 'shadow-sm', 'text-green-700', 'border-green-100');
 
-                    tabContents.forEach(function(c) {
-                        c.classList.add('hidden');
-                    });
+                    tabContents.forEach(function(c) { c.classList.add('hidden'); });
                     var target = document.getElementById(btn.getAttribute('data-target'));
                     if (target) {
                         target.classList.remove('hidden');
@@ -2042,143 +1551,17 @@ try {
                 });
             });
 
-            // Modal events
             document.getElementById('modalCloseBtn').addEventListener('click', closeModal);
             document.getElementById('articleModal').addEventListener('click', function(e) {
-                if (e.target === this) {
-                    closeModal();
-                }
+                if (e.target === this) closeModal();
             });
             document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape') {
-                    closeModal();
-                }
+                if (e.key === 'Escape') closeModal();
             });
 
+            // PANGGIL DATA
             loadClientData();
         });
-        // ============================================================
-// RENDER PRODUK PER KATEGORI
-// ============================================================
-function renderProdukKategori(kategori, allProducts, showAll) {
-    var containerId = 'produk-' + kategori + '-container';
-    var expandContainerId = kategori + '-expand-container';
-    var expandTextId = kategori + '-expand-text';
-    var expandBtnId = kategori + '-expand-btn';
-    
-    var container = document.getElementById(containerId);
-    if (!container) return;
-    
-    // Filter featured
-    var featured = allProducts.filter(function(p) {
-        return p.featured === 'TRUE' || p.featured === true;
-    });
-    
-    // Jika featured kurang dari 6, tambah produk non-featured sampai 6
-    var displayProducts;
-    if (featured.length >= 6) {
-        displayProducts = featured.slice(0, 6);
-    } else {
-        var nonFeatured = allProducts.filter(function(p) {
-            return !(p.featured === 'TRUE' || p.featured === true);
-        });
-        displayProducts = featured.concat(nonFeatured).slice(0, 6);
-    }
-    
-    // Jika showAll, tampilkan semua
-    if (showAll) {
-        displayProducts = allProducts;
-    }
-    
-    // Render
-    var html = '';
-    displayProducts.forEach(function(produk, index) {
-        html += renderProdukCard(produk, showAll && index >= 6);
-    });
-    
-    if (displayProducts.length === 0) {
-        html = '<div class="col-span-full text-center py-8 text-gray-400">Belum ada produk.</div>';
-    }
-    
-    container.innerHTML = html;
-    
-    // Handle tombol expand
-    var expandContainer = document.getElementById(expandContainerId);
-    var expandText = document.getElementById(expandTextId);
-    var expandBtn = document.getElementById(expandBtnId);
-    
-    if (allProducts.length > 6) {
-        expandContainer.style.display = 'block';
-        
-        if (showAll) {
-            expandText.textContent = 'Sembunyikan';
-            expandBtn.classList.add('expanded');
-        } else {
-            expandText.textContent = 'Lihat Semua ' + (kategori === 'mesin' ? 'Mesin' : 'Jasa') + ' (' + allProducts.length + ')';
-            expandBtn.classList.remove('expanded');
-        }
-    } else {
-        expandContainer.style.display = 'none';
-    }
-}
-
-// ============================================================
-// RENDER SATU CARD PRODUK
-// ============================================================
-function renderProdukCard(produk, animate) {
-    var hargaText = 'Hubungi Kami';
-    if (produk.harga && produk.harga !== 'Hubungi Kami' && !isNaN(produk.harga)) {
-        hargaText = 'Rp ' + Number(produk.harga).toLocaleString('id-ID');
-    } else if (produk.harga && produk.harga !== 'Hubungi Kami') {
-        hargaText = produk.harga;
-    }
-    
-    var isFeatured = (produk.featured === 'TRUE' || produk.featured === true);
-    var animateClass = animate ? ' produk-fade-in' : '';
-    
-    return '<div class="produk-card' + animateClass + '">' +
-        '<div class="produk-card-image">' +
-        (isFeatured ? '<div class="produk-featured-badge"><i class="fas fa-star"></i> Unggulan</div>' : '') +
-        '<img src="' + (produk.gambar || 'https://via.placeholder.com/300') + '" alt="' + (produk.nama || 'Produk') + '" loading="lazy">' +
-        '</div>' +
-        '<div class="produk-card-body">' +
-        '<div class="produk-card-name">' + (produk.nama || 'Tanpa Nama') + '</div>' +
-        '<div class="produk-card-desc">' + (produk.deskripsi || '') + '</div>' +
-        '<div class="produk-card-footer">' +
-        '<span class="produk-card-price">' + hargaText + '</span>' +
-        '<a href="#kontak" class="produk-card-btn">Tanya</a>' +
-        '</div>' +
-        '</div>' +
-        '</div>';
-}
-
-// ============================================================
-// TOGGLE EXPAND
-// ============================================================
-function toggleExpand(kategori) {
-    if (kategori === 'mesin') {
-        window.__mesinExpanded = !window.__mesinExpanded;
-        renderProdukKategori('mesin', window.__mesinAll, window.__mesinExpanded);
-        
-        // Scroll ke produk setelah expand
-        setTimeout(function() {
-            document.getElementById('produk-mesin-container').scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-        }, 100);
-    } else {
-        window.__jasaExpanded = !window.__jasaExpanded;
-        renderProdukKategori('jasa', window.__jasaAll, window.__jasaExpanded);
-        
-        setTimeout(function() {
-            document.getElementById('produk-jasa-container').scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-        }, 100);
-    }
-}
     </script>
 </body>
 </html>
