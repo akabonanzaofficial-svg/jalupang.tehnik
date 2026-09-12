@@ -71,7 +71,6 @@
             font-size: 0.875rem;
             z-index: 1000;
             box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-            transition: opacity 0.3s;
         }
 
         .editing-indicator {
@@ -86,11 +85,27 @@
             align-items: center;
             justify-content: space-between;
         }
+
+        /* Hide CMS content while checking auth */
+        .auth-loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            flex-direction: column;
+        }
     </style>
 </head>
 <body>
 
-<div class="max-w-6xl mx-auto px-4 py-10">
+<!-- AUTH LOADING -->
+<div id="auth-loading" class="auth-loading">
+    <div class="w-12 h-12 border-4 border-green-200 border-t-green-600 rounded-full animate-spin"></div>
+    <p class="mt-4 text-gray-500 text-sm">Memverifikasi akses...</p>
+</div>
+
+<!-- MAIN CONTENT -->
+<div id="cms-content" style="display: none;" class="max-w-6xl mx-auto px-4 py-10">
     
     <!-- HEADER -->
     <div class="flex justify-between items-center mb-8">
@@ -98,9 +113,15 @@
             <h1 class="text-3xl font-bold text-gray-800">📝 CMS Jalupang Teknik</h1>
             <p class="text-gray-500 text-sm">Kelola artikel dan produk website</p>
         </div>
-        <a href="index.html" class="text-green-600 hover:text-green-800 text-sm font-medium">
-            <i class="fas fa-arrow-left"></i> Kembali ke Website
-        </a>
+        <div class="flex items-center gap-3">
+            <a href="index.html" class="text-green-600 hover:text-green-800 text-sm font-medium">
+                <i class="fas fa-arrow-left"></i> Kembali ke Website
+            </a>
+            <button onclick="logoutAdmin()" 
+                    class="text-red-500 hover:text-red-700 text-sm font-medium px-3 py-1.5 rounded-lg border border-red-200 hover:bg-red-50 transition-all">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </div>
     </div>
 
     <!-- TAB NAVIGATION -->
@@ -249,23 +270,27 @@
                 
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Deskripsi</label>
-                    <textarea id="produk-deskripsi" rows="3"
+                    <textarea id="produk-deskripsi" rows="5"
                               class="w-full px-4 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none resize-y"
-                              placeholder="Deskripsi singkat produk..."></textarea>
+                              placeholder="Deskripsi singkat produk...&#10;&#10;Bisa multi-baris dengan enter."></textarea>
+                    <p class="text-xs text-gray-400 mt-1">
+                        <i class="fas fa-info-circle"></i> Tekan <strong>Enter</strong> untuk membuat baris baru. Enter akan tampil di card dan popup produk.
+                    </p>
                 </div>
-                    <!-- Toggle Produk Unggulan -->
-<div class="bg-amber-50 border border-amber-200 rounded-lg p-4">
-    <label class="flex items-center gap-3 cursor-pointer">
-        <input type="checkbox" id="produk-featured" 
-               class="w-5 h-5 text-amber-500 rounded focus:ring-2 focus:ring-amber-400 cursor-pointer" />
-        <div>
-            <span class="font-semibold text-amber-800 text-sm">
-                <i class="fas fa-star"></i> Produk Unggulan
-            </span>
-            <p class="text-xs text-amber-600 mt-0.5">Centang untuk menampilkan di halaman utama (maks 6 per kategori)</p>
-        </div>
-    </label>
-</div>
+                
+                <div class="bg-amber-50 border border-amber-200 rounded-lg p-4">
+                    <label class="flex items-center gap-3 cursor-pointer">
+                        <input type="checkbox" id="produk-featured" 
+                               class="w-5 h-5 text-amber-500 rounded focus:ring-2 focus:ring-amber-400 cursor-pointer" />
+                        <div>
+                            <span class="font-semibold text-amber-800 text-sm">
+                                <i class="fas fa-star"></i> Produk Unggulan
+                            </span>
+                            <p class="text-xs text-amber-600 mt-0.5">Centang untuk menampilkan di halaman utama (maks 10 per kategori)</p>
+                        </div>
+                    </label>
+                </div>
+                
                 <div class="flex flex-wrap gap-4 items-center">
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
@@ -308,12 +333,58 @@
     // ============================================================
     const API_URL = 'https://script.google.com/macros/s/AKfycbyQAKZs4rZouzb4TRyi6cWkFy2Mj5vIF4qlDdrzAu0HfqONxSp3Qo8YnpAQCaJ4WIBy/exec';
 
-    // Cache data (agar edit tidak perlu fetch ulang)
-    let cacheArticles = [];
-    let cacheProducts = [];
+    // ============================================================
+    // AMBIL TOKEN DARI STORAGE
+    // ============================================================
+    const ADMIN_TOKEN = localStorage.getItem('jalupang_admin_token') || sessionStorage.getItem('jalupang_admin_token');
 
     // ============================================================
-    // TOAST NOTIFICATION
+    // CEK LOGIN — JIKA TIDAK ADA TOKEN, REDIRECT KE LOGIN
+    // ============================================================
+    (function checkAuth() {
+        if (!ADMIN_TOKEN) {
+            window.location.href = 'login.html';
+            return;
+        }
+        
+        // Validasi token ke server
+        fetch(API_URL + '?action=validate&token=' + encodeURIComponent(ADMIN_TOKEN))
+            .then(function(res) { return res.json(); })
+            .then(function(data) {
+                if (data.valid) {
+                    // Token valid → tampilkan CMS
+                    document.getElementById('auth-loading').style.display = 'none';
+                    document.getElementById('cms-content').style.display = 'block';
+                    initCMS();
+                } else {
+                    // Token tidak valid → hapus & redirect
+                    localStorage.removeItem('jalupang_admin_token');
+                    sessionStorage.removeItem('jalupang_admin_token');
+                    window.location.href = 'login.html';
+                }
+            })
+            .catch(function(error) {
+                console.error('Auth check error:', error);
+                // Jika gagal fetch, tetap tampilkan CMS (untuk offline/error tolerance)
+                document.getElementById('auth-loading').style.display = 'none';
+                document.getElementById('cms-content').style.display = 'block';
+                initCMS();
+            });
+    })();
+
+    // ============================================================
+    // LOGOUT
+    // ============================================================
+    function logoutAdmin() {
+        if (confirm('Yakin ingin logout?')) {
+            localStorage.removeItem('jalupang_admin_token');
+            sessionStorage.removeItem('jalupang_admin_token');
+            window.location.href = 'login.html';
+        }
+    }
+
+    // ============================================================
+    // TOAST
     // ============================================================
     function showToast(message) {
         const existing = document.querySelector('.toast-notification');
@@ -353,24 +424,64 @@
     }
 
     // ============================================================
-    // QUILL EDITOR
+    // STATE
     // ============================================================
-    var quill = new Quill('#quill-editor', {
-        theme: 'snow',
-        placeholder: 'Tulis konten artikel di sini...',
-        modules: {
-            toolbar: [
-                [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-                ['bold', 'italic', 'underline', 'strike'],
-                [{ 'color': [] }, { 'background': [] }],
-                [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-                [{ 'align': [] }],
-                ['blockquote', 'code-block'],
-                ['link', 'image', 'video'],
-                ['clean']
-            ]
-        }
-    });
+    var quill = null;
+    var cacheArticles = [];
+    var cacheProducts = [];
+
+    // ============================================================
+    // INIT CMS
+    // ============================================================
+    function initCMS() {
+        // Init Quill
+        quill = new Quill('#quill-editor', {
+            theme: 'snow',
+            placeholder: 'Tulis konten artikel di sini...',
+            modules: {
+                toolbar: [
+                    [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                    ['bold', 'italic', 'underline', 'strike'],
+                    [{ 'color': [] }, { 'background': [] }],
+                    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                    [{ 'align': [] }],
+                    ['blockquote', 'code-block'],
+                    ['link', 'image', 'video'],
+                    ['clean']
+                ]
+            }
+        });
+
+        // Load data awal
+        loadArticles();
+
+        // Event listeners
+        attachEventListeners();
+    }
+
+    // ============================================================
+    // EVENT LISTENERS
+    // ============================================================
+    function attachEventListeners() {
+        // Artikel form
+        document.getElementById('cms-form').addEventListener('submit', submitArtikel);
+        document.getElementById('cms-clear-btn').addEventListener('click', function() {
+            if (confirm('Reset form artikel?')) cancelEditArtikel();
+        });
+        document.getElementById('cms-date-today').addEventListener('click', function() {
+            const today = new Date();
+            const dateStr = today.getFullYear() + '-' + 
+                            String(today.getMonth() + 1).padStart(2, '0') + '-' + 
+                            String(today.getDate()).padStart(2, '0');
+            document.getElementById('cms-date').value = dateStr;
+        });
+
+        // Produk form
+        document.getElementById('produk-form').addEventListener('submit', submitProduk);
+        document.getElementById('produk-clear-btn').addEventListener('click', function() {
+            if (confirm('Reset form produk?')) cancelEditProduk();
+        });
+    }
 
     // ============================================================
     // ============ ARTIKEL =======================================
@@ -432,7 +543,6 @@
         }
     }
 
-    // EDIT ARTIKEL - Isi form dengan data yang ada
     function editArticle(id) {
         const article = cacheArticles.find(a => String(a.id) === String(id));
         if (!article) {
@@ -440,30 +550,25 @@
             return;
         }
         
-        // Isi form
         document.getElementById('cms-id').value = article.id;
         document.getElementById('cms-title').value = article.title || '';
-        quill.root.innerHTML = article.content || '';
+        if (quill) quill.root.innerHTML = article.content || '';
         document.getElementById('cms-image').value = article.image || '';
         document.getElementById('cms-status').value = article.status || 'publish';
         document.getElementById('cms-date').value = article.created_at || '';
         
-        // Update UI ke mode edit
         document.getElementById('artikel-form-title').innerHTML = '✏️ Edit Artikel';
         document.getElementById('artikel-edit-id').textContent = article.id;
         document.getElementById('artikel-edit-indicator').classList.remove('hidden');
         
-        // Scroll ke form
         document.getElementById('cms-form').scrollIntoView({ behavior: 'smooth', block: 'start' });
-        
         showToast('✏️ Mode edit artikel aktif');
     }
 
-    // CANCEL EDIT ARTIKEL
     function cancelEditArtikel() {
         document.getElementById('cms-id').value = '';
         document.getElementById('cms-title').value = '';
-        quill.root.innerHTML = '';
+        if (quill) quill.root.innerHTML = '';
         document.getElementById('cms-image').value = '';
         document.getElementById('cms-status').value = 'publish';
         document.getElementById('cms-date').value = '';
@@ -472,13 +577,12 @@
         document.getElementById('artikel-edit-indicator').classList.add('hidden');
     }
 
-    // SUBMIT ARTIKEL (Tambah / Edit)
-    document.getElementById('cms-form').addEventListener('submit', async function(e) {
+    async function submitArtikel(e) {
         e.preventDefault();
         
         const id = document.getElementById('cms-id').value;
         const title = document.getElementById('cms-title').value.trim();
-        const content = quill.root.innerHTML;
+        const content = quill ? quill.root.innerHTML : '';
         const image = document.getElementById('cms-image').value.trim();
         const status = document.getElementById('cms-status').value;
         let date = document.getElementById('cms-date').value.trim();
@@ -506,10 +610,10 @@
                 content: content,
                 image: image,
                 status: status,
-                created_at: date
+                created_at: date,
+                token: ADMIN_TOKEN
             };
             
-            // Jika ada ID, berarti EDIT
             if (id) {
                 payload.action = 'update';
                 payload.id = id;
@@ -525,9 +629,7 @@
             showToast(id ? '✅ Artikel berhasil diperbarui!' : '✅ Artikel berhasil ditambahkan!');
             cancelEditArtikel();
             
-            setTimeout(() => {
-                loadArticles();
-            }, 1500);
+            setTimeout(() => loadArticles(), 1500);
             
         } catch (error) {
             console.error('Error saving article:', error);
@@ -536,25 +638,8 @@
         
         submitBtn.disabled = false;
         submitBtn.innerHTML = '<i class="fas fa-save"></i> Simpan Artikel';
-    });
+    }
 
-    // RESET FORM ARTIKEL
-    document.getElementById('cms-clear-btn').addEventListener('click', function() {
-        if (confirm('Reset form artikel?')) {
-            cancelEditArtikel();
-        }
-    });
-
-    // TOMBOL HARI INI
-    document.getElementById('cms-date-today').addEventListener('click', function() {
-        const today = new Date();
-        const dateStr = today.getFullYear() + '-' + 
-                        String(today.getMonth() + 1).padStart(2, '0') + '-' + 
-                        String(today.getDate()).padStart(2, '0');
-        document.getElementById('cms-date').value = dateStr;
-    });
-
-    // HAPUS ARTIKEL
     async function deleteArticle(id) {
         if (!confirm('Yakin ingin menghapus artikel #' + id + '? Tindakan ini tidak bisa dibatalkan.')) {
             return;
@@ -568,15 +653,13 @@
                 body: JSON.stringify({
                     action: 'delete',
                     type: 'artikel',
-                    id: id
+                    id: id,
+                    token: ADMIN_TOKEN
                 })
             });
             
             showToast('✅ Artikel berhasil dihapus!');
-            
-            setTimeout(() => {
-                loadArticles();
-            }, 1500);
+            setTimeout(() => loadArticles(), 1500);
             
         } catch (error) {
             console.error('Error deleting article:', error);
@@ -609,6 +692,7 @@
                 const statusText = produk.status === 'publish' ? 'Published' : 'Draft';
                 const kategoriColor = produk.kategori === 'Mesin' ? 'blue' : 'purple';
                 const produkId = produk.id || index + 1;
+                const isFeatured = (produk.featured === 'TRUE' || produk.featured === true);
                 
                 let hargaText = 'Hubungi Kami';
                 if (produk.harga && produk.harga !== 'Hubungi Kami' && !isNaN(produk.harga)) {
@@ -628,11 +712,9 @@
                                     <span class="text-xs font-bold text-gray-400">#${produkId}</span>
                                     <span class="text-sm font-semibold text-gray-800 truncate">${produk.nama || 'Tanpa Nama'}</span>
                                     <span class="px-2 py-0.5 text-xs rounded-full bg-${kategoriColor}-100 text-${kategoriColor}-700 font-medium">${produk.kategori || '-'}</span>
-                                    ${(produk.featured === 'TRUE' || produk.featured === true) 
-    ? '<span class="px-2 py-0.5 text-xs rounded-full bg-amber-100 text-amber-700 font-medium"><i class="fas fa-star"></i> Unggulan</span>' 
-    : ''}
+                                    ${isFeatured ? '<span class="px-2 py-0.5 text-xs rounded-full bg-amber-100 text-amber-700 font-medium"><i class="fas fa-star"></i> Unggulan</span>' : ''}
                                 </div>
-                                <div class="text-xs text-gray-400 truncate mt-0.5">${produk.deskripsi || '(tanpa deskripsi)'}</div>
+                                <div class="text-xs text-gray-400 truncate mt-0.5">${produk.deskripsi ? produk.deskripsi.substring(0, 80) : '(tanpa deskripsi)'}</div>
                                 <div class="text-xs font-bold text-green-700 mt-0.5">${hargaText}</div>
                             </div>
                         </div>
@@ -657,7 +739,6 @@
         }
     }
 
-    // EDIT PRODUK - Isi form dengan data yang ada
     function editProduk(id) {
         const produk = cacheProducts.find(p => String(p.id) === String(id));
         if (!produk) {
@@ -672,19 +753,16 @@
         document.getElementById('produk-gambar').value = produk.gambar || '';
         document.getElementById('produk-deskripsi').value = produk.deskripsi || '';
         document.getElementById('produk-status').value = produk.status || 'publish';
-        document.getElementById('produk-featured').checked = 
-    (produk.featured === 'TRUE' || produk.featured === true);
+        document.getElementById('produk-featured').checked = (produk.featured === 'TRUE' || produk.featured === true);
         
         document.getElementById('produk-form-title').innerHTML = '✏️ Edit Produk';
         document.getElementById('produk-edit-id').textContent = produk.id;
         document.getElementById('produk-edit-indicator').classList.remove('hidden');
         
         document.getElementById('produk-form').scrollIntoView({ behavior: 'smooth', block: 'start' });
-        
         showToast('✏️ Mode edit produk aktif');
     }
 
-    // CANCEL EDIT PRODUK
     function cancelEditProduk() {
         document.getElementById('produk-id').value = '';
         document.getElementById('produk-nama').value = '';
@@ -694,12 +772,12 @@
         document.getElementById('produk-deskripsi').value = '';
         document.getElementById('produk-status').value = 'publish';
         document.getElementById('produk-featured').checked = false;
+        
         document.getElementById('produk-form-title').innerHTML = '➕ Tambah Produk Baru';
         document.getElementById('produk-edit-indicator').classList.add('hidden');
     }
 
-    // SUBMIT PRODUK (Tambah / Edit)
-    document.getElementById('produk-form').addEventListener('submit', async function(e) {
+    async function submitProduk(e) {
         e.preventDefault();
         
         const id = document.getElementById('produk-id').value;
@@ -710,6 +788,7 @@
         const deskripsi = document.getElementById('produk-deskripsi').value.trim();
         const status = document.getElementById('produk-status').value;
         const featured = document.getElementById('produk-featured').checked;
+        
         if (!nama) {
             alert('Nama produk harus diisi!');
             return;
@@ -721,17 +800,17 @@
         
         try {
             const payload = {
-    type: 'produk',
-    nama: nama,
-    kategori: kategori,
-    harga: harga || 'Hubungi Kami',
-    deskripsi: deskripsi,
-    gambar: gambar,
-    status: status,
-    featured: featured
-};
+                type: 'produk',
+                nama: nama,
+                kategori: kategori,
+                harga: harga || 'Hubungi Kami',
+                deskripsi: deskripsi,
+                gambar: gambar,
+                status: status,
+                featured: featured,
+                token: ADMIN_TOKEN
+            };
             
-            // Jika ada ID, berarti EDIT
             if (id) {
                 payload.action = 'update';
                 payload.id = id;
@@ -747,9 +826,7 @@
             showToast(id ? '✅ Produk berhasil diperbarui!' : '✅ Produk berhasil ditambahkan!');
             cancelEditProduk();
             
-            setTimeout(() => {
-                loadProducts();
-            }, 1500);
+            setTimeout(() => loadProducts(), 1500);
             
         } catch (error) {
             console.error('Error saving product:', error);
@@ -758,16 +835,8 @@
         
         submitBtn.disabled = false;
         submitBtn.innerHTML = '<i class="fas fa-save"></i> Simpan Produk';
-    });
+    }
 
-    // RESET FORM PRODUK
-    document.getElementById('produk-clear-btn').addEventListener('click', function() {
-        if (confirm('Reset form produk?')) {
-            cancelEditProduk();
-        }
-    });
-
-    // HAPUS PRODUK
     async function deleteProduk(id) {
         if (!confirm('Yakin ingin menghapus produk #' + id + '? Tindakan ini tidak bisa dibatalkan.')) {
             return;
@@ -781,28 +850,19 @@
                 body: JSON.stringify({
                     action: 'delete',
                     type: 'produk',
-                    id: id
+                    id: id,
+                    token: ADMIN_TOKEN
                 })
             });
             
             showToast('✅ Produk berhasil dihapus!');
-            
-            setTimeout(() => {
-                loadProducts();
-            }, 1500);
+            setTimeout(() => loadProducts(), 1500);
             
         } catch (error) {
             console.error('Error deleting product:', error);
             showToast('❌ Gagal menghapus produk.');
         }
     }
-
-    // ============================================================
-    // LOAD SAAT HALAMAN DIBUKA
-    // ============================================================
-    document.addEventListener('DOMContentLoaded', function() {
-        loadArticles();
-    });
 </script>
 
 </body>
