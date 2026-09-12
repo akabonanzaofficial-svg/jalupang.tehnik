@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login Admin - Jalupang Teknik</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    
+    <style>
+        body {
+            background: linear-gradient(135deg, #15803d 0%, #166534 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Inter', sans-serif;
+        }
+        .login-card {
+            background: white;
+            border-radius: 1.5rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 2.5rem;
+            width: 100%;
+            max-width: 420px;
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="login-card fade-in">
+    <!-- LOGO -->
+    <div class="text-center mb-8">
+        <div class="w-16 h-16 mx-auto rounded-2xl bg-gradient-to-br from-green-500 to-green-700 flex items-center justify-center text-white text-3xl shadow-lg mb-4">
+            <i class="fas fa-leaf"></i>
+        </div>
+        <h1 class="text-2xl font-bold text-gray-800 mb-2">Login Admin</h1>
+        <p class="text-sm text-gray-500">Jalupang Teknik CMS</p>
+    </div>
+
+    <!-- FORM LOGIN -->
+    <form id="login-form" class="space-y-5">
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">
+                <i class="fas fa-lock text-green-600 mr-1"></i> Password Admin
+            </label>
+            <div class="relative">
+                <input type="password" id="password-input" required 
+                       class="w-full px-4 py-3 pr-12 rounded-xl border border-gray-200 focus:ring-2 focus:ring-green-500/20 focus:border-green-500 outline-none transition-all"
+                       placeholder="Masukkan password..." />
+                <button type="button" id="toggle-password"
+                        class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
+                    <i class="fas fa-eye" id="eye-icon"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- INGAT SAYA -->
+        <div class="flex items-center justify-between">
+            <label class="flex items-center gap-2 cursor-pointer text-sm text-gray-600">
+                <input type="checkbox" id="remember-me" 
+                       class="w-4 h-4 text-green-600 rounded focus:ring-2 focus:ring-green-500 cursor-pointer" />
+                <span>Ingat saya</span>
+            </label>
+        </div>
+
+        <!-- TOMBOL LOGIN -->
+        <button type="submit" id="login-btn"
+                class="w-full bg-green-600 text-white font-bold py-3 rounded-xl shadow-lg hover:bg-green-700 transition-all transform hover:-translate-y-0.5">
+            <i class="fas fa-sign-in-alt mr-2"></i> Login
+        </button>
+
+        <!-- ERROR -->
+        <div id="error-msg" class="hidden p-3 bg-red-100 text-red-700 rounded-lg border border-red-200 text-sm text-center">
+            <i class="fas fa-exclamation-circle mr-1"></i>
+            <span id="error-text">Password salah!</span>
+        </div>
+
+        <!-- LOADING -->
+        <div id="loading-msg" class="hidden p-3 bg-blue-100 text-blue-700 rounded-lg border border-blue-200 text-sm text-center">
+            <i class="fas fa-spinner fa-spin mr-1"></i> Memverifikasi...
+        </div>
+    </form>
+
+    <!-- BACK TO HOME -->
+    <div class="text-center mt-6">
+        <a href="index.html" class="text-sm text-gray-500 hover:text-green-600">
+            <i class="fas fa-arrow-left mr-1"></i> Kembali ke Website
+        </a>
+    </div>
+</div>
+
+<script>
+    // ============================================================
+    // KONFIGURASI
+    // ============================================================
+    const API_URL = 'https://script.google.com/macros/s/AKfycbyQAKZs4rZouzb4TRyi6cWkFy2Mj5vIF4qlDdrzAu0HfqONxSp3Qo8YnpAQCaJ4WIBy/exec';
+
+    // ============================================================
+    // CEK APAKAH SUDAH LOGIN
+    // ============================================================
+    document.addEventListener('DOMContentLoaded', function() {
+        var token = localStorage.getItem('jalupang_admin_token') || sessionStorage.getItem('jalupang_admin_token');
+        if (token) {
+            // Validasi token ke server
+            fetch(API_URL + '?action=validate&token=' + encodeURIComponent(token))
+                .then(function(res) { return res.json(); })
+                .then(function(data) {
+                    if (data.valid) {
+                        window.location.href = 'cms.html';
+                    }
+                })
+                .catch(function() {});
+        }
+    });
+
+    // ============================================================
+    // TOGGLE PASSWORD
+    // ============================================================
+    document.getElementById('toggle-password').addEventListener('click', function() {
+        var input = document.getElementById('password-input');
+        var icon = document.getElementById('eye-icon');
+        if (input.type === 'password') {
+            input.type = 'text';
+            icon.classList.remove('fa-eye');
+            icon.classList.add('fa-eye-slash');
+        } else {
+            input.type = 'password';
+            icon.classList.remove('fa-eye-slash');
+            icon.classList.add('fa-eye');
+        }
+    });
+
+    // ============================================================
+    // SUBMIT LOGIN
+    // ============================================================
+    document.getElementById('login-form').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        var password = document.getElementById('password-input').value;
+        var rememberMe = document.getElementById('remember-me').checked;
+        
+        if (!password) {
+            showError('Masukkan password!');
+            return;
+        }
+        
+        var loginBtn = document.getElementById('login-btn');
+        var loadingMsg = document.getElementById('loading-msg');
+        var errorMsg = document.getElementById('error-msg');
+        
+        loginBtn.disabled = true;
+        loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Memverifikasi...';
+        loadingMsg.classList.remove('hidden');
+        errorMsg.classList.add('hidden');
+        
+        try {
+            // Kirim password ke Apps Script via GET
+            var url = API_URL + '?action=login&password=' + encodeURIComponent(password);
+            var response = await fetch(url);
+            var data = await response.json();
+            
+            if (data.success && data.token) {
+                // Simpan token
+                if (rememberMe) {
+                    localStorage.setItem('jalupang_admin_token', data.token);
+                } else {
+                    sessionStorage.setItem('jalupang_admin_token', data.token);
+                }
+                
+                // Redirect ke CMS
+                window.location.href = 'cms.html';
+            } else {
+                loadingMsg.classList.add('hidden');
+                showError(data.message || 'Password salah!');
+                loginBtn.disabled = false;
+                loginBtn.innerHTML = '<i class="fas fa-sign-in-alt mr-2"></i> Login';
+            }
+            
+        } catch (error) {
+            console.error('Login error:', error);
+            loadingMsg.classList.add('hidden');
+            showError('Gagal terhubung ke server. Coba lagi.');
+            loginBtn.disabled = false;
+            loginBtn.innerHTML = '<i class="fas fa-sign-in-alt mr-2"></i> Login';
+        }
+    });
+
+    // ============================================================
+    // SHOW ERROR
+    // ============================================================
+    function showError(message) {
+        var errorMsg = document.getElementById('error-msg');
+        document.getElementById('error-text').textContent = message;
+        errorMsg.classList.remove('hidden');
+        
+        // Shake animation
+        errorMsg.style.animation = 'none';
+        setTimeout(function() {
+            errorMsg.style.animation = 'shake 0.5s';
+        }, 10);
+    }
+</script>
+
+<style>
+    @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        25% { transform: translateX(-8px); }
+        75% { transform: translateX(8px); }
+    }
+</style>
+
+</body>
+</html>
