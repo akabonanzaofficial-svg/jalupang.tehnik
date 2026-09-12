@@ -230,7 +230,7 @@
         }
         .modal-content .modal-meta { font-size: 0.875rem; color: #6b7280; margin-bottom: 1rem; }
         .modal-content .modal-image { width: 100%; max-height: 300px; object-fit: cover; border-radius: 1rem; margin-bottom: 1.5rem; }
-        .modal-content .modal-body { font-size: 1rem; line-height: 1.8; color: #374151; }
+        .modal-content .modal-body { font-size: 1rem; line-height: 1.8; color: #374151; white-space: pre-line; }
         .modal-content .modal-body h1 { font-size: 1.75rem; font-weight: 700; margin: 1.5rem 0 0.75rem; }
         .modal-content .modal-body h2 { font-size: 1.5rem; font-weight: 700; margin: 1.25rem 0 0.75rem; }
         .modal-content .modal-body h3 { font-size: 1.25rem; font-weight: 600; margin: 1rem 0 0.5rem; }
@@ -246,6 +246,11 @@
         }
         .modal-content .modal-body img { max-width: 100%; border-radius: 0.5rem; margin: 0.75rem 0; }
         .modal-content .modal-body iframe { max-width: 100%; border-radius: 0.5rem; margin: 0.75rem 0; }
+
+        /* Deskripsi modal produk — biar enter berfungsi */
+        #produkModalDeskripsi {
+            white-space: pre-line;
+        }
 
         /* SHARE */
         .share-buttons {
@@ -364,6 +369,7 @@
             -webkit-box-orient: vertical;
             overflow: hidden;
             min-height: 1.6em;
+            white-space: pre-line;
         }
         .produk-card-footer {
             display: flex;
@@ -971,7 +977,7 @@
                         <span id="produkModalKategori" class="inline-block text-xs font-bold text-green-600 uppercase tracking-wider mb-2"></span>
                         <h2 id="produkModalNama" class="font-heading text-2xl md:text-3xl font-bold text-earth mb-3"></h2>
                         <div id="produkModalHarga" class="text-2xl font-bold text-green-700 mb-4"></div>
-                        <p id="produkModalDeskripsi" class="text-gray-600 text-sm leading-relaxed mb-6"></p>
+                        <p id="produkModalDeskripsi" class="text-gray-600 text-sm leading-relaxed mb-6" style="white-space: pre-line;"></p>
                         
                         <a id="produkModalWaBtn" href="#" target="_blank" 
                            class="inline-flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-full transition-all transform hover:-translate-y-0.5 shadow-lg mb-4">
@@ -1004,6 +1010,7 @@
         const ARTICLES_API_URL = API_URL + '?type=artikel';
         const PRODUCTS_API_URL = API_URL + '?type=produk';
         const NO_WA_ADMIN = '6281313062747';
+        const MAX_FEATURED = 10; // ← Diubah dari 6 menjadi 10
 
         // ============================================================
         // DATA STATIS
@@ -1047,6 +1054,7 @@
             
             var isFeatured = (produk.featured === 'TRUE' || produk.featured === true);
             var animateClass = animate ? ' produk-fade-in' : '';
+            var deskripsi = (produk.deskripsi || '').replace(/"/g, '&quot;');
             
             return '<div class="produk-card' + animateClass + '" onclick="openProdukModal(' + produk.id + ')" style="cursor:pointer;">' +
                 '<div class="produk-card-image">' +
@@ -1055,7 +1063,7 @@
                 '</div>' +
                 '<div class="produk-card-body">' +
                 '<div class="produk-card-name">' + (produk.nama || 'Tanpa Nama') + '</div>' +
-                '<div class="produk-card-desc">' + (produk.deskripsi || '') + '</div>' +
+                '<div class="produk-card-desc">' + deskripsi + '</div>' +
                 '<div class="produk-card-footer">' +
                 '<span class="produk-card-price">' + hargaText + '</span>' +
                 '<button class="produk-card-btn" onclick="event.stopPropagation(); tanyaViaWA(\'' + (produk.nama || 'Produk').replace(/'/g, "\\'") + '\')">Tanya</button>' +
@@ -1081,13 +1089,13 @@
             });
             
             var displayProducts;
-            if (featured.length >= 6) {
-                displayProducts = featured.slice(0, 6);
+            if (featured.length >= MAX_FEATURED) {
+                displayProducts = featured.slice(0, MAX_FEATURED);
             } else {
                 var nonFeatured = allProducts.filter(function(p) {
                     return !(p.featured === 'TRUE' || p.featured === true);
                 });
-                displayProducts = featured.concat(nonFeatured).slice(0, 6);
+                displayProducts = featured.concat(nonFeatured).slice(0, MAX_FEATURED);
             }
             
             if (showAll) {
@@ -1096,7 +1104,7 @@
             
             var html = '';
             displayProducts.forEach(function(produk, index) {
-                html += renderProdukCard(produk, showAll && index >= 6);
+                html += renderProdukCard(produk, showAll && index >= MAX_FEATURED);
             });
             
             if (displayProducts.length === 0) {
@@ -1110,7 +1118,7 @@
             var expandBtn = document.getElementById(expandBtnId);
             
             if (expandContainer && expandText && expandBtn) {
-                if (allProducts.length > 6) {
+                if (allProducts.length > MAX_FEATURED) {
                     expandContainer.style.display = 'block';
                     
                     if (showAll) {
@@ -1164,6 +1172,7 @@
             
             document.getElementById('produkModalNama').textContent = produk.nama || 'Tanpa Nama';
             document.getElementById('produkModalKategori').textContent = produk.kategori || '';
+            // Pakai textContent + white-space: pre-line agar enter berfungsi
             document.getElementById('produkModalDeskripsi').textContent = produk.deskripsi || 'Tidak ada deskripsi.';
             
             var hargaText = 'Hubungi Kami';
